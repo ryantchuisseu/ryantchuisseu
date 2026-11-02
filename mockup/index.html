@@ -19,14 +19,14 @@
     --acc:#F6A343; --g1:#F6A343; --g2:#E3843D; --stage:#080b17;
     --k1:#F6A343; --k2:#2DB8BD; --k3:#CD6035; --k4:#9D87DC;
   }
-  /* Version Jour — palette « Jour » de la charte : crème #FBF6EE, sable #F4E6D2, encre #19203A.
-     Valeurs dérivées (non définies par la charte) : --acc, --g1/--g2, --k1/--k2, --muted, --line, --stage,
-     assombries pour tenir le contraste 4,5:1 sur fond clair. L'en-tête et la barre d'onglets restent sombres
-     (le logo a un lettrage blanc : interdit sur fond clair). */
+  /* Version Jour — d'après la version claire observée sur jciacm.com et la palette « Jour » de la charte :
+     crème #FBF6EE (page), encre #19203A (texte), cartes blanches à ombre douce, en-tête clair + logo à lettrage sombre.
+     Valeurs DÉRIVÉES (non définies par la charte), assombries pour le contraste sur fond clair :
+     --acc (terracotta foncé, petits textes), --g1/--g2 (dégradé des titres), --k1/--k2 (chiffres clés), --muted. */
   :root[data-theme="day"]{
-    --night:#FBF6EE; --card:#F4E6D2; --section:#FFFFFF; --line:#E0CFB3; --text:#19203A; --muted:#565C75;
-    --acc:#9A4C07; --g1:#B8600D; --g2:#9A4C07; --stage:#E7DCC9;
-    --k1:#B8600D; --k2:#1B7F84; --k3:#CD6035; --k4:#5D4696;
+    --night:#FBF6EE; --header:#FBF6EE; --card:#FFFFFF; --section:#F4E6D2; --line:#EADFCF; --text:#19203A; --muted:#5C617C;
+    --acc:#B8502A; --g1:#D2700F; --g2:#B8502A; --stage:#E7DCC9;
+    --k1:#D2700F; --k2:#1B7F84; --k3:#CD6035; --k4:#5D4696;
     color-scheme:light;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -44,21 +44,22 @@
     .phone{max-width:none;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
   }
 
-  .topbar{background:var(--header);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px;min-height:56px}
+  .topbar{background:var(--header);color:var(--text);padding:10px 16px;display:flex;align-items:center;gap:12px;min-height:56px}
   .topbar h1{font-size:17px;font-weight:700;flex:1}
   .topbar .back,.topbar .theme-btn{width:44px;height:44px;border-radius:50%;background:#182039;border:1px solid #2C3147;color:#fff;font-size:18px;flex:none}
+  .topbar .logo-day{display:none}
   .topbar .logo-img{width:150px;height:auto;display:block}
-  .topbar .mini{font-size:12px;font-weight:800;letter-spacing:.04em;color:#B5BAD0}
+  .topbar .mini{font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--muted)}
   .topbar .spacer{flex:1}
   .topbar .mini b{color:var(--orange)}
   .band{height:22px;background:var(--header) url(assets/bande-toghu.png) repeat-x 0 50%/auto 22px;flex:none}
 
   main{flex:1;overflow-y:auto;padding:18px 16px 28px;scroll-behavior:smooth}
   .tabbar{height:var(--tab-h);background:var(--header);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
-  .tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:#B5BAD0;min-height:44px}
+  .tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--muted);min-height:44px}
   .tabbar button span.ico{font-size:20px}
-  .tabbar button[aria-current="page"]{color:var(--orange);font-weight:700}
-  .tabbar button[aria-current="page"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 4px 4px;background:var(--orange)}
+  .tabbar button[aria-current="page"]{color:var(--acc);font-weight:700}
+  .tabbar button[aria-current="page"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 4px 4px;background:var(--acc)}
 
   h2{font-size:22px;font-weight:700;margin:24px 0 10px;line-height:1.25}
   h2:first-child{margin-top:0}
@@ -153,8 +154,28 @@
   .notice{background:var(--section);color:var(--text);border:1px solid var(--acc);border-radius:16px;padding:10px 14px;font-size:13px;margin-bottom:14px}
   ol,ul{color:var(--muted)}
   .timeline,.timeline li{color:var(--text)}
-  :root[data-theme="day"] .hero{background:linear-gradient(160deg,#FFFFFF 0%,var(--card) 100%)}
-  :root[data-theme="day"] .countdown div,:root[data-theme="day"] input,:root[data-theme="day"] select{background:#fff}
+  /* Diamants tricolores (orange, turquoise, terracotta) devant les sur-titres, comme sur le site */
+  .eyebrow.dia::before{content:"";display:inline-block;width:38px;height:12px;margin-right:10px;vertical-align:-1px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='38' height='12' viewBox='0 0 38 12'%3E%3Cpath d='M6 0l6 6-6 6-6-6z' fill='%23F6A343'/%3E%3Cpath d='M19 1l5 5-5 5-5-5z' fill='%232DB8BD'/%3E%3Cpath d='M32 1l5 5-5 5-5-5z' fill='%23CD6035'/%3E%3C/svg%3E") no-repeat}
+  /* Puces losange turquoise dans les listes des cartes */
+  .card ul{list-style:none;margin-left:0!important;padding-left:0}
+  .card ul li{padding-left:20px;position:relative}
+  .card ul li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;background:var(--turquoise);transform:rotate(45deg)}
+
+  /* ----- Version Jour ----- */
+  :root[data-theme="day"] .logo-night{display:none}
+  :root[data-theme="day"] .topbar .logo-day{display:block}
+  :root[data-theme="day"] .topbar .back,:root[data-theme="day"] .topbar .theme-btn{background:#fff;border-color:#D9CBB5;color:var(--text)}
+  :root[data-theme="day"] .tabbar{background:#fff;border-top-color:var(--line)}
+  :root[data-theme="day"] main{background:var(--night) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140' fill='none' stroke='%2319203A' stroke-opacity='.06' stroke-width='1.5'%3E%3Cpath d='M70 20l50 50-50 50-50-50z'/%3E%3Ccircle cx='70' cy='70' r='18'/%3E%3Ccircle cx='70' cy='70' r='4' fill='%2319203A' fill-opacity='.06'/%3E%3C/svg%3E")}
+  :root[data-theme="day"] .card,:root[data-theme="day"] details,:root[data-theme="day"] .menu a,:root[data-theme="day"] .menu button{box-shadow:0 8px 24px rgba(25,32,58,.07)}
+  :root[data-theme="day"] .hero{background:linear-gradient(160deg,#FBF6EE 0%,#F4E6D2 58%,#E4EEE6 100%);border-color:#E6D8C2;box-shadow:0 8px 24px rgba(25,32,58,.07)}
+  :root[data-theme="day"] .chip{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+  :root[data-theme="day"] .countdown div{background:rgba(255,255,255,.55);border:1px solid #D9CBB5}
+  :root[data-theme="day"] .countdown b{color:var(--text)}
+  :root[data-theme="day"] .countdown div:first-child b{color:var(--acc)}
+  :root[data-theme="day"] .btn.secondary{background:#F2EDE7;border-color:#B7B6B8;color:var(--text)}
+  :root[data-theme="day"] input,:root[data-theme="day"] select{background:#fff}
   :root[data-theme="day"] .phone{box-shadow:0 20px 60px rgba(25,32,58,.25)}
 </style>
 </head>
@@ -280,6 +301,10 @@ const views = {
         <button class="btn secondary" data-go="awards">Awards 2027</button>
       </div>
     </section>
+
+    <p class="eyebrow dia" style="margin-top:26px">À propos</p>
+    <h2 style="margin-top:6px">La plateforme nationale de l'<span class="grad">IA au Cameroun</span></h2>
+    <p class="muted" style="font-size:14.5px">Depuis 2023, les Journées camerounaises de l'IA réunissent gouvernement, universités, entreprises, chercheurs, startups, société civile et partenaires internationaux autour d'un même programme : réflexion stratégique, démonstrations, formation et célébration de l'excellence.</p>
 
     <h2>Chiffres <span class="grad">attendus</span></h2>
     <div class="stats">
@@ -428,7 +453,7 @@ const views = {
       ${[["salon","🏛️","Salon National 100 % IA"],["awards","🏆","Cameroon AI Awards 2027"],["catalogue","📚","Annuaire national de l'IA"],["participants","👥","Participants"],["partners","🤝","Partenaires & sponsors"],["faq","❓","FAQ"],["contact","✉️","Contact & infos pratiques"]]
         .map(m=>`<button data-go="${m[0]}"><span class="ico">${m[1]}</span><b class="grow">${m[2]}</b><span>›</span></button>`).join("")}
     </div>
-    <div class="card"><h3>Apparence</h3><p class="muted">Version Nuit (par défaut, comme le site) ou version Jour (e-mails, documents).</p>
+    <div class="card"><h3>Apparence</h3><p class="muted">Suit par défaut le réglage de votre téléphone, comme le site. Vous pouvez forcer Nuit ou Jour.</p>
       <div class="seg" style="margin:10px 0 0" role="group" aria-label="Apparence"><button data-theme-set="night" aria-pressed="${getTheme()==="night"}">🌙 Nuit</button><button data-theme-set="day" aria-pressed="${getTheme()==="day"}">☀️ Jour</button></div></div>
     <div class="card"><h3>Langue</h3><div class="seg" style="margin:8px 0 0"><button aria-pressed="true" data-stub="Le site existe en FR et EN">Français</button><button aria-pressed="false" data-stub="Le site existe en FR et EN">English</button></div></div>
     `};
@@ -571,7 +596,7 @@ function themeBtn(){
   return `<button class="theme-btn" data-theme-toggle aria-label="${day?"Passer à la version Nuit":"Passer à la version Jour"}">${day?"🌙":"☀️"}</button>`;
 }
 (function initTheme(){
-  let t = "night";
+  let t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "night" : "day";
   try { t = localStorage.getItem(THEME_KEY) || t; } catch(e) {}
   const q = new URLSearchParams(location.search).get("theme");   // ?theme=day pour partager un lien direct
   if(q==="day"||q==="night") t = q;
@@ -585,7 +610,7 @@ function render(name){
   const v = views[name]();
   const top = $("#topbar");
   top.innerHTML = v.title === null
-    ? `<img class="logo-img" src="assets/logo-jcia.png" alt="JCIA — Journées Camerounaises de l'Intelligence Artificielle, Hilton Yaoundé, 27 et 28 avril 2027" width="150" height="65"><span class="spacer"></span>${themeBtn()}`
+    ? `<img class="logo-img logo-night" src="assets/logo-jcia.png" alt="JCIA — Journées Camerounaises de l'Intelligence Artificielle, Hilton Yaoundé, 27 et 28 avril 2027" width="150" height="65"><img class="logo-img logo-day" src="assets/logo-jcia-jour.png" alt="" aria-hidden="true" width="150" height="65"><span class="spacer"></span>${themeBtn()}`
     : `${v.back?`<button class="back" data-go="${v.back}" aria-label="Retour">←</button>`:""}<h1>${v.title}</h1><span class="mini">JCIA <b>2027</b></span>${themeBtn()}`;
   $("#view").innerHTML = v.html;
   $("#view").scrollTop = 0;

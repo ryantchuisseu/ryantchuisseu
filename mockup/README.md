@@ -34,11 +34,13 @@ Sur ordinateur, l'app s'affiche dans un cadre de téléphone ; sur mobile, en pl
 
 ## Version Jour
 
-Bouton ☀️/🌙 dans l'en-tête, ou Plus → Apparence. Lien direct : `index.html?theme=day`. Le choix est mémorisé dans le navigateur.
+Modelée sur la version claire observée sur <https://jciacm.com/> (le site suit le réglage du système : `color-scheme: light dark`) et sur la palette « Jour » de la charte.
 
-- Palette « Jour » de la charte : crème `#FBF6EE` (page), sable `#F4E6D2` (cartes), encre `#19203A` (texte).
-- **En-tête et barre d'onglets restent sombres** : le logo a un lettrage blanc, interdit sur fond clair par la charte.
-- **Valeurs dérivées, absentes de la charte** (assombries pour tenir le contraste 4,5:1 sur fond clair) : orange de texte `#9A4C07`, gris de texte `#565C75`, chiffres clés `#B8600D` et `#1B7F84`. À faire valider par l'organisateur.
+- **Bascule** : bouton ☀️/🌙 en haut à droite, ou Plus → Apparence. Par défaut, la maquette suit le réglage du téléphone. Lien direct : `index.html?theme=day`. Le choix est mémorisé.
+- **Ce qui change** : fond crème `#FBF6EE` avec motif toghu discret, cartes blanches à ombre douce, en-tête clair avec logo à **lettrage sombre**, bande toghu conservée, bouton secondaire gris clair, petits titres en terracotta précédés de trois losanges.
+- **Valeurs dérivées, absentes de la charte** (assombries pour le contraste sur fond clair) : terracotta de texte `#B8502A`, dégradé des titres `#D2700F → #B8502A`, gris de texte `#5C617C`, chiffres clés `#D2700F` et `#1B7F84`. À faire valider.
+- **Logo jour** (`assets/logo-jcia-jour.png`) : **version provisoire** fabriquée en recolorant le logo de la charte (lettrage blanc → encre). Le site utilise un vrai logo à lettrage sombre : demander le fichier officiel (SVG/PNG).
+- La carte du Cameroun reste dans son cadre sombre arrondi (comme dans la charte) : sa version à fond transparent n'est pas disponible.
 - Implémentation : variables CSS surchargées sous `:root[data-theme="day"]` en tête de `index.html`.
 
 Les trois visuels de `assets/` ont été **extraits du PDF de la charte** : le logo est en 600 px (flou à grande taille).
