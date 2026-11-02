@@ -45,7 +45,13 @@ Même application, même code (`app.js`), avec une feuille de style en plus : `l
 
 - Fond blanc cassé `#F7F5F0`, beaucoup d'air, cartes très arrondies (30 à 40 px) à ombre quasi invisible.
 - Typographie éditoriale : Sora pour le texte, **Instrument Serif** pour les grands titres et les mots en italique (« Bienvenue aux *JCIA 2027* »).
-- Galets pastel en décor (pêche, sauge, lavande, jaune), icônes à trait fin, boutons pilule encre.
+- Icônes à trait fin, boutons pilule encre, pastilles et badges en teintes pastel.
+- **Motifs de l'identité JCIA**, relevés sur jciacm.com et dans la charte, dessinés en traits fins (SVG intégrés dans `leger.css`) :
+  - les **3 losanges** orange, turquoise, terracotta devant les titres de section ;
+  - les **motifs toghu** (losange pointé, cercle pointé, peigne, zigzag) : bande claire sous le compte à rebours et motif dans le coin de chaque accès rapide ;
+  - l'**arc « Yaoundé → Genève »** en dégradé, avec ses points à halo, et la **constellation** de points reliés (l'IA), sur l'accueil et les écrans de bienvenue ;
+  - la **trame de points** discrète du fond et le **soulignement épais** sous un mot-clé ;
+  - les **pastilles rondes à halo** autour des icônes (comme les étapes du site).
 - Version jour uniquement (le choix Nuit / Jour est masqué).
 
 **Écarts à la charte, à valider** : police serif ajoutée à Sora, bouton principal encre au lieu du dégradé orange, teintes pastel dérivées de la palette, carte du Cameroun et bande toghu retirées de l'accueil.
