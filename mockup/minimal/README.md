@@ -19,6 +19,25 @@ de grands titres, des gestes simples. La maquette complète précédente reste d
 - **Billet en 3 étapes** (choisir → informations → payer) avec barre de progression, puis un billet lisible avec QR.
 - Nuit / Jour / Auto (suit le téléphone), animations coupées si « réduire les animations », navigation au clavier, feuilles à piège de focus.
 
+## Expérience « wouah » (utile, sans manipulation)
+
+| Fonction | Ce qu'elle apporte | Où |
+|---|---|---|
+| **Billet 3D** | S'incline au doigt ou en penchant le téléphone, reflet lumineux ; **mode scan** (QR plein écran, écran maintenu allumé) | Billet |
+| **Visuel « Je serai là »** | Photo (recadrage au doigt + zoom), nom, rôle, couleur du billet ; **partage** natif ou téléchargement PNG 1080×1350. La photo ne quitte pas le téléphone | Billet → Créer mon visuel |
+| **Mode « En direct »** | Le jour J, l'accueil montre la session en cours (barre d'avancement), la suivante et un bouton **« M'y emmener »** vers la salle sur le plan ; « En cours » dans le programme | Accueil, Programme |
+| **Préparation** | Checklist de 4 étapes avec anneau de progression ; elle **se termine**, est célébrée une fois, puis disparaît | Accueil |
+| **Personnalisation** | 4e étape d'accueil : profil + 4 thèmes → cartes « Pour vous », badges dans le programme, rencontres classées par thème | Accueil, Explorer → Mes thèmes |
+| **Calendrier** | Vrais fichiers `.ics` (favoris ou événement), fuseau de Yaoundé | Programme, Billet |
+| **Recherche** | Sessions, intervenants, questions, en direct | Loupe en haut |
+| **Retours sensoriels** | Confettis aux réussites, étincelles sur les favoris, bulle « gélatine », vibrations (désactivables), sons (désactivés par défaut) | Partout · Explorer |
+
+**Mode démonstration** (Explorer) : simule « mardi 12:10 » ou « mercredi 15:05 » pour montrer le mode direct avant l'événement.
+
+**Choix éthiques assumés** : pas de récompense aléatoire, pas de série à perdre, pas de classement public, pas de pression pour revenir. La préparation est finie, les sons sont désactivés par défaut, et tout effet de mouvement est coupé si l'utilisateur réduit les animations.
+
+**Limites** : l'export du visuel ne fonctionne pas depuis `index.html` ouvert en local (sécurité du navigateur) : utiliser les fichiers de `dist/` ou un petit serveur. Le partage natif dépend du téléphone (sinon, téléchargement). L'inclinaison au gyroscope demande une autorisation sur iPhone (au premier toucher du billet).
+
 ## Les deux variantes d'icônes
 
 - **3D** : [Fluent Emoji 3D](https://github.com/microsoft/fluentui-emoji) de Microsoft, **licence MIT** (fichier `assets/3d/LICENSE-fluentui-emoji.txt`). 37 icônes en 160 px. Ce sont des emojis 3D : leur style est celui de Microsoft, pas une identité JCIA sur mesure.
