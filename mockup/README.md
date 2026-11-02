@@ -17,7 +17,7 @@ Sur ordinateur, l'app s'affiche dans un cadre de téléphone ; sur mobile, en pl
 | Programme | Jour 1 / Jour 2, masterclasses |
 | Intervenants | Liste + recherche |
 | Billets | 5 billets → inscription en 4 étapes → billet (QR fictif) + visuel « I'll be there » |
-| Plus | Salon 100 % IA, Awards, Annuaire, Participants, Partenaires, FAQ, Contact |
+| Plus | Salon 100 % IA, Awards, Annuaire, Participants, Partenaires, FAQ, Contact, choix Nuit / Jour |
 
 ## Charte graphique appliquée (v1.0, octobre 2026)
 
@@ -31,6 +31,15 @@ Sur ordinateur, l'app s'affiche dans un cadre de téléphone ; sur mobile, en pl
 | Carte du Cameroun : une fois par page, jamais derrière un paragraphe | Accueil uniquement, à droite des dates |
 | Écriture : vouvoiement, « visés / attendus », pas de places restantes garanties, pas de code PIN | Appliquée aux textes |
 | Contraste 4,5:1, jamais l'état par la seule couleur | Onglet actif : couleur + barre ; billet choisi : bordure + « ✓ Sélectionné » |
+
+## Version Jour
+
+Bouton ☀️/🌙 dans l'en-tête, ou Plus → Apparence. Lien direct : `index.html?theme=day`. Le choix est mémorisé dans le navigateur.
+
+- Palette « Jour » de la charte : crème `#FBF6EE` (page), sable `#F4E6D2` (cartes), encre `#19203A` (texte).
+- **En-tête et barre d'onglets restent sombres** : le logo a un lettrage blanc, interdit sur fond clair par la charte.
+- **Valeurs dérivées, absentes de la charte** (assombries pour tenir le contraste 4,5:1 sur fond clair) : orange de texte `#9A4C07`, gris de texte `#565C75`, chiffres clés `#B8600D` et `#1B7F84`. À faire valider par l'organisateur.
+- Implémentation : variables CSS surchargées sous `:root[data-theme="day"]` en tête de `index.html`.
 
 Les trois visuels de `assets/` ont été **extraits du PDF de la charte** : le logo est en 600 px (flou à grande taille).
 Demander à l'organisateur le logo en **SVG/PNG haute définition**, la carte et la bande en vectoriel.
