@@ -1,0 +1,109 @@
+{
+  "source": "https://jciacm.com/faq",
+  "updated": "2026-11-02",
+  "note": "Questions et réponses reprises telles quelles de la FAQ du site (FR et EN). Seule exception : le prix entre parenthèses de la réponse EN « faq-distance » a été retiré, car il contredit la page Billetterie (voir README, section Incohérences).",
+  "quick": ["faq-dates", "faq-partner", "contact"],
+  "suggestions": ["speakers", "faq-booking"],
+  "items": [
+    {
+      "id": "faq-dates", "category": "event", "card": "dates",
+      "fr": { "label": "Dates et lieu", "q": "Quand et où se déroulent les JCIA 2027 ?", "a": "Les mardi 27 et mercredi 28 avril 2027 au Hilton Hotel de Yaoundé. La soirée de gala des Cameroon AI Awards a lieu le 28 avril au soir, sur invitation." },
+      "en": { "label": "Dates and venue", "q": "When and where does JCIA 2027 take place?", "a": "On Tuesday 27 and Wednesday 28 April 2027 at the Hilton Hotel in Yaoundé. The Cameroon AI Awards gala takes place on the evening of 28 April, by invitation only." }
+    },
+    {
+      "id": "faq-who", "category": "event",
+      "fr": { "q": "Qui peut participer ?", "a": "Tout l’écosystème : décideurs publics, entreprises, investisseurs, chercheurs, startups, étudiants, diaspora, société civile et grand public curieux de l’IA." },
+      "en": { "q": "Who can attend?", "a": "The whole ecosystem: public decision-makers, companies, investors, researchers, startups, students, the diaspora, civil society and anyone curious about AI." }
+    },
+    {
+      "id": "faq-languages", "category": "event",
+      "fr": { "q": "Dans quelles langues se déroulent les sessions ?", "a": "En français et en anglais." },
+      "en": { "q": "In which languages are the sessions held?", "a": "In French and English." }
+    },
+    {
+      "id": "faq-masterclass", "category": "event",
+      "fr": { "q": "Les masterclasses donnent-elles lieu à une attestation ?", "a": "Oui. Les quatre masterclasses du 28 avril comprennent des exercices pratiques et une attestation de participation." },
+      "en": { "q": "Do the masterclasses include a certificate?", "a": "Yes. The four masterclasses on 28 April include hands-on exercises and a certificate of attendance." }
+    },
+    {
+      "id": "faq-booking", "category": "tickets",
+      "fr": { "label": "Comment réserver ma place ?", "q": "Comment réserver ma place ?", "a": "La page Billetterie présente les cinq billets, leurs quotas et les places restantes. Quel que soit le billet, vous vous inscrivez sur notre site : prénom, nom, e-mail, numéro WhatsApp, organisation, rôle et photo. Le billet gratuit est alors confirmé ; un billet payant se règle ensuite sur le site, par MTN Mobile Money, Orange Money, carte bancaire ou PayPal." },
+      "en": { "label": "How do I book my seat?", "q": "How do I book my seat?", "a": "The Tickets page lists the five tickets, their quotas and the seats left. Whatever the ticket, you register on our website: first name, last name, e-mail, WhatsApp number, organisation, role and photo. The free ticket is then confirmed; a paid ticket is then paid for on the website, with MTN Mobile Money, Orange Money, bank card or PayPal." },
+      "link": "https://jciacm.com/billetterie"
+    },
+    {
+      "id": "faq-payment", "category": "tickets",
+      "fr": { "q": "Comment fonctionnera le paiement ?", "a": "Après votre inscription, vous payez sur la même page. Mobile Money : saisissez votre numéro MTN ou Orange et validez la demande de paiement reçue sur votre téléphone. Carte bancaire ou PayPal : vous passez par la page de paiement sécurisée Stripe, puis revenez automatiquement sur notre site. Dès que le paiement est accepté, votre billet (QR code) s’affiche, vous recevez l’e-mail de confirmation avec le lien du formulaire participant et votre visuel « J’y serai » se débloque. Le paiement passe par notre partenaire TIKORA ; nous ne vous demanderons jamais votre code secret Mobile Money et ne voyons jamais vos données bancaires." },
+      "en": { "q": "How will payment work?", "a": "After registering, you pay on the same page. Mobile Money: enter your MTN or Orange number and approve the payment request on your phone. Bank card or PayPal: you go through the secure Stripe payment page, then come back to our website automatically. As soon as the payment is accepted, your ticket (QR code) is displayed, you receive the confirmation e-mail with the attendee form link, and your “I’ll be there” visual is unlocked. Payment goes through our partner TIKORA; we will never ask for your Mobile Money PIN and never see your card details." }
+    },
+    {
+      "id": "faq-distance", "category": "tickets",
+      "fr": { "q": "Puis-je suivre l’événement à distance ?", "a": "Oui. Le billet « En ligne » donne accès à la retransmission, à une masterclass avec attestation et au replay des sessions pendant 30 jours." },
+      "en": { "q": "Can I follow the event remotely?", "a": "Yes. The “Online” ticket gives access to the whole programme live, one masterclass with certificate, B2B / B2G meetings via the app and session replays for 30 days." }
+    },
+    {
+      "id": "faq-student", "category": "tickets",
+      "fr": { "q": "Le tarif étudiant est-il soumis à conditions ?", "a": "Oui : il est réservé aux étudiants et une carte d’étudiant en cours de validité sera demandée à l’accueil." },
+      "en": { "q": "Are there conditions for the student rate?", "a": "Yes: it is reserved for students and a valid student card will be requested at the entrance." }
+    },
+    {
+      "id": "faq-visual", "category": "tickets",
+      "fr": { "q": "Qu’est-ce que le visuel « J’y serai » ?", "a": "Dès que votre billet est confirmé — gratuit ou payant —, vous créez un visuel personnalisé aux couleurs de votre billet, avec la photo de votre fiche participant, votre nom et les informations de l’événement, à partager sur vos réseaux. Votre photo n’apparaît dans la liste publique des participants que si vous avez accepté d’y figurer, et vous pouvez la retirer à tout moment." },
+      "en": { "q": "What is the “I’ll be there” visual?", "a": "As soon as your ticket is confirmed — free or paid —, you create a personalised visual in your ticket’s colours, with the photo from your attendee profile, your name and the event details, to share on social media. Your photo only appears in the public attendee list if you agreed to be listed, and you can remove it at any time." }
+    },
+    {
+      "id": "faq-group", "category": "tickets",
+      "fr": { "q": "Puis-je inscrire plusieurs personnes ?", "a": "Oui : chaque participant s’inscrit avec sa propre fiche et sa photo (une inscription par personne), et reçoit son propre visuel. Chaque inscription payante se règle séparément. Pour les groupes et institutions, contactez le secrétariat." },
+      "en": { "q": "Can I register several people?", "a": "Yes: each attendee registers with their own details and photo (one registration per person) and gets their own visual. Each paid registration is paid for separately. For groups and institutions, contact the secretariat." }
+    },
+    {
+      "id": "faq-caia-apply", "category": "awards",
+      "fr": { "q": "Comment candidater aux Cameroon AI Awards (CAIA 2027) ?", "a": "Exclusivement via le formulaire en ligne (awards.jcia.cm ou iacameroun.com), du 15 novembre 2026 au 28 février 2027 à 23h59. Le concours est ouvert et entièrement gratuit." },
+      "en": { "q": "How do I apply for the Cameroon AI Awards (CAIA 2027)?", "a": "Only through the online form (awards.jcia.cm or iacameroun.com), from 15 November 2026 to 28 February 2027 at 23:59. The competition is open and completely free." }
+    },
+    {
+      "id": "faq-caia-diaspora", "category": "awards",
+      "fr": { "q": "Faut-il être au Cameroun pour candidater ?", "a": "Non. Toute personne de nationalité camerounaise âgée d’au moins 18 ans peut candidater, qu’elle réside au Cameroun ou dans la diaspora." },
+      "en": { "q": "Do I need to live in Cameroon to apply?", "a": "No. Any Cameroonian national aged 18 or over may apply, whether living in Cameroon or in the diaspora." }
+    },
+    {
+      "id": "faq-caia-score", "category": "awards",
+      "fr": { "q": "Comment est calculée la note finale ?", "a": "La note du jury compte pour 60 % et le vote du public (du 20 mars au 15 avril 2027) pour 40 %." },
+      "en": { "q": "How is the final score calculated?", "a": "The jury score counts for 60% and the public vote (20 March to 15 April 2027) for 40%." }
+    },
+    {
+      "id": "faq-expo", "category": "expo",
+      "fr": { "q": "Comment exposer au Salon National 100 % IA ?", "a": "Contactez le secrétariat (contact@jciacm.com) : les formules de stand vous seront communiquées. Les 50 projets présélectionnés aux CAIA exposent gratuitement." },
+      "en": { "q": "How can I exhibit at the National 100% AI Expo?", "a": "Contact the secretariat (contact@jciacm.com) to receive the stand packages. The 50 CAIA shortlisted projects exhibit free of charge." }
+    },
+    {
+      "id": "faq-partner", "category": "partners", "card": "enjeux",
+      "fr": { "label": "Devenir partenaire", "q": "Comment devenir partenaire ou sponsor ?", "a": "Téléchargez le dossier de sponsoring puis contactez le Comité d’Organisation pour construire une formule adaptée." },
+      "en": { "label": "Become a partner", "q": "How can I become a partner or sponsor?", "a": "Download the sponsorship package and contact the Organising Committee to build a tailored package." },
+      "link": "https://jciacm.com/documents/Dossier-Partenariat-JCIA-2027.pdf"
+    },
+    {
+      "id": "faq-press", "category": "partners",
+      "fr": { "q": "Je suis journaliste : comment obtenir une accréditation ?", "a": "Une centaine de journalistes seront accrédités. Écrivez au secrétariat (contact@jciacm.com) en précisant votre média." },
+      "en": { "q": "I am a journalist: how do I get accredited?", "a": "Around one hundred journalists will be accredited. Write to the secretariat (contact@jciacm.com) stating your media outlet." }
+    },
+    {
+      "id": "contact", "category": "contact", "card": "contact", "extra": true,
+      "fr": { "label": "Contact", "q": "Comment contacter l’organisation ?", "a": "Le secrétariat vous répond par e-mail ou par téléphone." },
+      "en": { "label": "Contact", "q": "How do I contact the organisers?", "a": "The secretariat will reply by e-mail or phone." }
+    },
+    {
+      "id": "speakers", "category": "event", "extra": true,
+      "fr": { "label": "Quels sont les intervenants ?", "q": "Quels sont les intervenants ?", "a": "Plus de 40 intervenants de haut niveau sont attendus ; ils sont annoncés progressivement. Déjà publiés sur le site : Boris Landry KOUEKAM (directeur de CAIPI, IAC), Natalie DELATTE (Pictet Asset Management), Eddy Damaris NONO DEFO (Chaire UNESCO, Université de Montréal), Dr Axel MAZOLO (directeur de GAIGI), Guillaume SOTO (Shauri et Maitrise AI), Destin KOUAM (IAC), Dr Volviane Saphir MFOGO (Open AIR) et David KENFACK (chercheur en IA). Leurs sujets seront annoncés prochainement." },
+      "en": { "label": "Who are the speakers?", "q": "Who are the speakers?", "a": "More than 40 high-level speakers are expected; they are announced progressively. Already published on the website: Boris Landry KOUEKAM (Director of CAIPI, IAC), Natalie DELATTE (Pictet Asset Management), Eddy Damaris NONO DEFO (UNESCO Chair, Université de Montréal), Dr Axel MAZOLO (Director of GAIGI), Guillaume SOTO (Shauri and Maitrise AI), Destin KOUAM (IAC), Dr Volviane Saphir MFOGO (Open AIR) and David KENFACK (AI researcher). Their topics will be announced soon." },
+      "link": "https://jciacm.com/intervenants"
+    }
+  ],
+  "contacts": {
+    "email": "contact@jciacm.com",
+    "whatsapp": "+237 699 089 937",
+    "phones": ["+237 699 089 937", "+237 677 238 022"],
+    "address_fr": "Route de l’aéroport, Rond-point Cami-Toyota, Coron, Immeuble Dangote, 2e étage, Yaoundé",
+    "address_en": "Route de l’aéroport, Cami-Toyota roundabout, Coron, Dangote Building, 2nd floor, Yaoundé"
+  }
+}

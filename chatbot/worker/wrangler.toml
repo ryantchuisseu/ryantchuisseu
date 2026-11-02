@@ -1,0 +1,22 @@
+# Worker Cloudflare du chatbot JCIA 2027.
+# La clé API n'est JAMAIS écrite ici : elle s'ajoute avec
+#   npx wrangler secret put ANTHROPIC_API_KEY
+name = "jcia-chatbot"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Permet d'importer infos.md comme texte.
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
+
+[vars]
+# Sites autorisés à appeler le chatbot (séparés par des virgules).
+ALLOWED_ORIGINS = "https://jciacm.com,https://www.jciacm.com,https://jcia.cm,https://www.jcia.cm,http://localhost:8080,http://127.0.0.1:8080"
+# Nombre maximal de questions IA par visiteur et par tranche de 10 minutes.
+RATE_LIMIT = "20"
+
+[observability]
+enabled = true

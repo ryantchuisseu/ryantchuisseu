@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Démo du chatbot JCIA 2027</title>
+<style>
+  body{margin:0;font-family:Sora,Arial,sans-serif;background:#0E1326;color:#fff;min-height:100vh}
+  main{max-width:720px;margin:0 auto;padding:48px 20px}
+  h1{font-size:28px;line-height:1.2}
+  p{color:#B5BAD0}
+  code{background:#182039;border:1px solid #2C3147;border-radius:6px;padding:2px 6px;color:#F6A343}
+</style>
+</head>
+<body>
+<main>
+  <h1>Démo du chatbot JCIA 2027</h1>
+  <p>Cette page imite le site. Le widget est chargé par une seule ligne, comme il le sera sur jciacm.com.</p>
+  <p>Adresse du Worker utilisée : <code id="api"></code>. Pour en changer, ajoutez <code>?api=https://...</code> à l'adresse de cette page.</p>
+</main>
+<script>
+  // Charge le widget avec l'adresse du Worker passée dans l'URL (par défaut : le Worker lancé en local).
+  var api = new URLSearchParams(location.search).get('api') || 'http://localhost:8787';
+  document.getElementById('api').textContent = api;
+  var s = document.createElement('script');
+  s.src = 'jcia-chat.js'; s.dataset.api = api; s.dataset.open = 'true'; s.defer = true;
+  document.body.appendChild(s);
+</script>
+</body>
+</html>
