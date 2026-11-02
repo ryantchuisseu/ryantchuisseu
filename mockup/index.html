@@ -3,127 +3,147 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#19203a">
+<meta name="theme-color" content="#0E1326">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 <title>JCIA 2027 — Maquette app</title>
 <style>
+  /* Charte graphique JCIA 2027 v1.0 — nuit & chaleur, police Sora */
   :root{
-    --navy:#19203a; --navy-2:#232c4d; --green:#2fb36d; --yellow:#f5c542; --red:#e5484d;
-    --bg:#f5f3ee; --card:#ffffff; --text:#171a29; --muted:#667085; --line:#e6e2d8;
-    --radius:16px; --tab-h:64px;
-  }
-  @media (prefers-color-scheme:dark){
-    :root{--bg:#10142a; --card:#1a2040; --text:#f2f1ec; --muted:#a0a6c0; --line:#2b3359}
+    --night:#0E1326; --header:#0F1427; --card:#182039; --section:#1A223C; --line:#2C3147;
+    --orange:#F6A343; --orange-2:#E3843D; --turquoise:#2DB8BD; --terracotta:#CD6035;
+    --violet:#5D4696; --violet-l:#9D87DC; --ink:#19203A; --muted:#B5BAD0; --text:#ffffff;
+    --radius:22px; --tab-h:66px;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
-  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#0c0f1e;color:var(--text);line-height:1.45}
+  html,body{height:100%;color-scheme:dark}
+  body{font-family:"Sora",Arial,sans-serif;background:#080b17;color:var(--text);line-height:1.6;font-size:15px}
   button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-  a{color:inherit}
+  a{color:var(--orange)}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:2px}
 
-  /* Cadre téléphone sur grand écran, plein écran sur mobile */
   .stage{min-height:100%;display:flex;align-items:center;justify-content:center;padding:16px}
-  .phone{width:100%;max-width:400px;height:min(820px,calc(100vh - 32px));background:var(--bg);border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .phone{width:100%;max-width:400px;height:min(820px,calc(100vh - 32px));background:var(--night);border-radius:32px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6)}
   @media (max-width:480px){
     .stage{padding:0}
     .phone{max-width:none;height:100vh;height:100dvh;border-radius:0;box-shadow:none}
   }
 
-  .topbar{background:var(--navy);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;min-height:56px}
+  .topbar{background:var(--header);padding:10px 16px;display:flex;align-items:center;gap:12px;min-height:56px}
   .topbar h1{font-size:17px;font-weight:700;flex:1}
-  .topbar .back{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.12);font-size:18px}
-  .logo{font-weight:800;letter-spacing:.5px}
-  .logo b{color:var(--yellow)}
+  .topbar .back{width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--line);font-size:18px}
+  .topbar .logo-img{width:150px;height:auto;display:block}
+  .topbar .mini{font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--muted)}
+  .topbar .mini b{color:var(--orange)}
+  .band{height:22px;background:var(--header) url(assets/bande-toghu.png) repeat-x 0 50%/auto 22px;flex:none}
 
-  main{flex:1;overflow-y:auto;padding:16px 16px 24px;scroll-behavior:smooth}
-  .tabbar{height:var(--tab-h);background:var(--card);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
-  .tabbar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--muted)}
+  main{flex:1;overflow-y:auto;padding:18px 16px 28px;scroll-behavior:smooth}
+  .tabbar{height:var(--tab-h);background:var(--header);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
+  .tabbar button{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--muted);min-height:44px}
   .tabbar button span.ico{font-size:20px}
-  .tabbar button[aria-current="page"]{color:var(--green);font-weight:700}
+  .tabbar button[aria-current="page"]{color:var(--orange);font-weight:700}
+  .tabbar button[aria-current="page"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 4px 4px;background:var(--orange)}
 
-  h2{font-size:20px;margin:20px 0 10px}
+  h2{font-size:22px;font-weight:700;margin:24px 0 10px;line-height:1.25}
   h2:first-child{margin-top:0}
-  h3{font-size:16px}
-  .muted{color:var(--muted);font-size:14px}
-  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--green);font-weight:700}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px}
-  .row{display:flex;gap:10px;align-items:center}
+  h3{font-size:16px;font-weight:700;line-height:1.35}
+  .muted{color:var(--muted);font-size:13.5px}
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:var(--orange);font-weight:700}
+  .grad{background:linear-gradient(90deg,var(--orange),var(--orange-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .row{display:flex;gap:12px;align-items:center}
   .grow{flex:1;min-width:0}
   .stack>*+*{margin-top:10px}
 
-  .hero{background:linear-gradient(160deg,var(--navy),#2b3a78);color:#fff;border-radius:22px;padding:20px;position:relative;overflow:hidden}
-  .hero .tag{display:inline-block;background:var(--yellow);color:#241c00;font-size:12px;font-weight:700;padding:4px 10px;border-radius:99px}
-  .hero h2{font-size:22px;margin:12px 0 6px;line-height:1.2}
-  .hero p{opacity:.85;font-size:14px}
-  .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
-  .countdown div{background:rgba(255,255,255,.12);border-radius:12px;padding:8px 0;text-align:center}
-  .countdown b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
-  .countdown small{font-size:11px;opacity:.75}
+  /* Cartes à filet coloré + numéro en filigrane (opacité 14 %) */
+  .chal{position:relative;overflow:hidden;border-top:5px solid var(--c);padding-top:14px}
+  .chal .eyebrow{color:var(--muted);font-size:11px}
+  .chal::after{content:attr(data-n);position:absolute;right:12px;top:6px;font-size:54px;font-weight:800;color:var(--c);opacity:.14;line-height:1;pointer-events:none}
+  .c1{--c:var(--orange)} .c2{--c:var(--turquoise)} .c3{--c:var(--terracotta)} .c4{--c:var(--violet)}
 
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:14px;font-weight:700;background:var(--green);color:#04210f;width:100%}
-  .btn.secondary{background:transparent;border:1.5px solid var(--line);color:var(--text)}
-  .btn.yellow{background:var(--yellow);color:#241c00}
-  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .hero{background:radial-gradient(120% 80% at 100% 0%,#232c52 0%,var(--night) 60%);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .chip{display:inline-block;font-size:11.5px;font-weight:700;color:var(--orange);border:1.5px solid var(--orange);padding:3px 12px;border-radius:99px}
+  .hero h2{font-size:26px;font-weight:800;margin:14px 0 8px;line-height:1.15}
+  .hero .theme{color:var(--muted);font-size:14px}
+  .hero-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+  .hero-meta .map{width:84px;height:auto;border-radius:14px;flex:none}
+  .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+  .countdown div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 0;text-align:center}
+  .countdown b{display:block;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--orange)}
+  .countdown small{font-size:11px;color:var(--muted)}
+
+  /* Boutons : pilule, dégradé orange, 44 px mini, un seul bouton plein par écran */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 20px;border-radius:99px;font-weight:700;background:linear-gradient(90deg,var(--orange),var(--orange-2));color:var(--ink);width:100%;text-decoration:none;box-shadow:0 6px 18px rgba(246,163,67,.28)}
+  .btn.secondary{background:transparent;border:1.5px solid var(--orange);color:var(--orange);box-shadow:none}
+  .btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
   .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .stats .card{text-align:center;padding:12px 4px;margin:0}
-  .stats b{display:block;font-size:20px}
-  .stats small{color:var(--muted);font-size:11px}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .stats .card{text-align:center;padding:14px 6px;margin:0;border-top:5px solid var(--c,var(--orange))}
+  .stats .card:nth-child(1){--c:var(--orange)} .stats .card:nth-child(2){--c:var(--turquoise)}
+  .stats .card:nth-child(3){--c:var(--terracotta)} .stats .card:nth-child(4){--c:var(--violet-l)}
+  .stats b{display:block;font-size:28px;font-weight:800;color:var(--c);line-height:1.2}
+  .stats small{color:var(--muted);font-size:12px}
+  .stats.three{grid-template-columns:repeat(3,1fr)} .stats.three b{font-size:22px}
 
-  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--navy);color:#fff}
-  .pill.green{background:var(--green);color:#04210f}
-  .pill.yellow{background:var(--yellow);color:#241c00}
-  .pill.gray{background:var(--line);color:var(--text)}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--section);border:1px solid var(--line);color:var(--muted)}
+  .pill.orange{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+  .pill.violet{background:var(--violet);border-color:var(--violet);color:#fff}
 
-  .seg{display:flex;background:var(--line);border-radius:12px;padding:3px;margin-bottom:14px}
-  .seg button{flex:1;padding:9px;border-radius:10px;font-weight:600;font-size:14px;color:var(--muted)}
-  .seg button[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px;margin-bottom:14px}
+  .seg button{flex:1;min-height:44px;border-radius:99px;font-weight:600;font-size:14px;color:var(--muted)}
+  .seg button[aria-pressed="true"]{background:var(--orange);color:var(--ink);font-weight:700}
 
-  .timeline{list-style:none;position:relative;padding-left:18px}
+  .timeline{list-style:none;position:relative;padding-left:20px}
   .timeline::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--line)}
-  .timeline li{position:relative;margin-bottom:10px}
-  .timeline li::before{content:"";position:absolute;left:-18px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--green);border:2px solid var(--bg)}
-  .time{font-size:12px;font-weight:700;color:var(--green)}
+  .timeline li{position:relative}
+  .timeline li::before{content:"";position:absolute;left:-20px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--orange);border:2px solid var(--night)}
+  .time{font-size:12px;font-weight:700;color:var(--orange)}
 
-  .avatar{width:48px;height:48px;border-radius:50%;background:var(--navy-2);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
-  input[type=search],input[type=text],input[type=email],input[type=tel],select{width:100%;padding:13px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font:inherit}
-  input:focus,select:focus{outline:2px solid var(--green);border-color:transparent}
-  label{display:block;font-size:13px;font-weight:600;margin:12px 0 5px}
+  .avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(140deg,var(--violet),var(--section));border:1px solid var(--violet-l);color:#fff;display:grid;place-items:center;font-weight:700;flex:none}
+  input[type=search],input[type=text],input[type=email],input[type=tel],select{width:100%;min-height:48px;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font:inherit}
+  input::placeholder{color:var(--muted)}
+  label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+  input[type=checkbox]{width:20px;height:20px;accent-color:var(--orange);flex:none;margin-top:3px}
 
   .ticket{border:2px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px;background:var(--card);width:100%;text-align:left;display:block}
-  .ticket[aria-pressed="true"]{border-color:var(--green);box-shadow:0 0 0 3px rgba(47,179,109,.2)}
-  .price{font-size:20px;font-weight:800}
+  .ticket[aria-pressed="true"]{border-color:var(--orange);background:var(--section)}
+  .ticket .sel{display:none;font-size:12px;font-weight:700;color:var(--orange)}
+  .ticket[aria-pressed="true"] .sel{display:inline}
+  .price{font-size:22px;font-weight:800;color:var(--orange)}
   .price s{font-size:13px;color:var(--muted);font-weight:400;margin-right:6px}
-  .bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:8px}
-  .bar i{display:block;height:100%;background:var(--green)}
+  .bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:8px}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-2))}
+  .bar i.t{background:var(--turquoise)}
 
-  details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:8px}
-  summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
-  summary::after{content:"+";color:var(--green);font-weight:800}
+  details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin-bottom:8px}
+  summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;min-height:24px}
+  summary::after{content:"+";color:var(--orange);font-weight:800}
   details[open] summary::after{content:"–"}
   details p{margin-top:8px;color:var(--muted);font-size:14px}
 
-  .steps{display:flex;gap:6px;margin-bottom:14px}
-  .steps i{flex:1;height:5px;border-radius:9px;background:var(--line)}
-  .steps i.on{background:var(--green)}
+  .steps{display:flex;gap:6px;margin-bottom:6px}
+  .steps i{flex:1;height:6px;border-radius:9px;background:var(--line)}
+  .steps i.on{background:var(--orange)}
+  .steps-l{font-size:12px;color:var(--muted);margin-bottom:14px}
 
-  .menu a,.menu button{display:flex;align-items:center;gap:12px;width:100%;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;text-decoration:none;text-align:left}
+  .menu a,.menu button{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-radius:18px;margin-bottom:8px;text-decoration:none;text-align:left;color:var(--text)}
   .menu .ico{font-size:22px;width:32px;text-align:center}
 
-  .qr{width:180px;height:180px;margin:12px auto;border-radius:12px;background:
-    conic-gradient(from 90deg at 50% 50%,#000 25%,#fff 0 50%,#000 0 75%,#fff 0) 0 0/22px 22px;border:10px solid #fff;outline:1px solid var(--line)}
-  .badge-vis{background:linear-gradient(160deg,var(--green),#1c7a4a);color:#04210f;border-radius:20px;padding:22px;text-align:center}
-  .badge-vis .circle{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.35);margin:10px auto;display:grid;place-items:center;font-size:30px}
+  .qr{width:180px;height:180px;margin:12px auto;border-radius:12px;background:conic-gradient(from 90deg at 50% 50%,#000 25%,#fff 0 50%,#000 0 75%,#fff 0) 0 0/22px 22px;border:10px solid #fff}
+  .badge-vis{background:linear-gradient(160deg,var(--orange),var(--orange-2));color:var(--ink);border-radius:var(--radius);padding:22px;text-align:center;margin-bottom:12px}
+  .badge-vis .circle{width:84px;height:84px;border-radius:50%;background:rgba(25,32,58,.18);margin:10px auto;display:grid;place-items:center;font-size:30px}
 
-  .notice{background:#fff8e1;color:#5c4400;border:1px solid #f0d98a;border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:12px}
-  @media (prefers-color-scheme:dark){.notice{background:#3a3112;color:#f6e3a0;border-color:#5b4c1a}}
-  .sr{position:absolute;left:-9999px}
+  .notice{background:var(--section);color:var(--text);border:1px solid var(--orange);border-radius:16px;padding:10px 14px;font-size:13px;margin-bottom:14px}
+  ol,ul{color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="stage">
   <div class="phone" id="app">
     <header class="topbar" id="topbar"></header>
+    <div class="band" role="presentation"></div>
     <main id="view" tabindex="-1"></main>
     <nav class="tabbar" id="tabbar" aria-label="Navigation principale"></nav>
   </div>
@@ -139,11 +159,11 @@
 const EVENT_START = new Date("2027-04-27T07:00:00Z");
 
 const TICKETS = [
-  { id:"gratuit",  name:"Gratuit",  price:0,     old:0,     left:null, total:null, perks:["Visite des stands","Accès au Salon 100 % IA"] },
-  { id:"etudiant", name:"Étudiant", price:3500,  old:5000,  left:97,   total:100,  perks:["Accès aux 2 jours","Salon 100 % IA","Young AI Leaders","AI Career Fair"], note:"Carte étudiante valide exigée à l'entrée." },
-  { id:"standard", name:"Standard", price:7000,  old:10000, left:249,  total:250,  perks:["Tout l'Étudiant","Cocktail networking","Live stream","Conférences plénières","Women in AI Forum","Certificat de participation","Replay 30 jours","Rencontres B2B / B2G"] },
-  { id:"online",   name:"En ligne", price:10500, old:15000, left:null, total:null, perks:["Live stream","Masterclass + certificat","Replay 30 jours"], note:"Le lien de connexion est envoyé par e-mail avant l'événement." },
-  { id:"vip",      name:"VIP",      price:17500, old:25000, left:148,  total:150,  perks:["Tout Standard et En ligne","Déjeuner networking CAIA"] },
+  { id:"gratuit",  name:"Gratuit",  price:0,     old:0,     perks:["Visite des stands","Accès au Salon 100 % IA"] },
+  { id:"etudiant", name:"Étudiant", price:3500,  old:5000,  limited:true,  perks:["Accès aux 2 jours","Salon 100 % IA","Young AI Leaders","AI Career Fair"], note:"Carte étudiante valide exigée à l'entrée." },
+  { id:"standard", name:"Standard", price:7000,  old:10000, limited:true,  perks:["Tout l'Étudiant","Cocktail networking","Live stream","Conférences plénières","Women in AI Forum","Certificat de participation","Replay 30 jours","Rencontres B2B / B2G"] },
+  { id:"online",   name:"En ligne", price:10500, old:15000, perks:["Live stream","Masterclass + certificat","Replay 30 jours"], note:"Le lien de connexion est envoyé par e-mail avant l'événement." },
+  { id:"vip",      name:"VIP",      price:17500, old:25000, limited:true,  perks:["Tout Standard et En ligne","Déjeuner networking CAIA"] },
 ];
 
 const DAY1 = [
@@ -228,39 +248,43 @@ const views = {
   home(){
     return {title:null, html:`
     <section class="hero">
-      <span class="tag">3ᵉ édition · Side event Sommet IA de Genève 2027</span>
-      <h2>Journées Camerounaises de l'Intelligence Artificielle</h2>
-      <p>« Penser l'IA <b>au Cameroun</b>, <b>pour le Cameroun</b> »</p>
-      <p style="margin-top:10px">📅 27 &amp; 28 avril 2027<br>📍 Hilton Hotel, Yaoundé</p>
-      <div class="countdown" id="cd" aria-label="Compte à rebours"></div>
+      <span class="chip">3ᵉ édition · Side event du Sommet IA de Genève 2027</span>
+      <h2>Journées Camerounaises de l'<span class="grad">Intelligence Artificielle</span> 2027</h2>
+      <p class="theme">Thème : « Penser l'intelligence artificielle <b style="color:#fff">au Cameroun</b>, <b style="color:#fff">pour le Cameroun</b> »</p>
+      <div class="hero-meta">
+        <p>📅 27 &amp; 28 avril 2027<br>📍 Hilton Hotel, Yaoundé</p>
+        <img class="map" src="assets/carte-cameroun.png" alt="" width="84" height="121">
+      </div>
+      <div class="countdown" id="cd" role="timer" aria-label="Compte à rebours avant l'ouverture"></div>
       <div class="btn-row">
-        <button class="btn yellow" data-go="tickets">Réserver ma place</button>
-        <button class="btn secondary" style="color:#fff;border-color:rgba(255,255,255,.4)" data-go="awards">Awards 2027</button>
+        <button class="btn" data-go="tickets">Réserver ma place</button>
+        <button class="btn secondary" data-go="awards">Awards 2027</button>
       </div>
     </section>
 
-    <h2>Chiffres attendus</h2>
+    <h2>Chiffres <span class="grad">attendus</span></h2>
     <div class="stats">
-      <div class="card"><b>7 000+</b><small>participants</small></div>
-      <div class="card"><b>150+</b><small>startups &amp; exposants</small></div>
-      <div class="card"><b>10</b><small>AI Awards</small></div>
+      <div class="card"><b>7 000+</b><small>participants attendus</small></div>
+      <div class="card"><b>5 000+</b><small>participants en ligne attendus</small></div>
+      <div class="card"><b>150+</b><small>startups et exposants attendus</small></div>
+      <div class="card"><b>80+</b><small>organisations représentées (visé)</small></div>
     </div>
 
-    <h2>Les 4 défis</h2>
-    ${[["Visibilité","Une vitrine : le Salon National 100 % IA"],["Financement","Un pont : Startup Pitch, investisseurs & sponsors"],["Structuration","Un outil : l'Annuaire national des acteurs de l'IA"],["Rayonnement","Un tremplin : side event de l'AI for Good Global Summit"]]
-      .map((c,i)=>`<div class="card row"><span class="pill green">0${i+1}</span><div class="grow"><h3>${c[0]}</h3><p class="muted">${c[1]}</p></div></div>`).join("")}
+    <h2>Quatre défis, <span class="grad">une ambition</span></h2>
+    ${[["Visibilité","Une vitrine : le Salon National 100 % IA"],["Financement","Un pont : Startup Pitch, investisseurs & sponsors"],["Structuration","Un outil : l'Annuaire national des acteurs de l'IA"],["Projection internationale","Une rampe : side event de l'AI for Good Global Summit"]]
+      .map((c,i)=>`<div class="card chal c${i+1}" data-n="0${i+1}"><span class="eyebrow">Le défi de la</span><h3>${c[0]}</h3><p class="muted">${c[1]}</p></div>`).join("")}
 
-    <h2>De Yaoundé à Genève</h2>
-    <div class="card"><p class="muted">Yaoundé 27–28 avril 2027 → Genève 21–22 juin 2027. Préparer la délégation, promouvoir les solutions, briller, investir, coopérer.</p></div>
+    <h2>De Yaoundé <span class="grad">à Genève</span></h2>
+    <div class="card"><p class="muted">Yaoundé, 27–28 avril 2027 → Genève, 21–22 juin 2027. Préparer la délégation, promouvoir les solutions, briller, investir, coopérer.</p></div>
 
-    <h2>Notre parcours</h2>
+    <h2>Notre <span class="grad">parcours</span></h2>
     <ul class="timeline">
       <li class="card"><span class="time">2023 · Décembre</span><h3>1ʳᵉ édition</h3><p class="muted">1 000+ participants · 17 intervenants · IRIC &amp; ENSPY</p></li>
       <li class="card"><span class="time">2025 · Avril</span><h3>2ᵉ édition</h3><p class="muted">5 000 participants + 2 000 en ligne · premiers AI Awards (53 projets)</p></li>
       <li class="card"><span class="time">2027 · 27–28 avril</span><h3>3ᵉ édition</h3><p class="muted">7 000+ attendus · lancement de l'Annuaire national</p></li>
     </ul>
 
-    <h2>Communauté Cameroon AI Network</h2>
+    <h2>La communauté <span class="grad">Cameroon AI Network</span></h2>
     <div class="card"><p class="muted">Forum WhatsApp quotidien, ouvert et gratuit : annonces, entraide, projets.</p>
       <div style="margin-top:10px"><a class="btn secondary" href="#" data-stub="Ouvre WhatsApp (lien du site d'origine)">Rejoindre la communauté</a></div></div>
     `, after(){ startCountdown(); }};
@@ -280,7 +304,7 @@ const views = {
     </ul>
     ${state.day===2?`<h2>Les 4 masterclasses · 09:00–12:00</h2>
       <p class="muted" style="margin-bottom:8px">3 h · exercices pratiques · certificat · places limitées</p>
-      ${MASTERCLASSES.map((m,i)=>`<div class="card"><span class="pill green">0${i+1}</span><h3 style="margin-top:6px">${m[0]}</h3><p class="muted">Public : ${m[1]}</p></div>`).join("")}`:""}
+      ${MASTERCLASSES.map((m,i)=>`<div class="card"><span class="pill orange">0${i+1}</span><h3 style="margin-top:6px">${m[0]}</h3><p class="muted">Public : ${m[1]}</p></div>`).join("")}`:""}
     <div class="row" style="margin-top:14px"><button class="btn secondary" data-stub="Télécharge un fichier .ics de l'événement">📆 Ajouter à mon calendrier</button></div>
     <p class="muted" style="margin-top:12px">Programme susceptible d'évoluer. Sessions en français et en anglais.</p>
     `};
@@ -309,16 +333,16 @@ const views = {
 
   tickets(){
     return {title:"Billetterie", html:`
-    <div class="notice">🎉 Offre de lancement : −30 % jusqu'au 31 décembre 2026.</div>
+    <div class="notice"><b>Offre de lancement −30 %</b> jusqu'au 31 décembre 2026.</div>
     ${TICKETS.map(t=>`
-    <div class="ticket card" style="padding:0;border-width:1px">
+    <div class="card" style="padding:0">
       <div style="padding:14px">
         <div class="row"><h3 class="grow">${t.name}</h3>${t.id==="online"?'<span class="pill">100 % en ligne</span>':'<span class="pill gray">Accès Hilton</span>'}</div>
         <p class="price">${t.old?`<s>${t.old.toLocaleString("fr-FR")}</s>`:""}${fcfa(t.price)}</p>
-        ${t.left!==null?`<p class="muted">${t.left} places sur ${t.total}</p><div class="bar"><i style="width:${Math.round(t.left/t.total*100)}%"></i></div>`:`<p class="muted">Sans limite</p>`}
+        <p class="muted">${t.limited?"Quota limité":"Sans limite"}</p>
         <ul class="muted" style="margin:10px 0 0 18px">${t.perks.map(p=>`<li>${p}</li>`).join("")}</ul>
         ${t.note?`<p class="muted" style="margin-top:8px"><i>${t.note}</i></p>`:""}
-        <button class="btn" style="margin-top:12px" data-buy="${t.id}">Choisir ce billet</button>
+        <button class="btn${t.id==='standard'?'':' secondary'}" style="margin-top:12px" data-buy="${t.id}">Choisir ce billet</button>
       </div></div>`).join("")}
     <div class="card"><h3>Groupes, entreprises, institutions</h3><p class="muted">Offre sur mesure et facturation au nom de votre organisation.</p>
       <div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">✉️ Demander</a><a class="btn secondary" href="tel:+237699089937">📞 Appeler</a></div></div>
@@ -328,13 +352,13 @@ const views = {
 
   register(){
     const r = state.reg, t = TICKETS.find(x=>x.id===r.ticket);
-    const steps = `<div class="steps">${[1,2,3,4].map(i=>`<i class="${i<=r.step?"on":""}"></i>`).join("")}</div>`;
+    const steps = `<div class="steps">${[1,2,3,4].map(i=>`<i class="${i<=r.step?"on":""}"></i>`).join("")}</div><p class="steps-l">Étape ${r.step} sur 4</p>`;
     let body = "";
-    if(r.step===1) body = `<h2>1 · Votre billet</h2>${TICKETS.map(x=>`
+    if(r.step===1) body = `<h2>Votre <span class="grad">billet</span></h2>${TICKETS.map(x=>`
       <button class="ticket" data-pick="${x.id}" aria-pressed="${x.id===r.ticket}">
-        <div class="row"><b class="grow">${x.name}</b><span class="price" style="font-size:16px">${fcfa(x.price)}</span></div></button>`).join("")}
+        <div class="row"><b class="grow">${x.name} <span class="sel">✓ Sélectionné</span></b><span class="price" style="font-size:16px">${fcfa(x.price)}</span></div></button>`).join("")}
       <p class="muted">Une inscription par participant.</p>`;
-    if(r.step===2) body = `<h2>2 · Vos informations</h2>
+    if(r.step===2) body = `<h2>Vos <span class="grad">informations</span></h2>
       <p class="muted">Elles composent votre visuel « I'll be there » et votre profil.</p>
       <label for="f1">Prénom *</label><input id="f1" type="text" value="${esc(r.first)}" autocomplete="given-name">
       <label for="f2">Nom *</label><input id="f2" type="text" value="${esc(r.last)}" autocomplete="family-name">
@@ -342,13 +366,13 @@ const views = {
       <label for="f4">Numéro WhatsApp * (6XX XX XX XX ou +44…)</label><input id="f4" type="tel" value="${esc(r.wa)}" autocomplete="tel">
       <label for="f5">Organisation *</label><input id="f5" type="text" value="${esc(r.org)}">
       <label for="f6">Rôle dans l'organisation *</label><input id="f6" type="text" value="${esc(r.role)}">`;
-    if(r.step===3) body = `<h2>3 · Votre photo</h2>
+    if(r.step===3) body = `<h2>Votre <span class="grad">photo</span></h2>
       <p class="muted">Elle apparaît sur votre visuel et votre profil. Recadrage en cercle avant utilisation.</p>
       <div class="card" style="text-align:center"><div class="avatar" style="width:96px;height:96px;margin:6px auto;font-size:28px">${initials((r.first+" "+r.last).trim()||"?")}</div>
       <button class="btn secondary" data-stub="Ouvre l'appareil photo ou la galerie (JPG, PNG, WebP)">📷 Ajouter ma photo</button></div>
       <div class="badge-vis"><b>I'LL BE THERE!</b><div class="circle">👤</div><b>${esc((r.first+" "+r.last).trim()||"Votre nom")}</b>
       <p style="font-size:13px">${esc(r.role||"Votre rôle")} · ${esc(r.org||"votre organisation")}</p><p style="font-size:13px;margin-top:6px">27 &amp; 28 AVRIL 2027 · #JCIA2027</p></div>`;
-    if(r.step===4) body = `<h2>4 · Confirmation</h2>
+    if(r.step===4) body = `<h2><span class="grad">Confirmation</span></h2>
       <div class="card"><div class="row"><b class="grow">${t.name}</b><b>${fcfa(t.price)}</b></div></div>
       ${t.price>0?`<label>Moyen de paiement</label>
         <select id="pay"><option value="momo" ${r.pay==="momo"?"selected":""}>MTN / Orange Mobile Money</option><option value="card" ${r.pay==="card"?"selected":""}>Carte bancaire / PayPal</option></select>
@@ -366,15 +390,16 @@ const views = {
     const r = state.reg, t = TICKETS.find(x=>x.id===r.ticket);
     return {title:"Mon billet", html:`
     <div class="notice">Maquette : ce billet est fictif, aucun paiement ni e-mail n'a eu lieu.</div>
+    <h2>Bonjour ${esc(r.first.trim()||"Alex")}, <span class="grad">à bientôt à Yaoundé</span></h2>
     <div class="card" style="text-align:center">
-      <span class="pill green">${t.name}</span>
-      <h2 style="margin:10px 0 0">${esc((r.first+" "+r.last).trim()||"Participant Exemple")}</h2>
+      <span class="pill orange">${t.name}</span>
+      <h3 style="margin:10px 0 0;font-size:19px">${esc((r.first+" "+r.last).trim()||"Participant Exemple")}</h3>
       <p class="muted">${esc(r.role||"Rôle")} · ${esc(r.org||"Organisation")}</p>
       <div class="qr" role="img" aria-label="QR code fictif"></div>
       <p class="muted">27 &amp; 28 avril 2027 · Hilton Hotel, Yaoundé<br>Pièce d'identité possible à l'entrée.</p>
     </div>
     <div class="badge-vis"><b>I'LL BE THERE!</b><div class="circle">👤</div><b>${esc((r.first+" "+r.last).trim()||"Participant Exemple")}</b><p style="font-size:13px;margin-top:6px">#JCIA2027</p></div>
-    <div class="btn-row"><button class="btn secondary" data-stub="Partager le visuel (Web Share)">📤 Partager</button><button class="btn" data-go="home">Accueil</button></div>
+    <div class="btn-row"><button class="btn" data-stub="Partager le visuel (Web Share)">Partager</button><button class="btn secondary" data-go="home">Accueil</button></div>
     `};
   },
 
@@ -391,9 +416,9 @@ const views = {
   salon(){
     return {title:"Salon 100 % IA", back:"more", html:`
     <p class="muted">Le plus grand salon camerounais exclusivement dédié à l'IA, ouvert par des membres du Gouvernement, sur les deux jours au Hilton.</p>
-    <div class="stats" style="margin:14px 0"><div class="card"><b>150+</b><small>exposants</small></div><div class="card"><b>200</b><small>solutions</small></div><div class="card"><b>100+</b><small>journalistes</small></div></div>
+    <div class="stats three" style="margin:14px 0"><div class="card"><b>150+</b><small>exposants attendus</small></div><div class="card"><b>200</b><small>solutions présentées</small></div><div class="card"><b>100+</b><small>journalistes accrédités</small></div></div>
     ${[["Démos en continu","Créneaux sur la scène du Salon, diffusés sur écrans et en ligne."],["Networking structuré","Application de matchmaking pour planifier vos rendez-vous."],["Rencontres B2B","Espaces dédiés startups, entreprises, investisseurs."],["Rencontres B2G","Mettre en relation solutions camerounaises et commande publique."]]
-      .map((x,i)=>`<div class="card row"><span class="pill green">0${i+1}</span><div class="grow"><h3>${x[0]}</h3><p class="muted">${x[1]}</p></div></div>`).join("")}
+      .map((x,i)=>`<div class="card row"><span class="pill orange">0${i+1}</span><div class="grow"><h3>${x[0]}</h3><p class="muted">${x[1]}</p></div></div>`).join("")}
     <h2>Qui expose ?</h2>
     <p class="muted">Startups · entreprises tech · laboratoires · administrations · universités · incubateurs · diaspora · institutions financières</p>
     <h2>Réserver un stand en 4 étapes</h2>
@@ -405,10 +430,10 @@ const views = {
 
   awards(){
     return {title:"Cameroon AI Awards", back:"more", html:`
-    <div class="hero" style="padding:16px"><span class="tag">Appel à candidatures · gratuit</span>
-      <h2 style="font-size:19px">Du 15 novembre 2026 au 28 février 2027, 23:59</h2>
+    <div class="hero" style="padding:16px"><span class="chip">Appel à candidatures · gratuit</span>
+      <h2 style="font-size:19px;margin-top:12px">Du 15 novembre 2026 au <span class="grad">28 février 2027</span>, 23:59</h2>
       <p>Sous le patronage de l'UNESCO (Bureau régional Afrique centrale) et du Haut-commissariat britannique.</p></div>
-    <div class="stats" style="margin-top:12px"><div class="card"><b>10</b><small>prix</small></div><div class="card"><b>50</b><small>présélectionnés</small></div><div class="card"><b>300</b><small>candidatures visées</small></div></div>
+    <div class="stats three" style="margin-top:12px"><div class="card"><b>10</b><small>prix</small></div><div class="card"><b>50</b><small>présélectionnés</small></div><div class="card"><b>300</b><small>candidatures visées</small></div></div>
     <div class="btn-row"><button class="btn" data-stub="Ouvre le formulaire de candidature (Google Forms sur le site d'origine)">Candidater</button><button class="btn secondary" data-stub="Ouvre le PDF des termes de référence">Termes (PDF)</button></div>
     <h2>Dix catégories</h2>
     ${AWARDS.map((a,i)=>`<div class="card row"><span class="pill gray">${String(i+1).padStart(2,"0")}</span><b class="grow">${a}</b></div>`).join("")}
@@ -416,7 +441,7 @@ const views = {
     <ul class="timeline">${AWARD_TL.map(x=>`<li class="card"><span class="time">${x[0]}</span><p>${x[1]}</p></li>`).join("")}</ul>
     <h2>Notation finale</h2>
     <div class="card"><div class="row"><b class="grow">Jury d'experts</b><b>60 %</b></div><div class="bar"><i style="width:60%"></i></div>
-      <div class="row" style="margin-top:10px"><b class="grow">Vote du public</b><b>40 %</b></div><div class="bar"><i style="width:40%;background:var(--yellow)"></i></div></div>
+      <div class="row" style="margin-top:10px"><b class="grow">Vote du public</b><b>40 %</b></div><div class="bar"><i class="t" style="width:40%"></i></div></div>
     <details><summary>Critères du jury</summary><p>Pertinence et impact 25 % · Innovation et qualité technique 25 % · Maturité et faisabilité 20 % · Éthique et responsabilité 15 % · Équipe et potentiel 10 % · Qualité du dossier 5 %.</p></details>
     <details><summary>Qui peut candidater ?</summary><p>Ressortissants camerounais (au pays ou en diaspora), 18 ans révolus, à titre individuel ou en équipe (porteur camerounais).</p></details>
     <details><summary>Pièces à fournir</summary><p>CV (PDF) · photo du porteur · logo du projet · pièce d'identité (PDF) · lien vers une vidéo de pitch (3 min max) · fiche technique (PDF, 2 pages max).</p></details>
@@ -441,7 +466,7 @@ const views = {
   participants(){
     return {title:"Participants", back:"more", html:`
     <div class="notice">Exemples fictifs. Dans l'app réelle, seules les personnes ayant coché « apparaître dans la liste publique » seront affichées (jamais e-mail ni WhatsApp).</div>
-    ${ATTENDEES.map(a=>`<div class="card row"><div class="avatar">${initials(a[0])}</div><div class="grow"><h3>${a[0]}</h3><p class="muted">${a[1]}</p></div><span class="pill ${a[3]==="VIP"?"yellow":"gray"}">${a[3]}</span></div>`).join("")}
+    ${ATTENDEES.map(a=>`<div class="card row"><div class="avatar">${initials(a[0])}</div><div class="grow"><h3>${a[0]}</h3><p class="muted">${a[1]}</p></div><span class="pill ${a[3]==="VIP"?"orange":"gray"}">${a[3]}</span></div>`).join("")}
     <button class="btn" data-go="tickets">Rejoignez-les</button>
     `};
   },
@@ -484,9 +509,10 @@ const views = {
     <h2>Le secrétariat</h2>
     <div class="card stack">
       <a href="mailto:contact@jciacm.com">✉️ contact@jciacm.com</a>
-      <a href="tel:+237699089937">📞 +237 699 089 937</a>
+      <a href="tel:+237699089937">📞 +237 699 089 937 (WhatsApp)</a>
       <a href="tel:+237677238022">📞 +237 677 238 022</a>
-      <p class="muted">Rue Félicia Hôtel, Coron Yaoundé, Dangote Building, 2ᵉ étage</p>
+      <a href="tel:+237222306079">📞 +237 222 306 079</a>
+      <p class="muted">Rond-point Cami-Toyota, Coron, Immeuble Dangote, 2ᵉ étage, Yaoundé</p>
     </div>
     <h2>L'organisateur</h2>
     <p class="muted">IAC – CAIPI : association à but non lucratif fondée le 6 octobre 2023 à Yaoundé. Think tank et plateforme de dialogue multi-acteurs.</p>
@@ -519,8 +545,8 @@ function render(name){
   const v = views[name]();
   const top = $("#topbar");
   top.innerHTML = v.title === null
-    ? `<span class="logo">JCIA <b>2027</b></span><h1></h1>`
-    : `${v.back?`<button class="back" data-go="${v.back}" aria-label="Retour">←</button>`:""}<h1>${v.title}</h1><span class="logo" style="font-size:13px">JCIA <b>2027</b></span>`;
+    ? `<img class="logo-img" src="assets/logo-jcia.png" alt="JCIA — Journées Camerounaises de l'Intelligence Artificielle, Hilton Yaoundé, 27 et 28 avril 2027" width="150" height="65">`
+    : `${v.back?`<button class="back" data-go="${v.back}" aria-label="Retour">←</button>`:""}<h1>${v.title}</h1><span class="mini">JCIA <b>2027</b></span>`;
   $("#view").innerHTML = v.html;
   $("#view").scrollTop = 0;
   const activeTab = ["register","confirmed"].includes(name) ? "tickets" : (TABS.find(t=>t[0]===name) ? name : "more");

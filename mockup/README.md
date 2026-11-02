@@ -1,8 +1,8 @@
 # JCIA 2027 — Maquette de l'application mobile
 
 Maquette cliquable de l'app compagnon du site <https://jciacm.com/>.
-Elle reproduit les pages et parcours **visibles publiquement** sur le site. Elle ne contient
-aucun code, aucune clé et aucune donnée privée du site d'origine.
+Elle reproduit les pages et parcours **visibles publiquement** sur le site et applique la charte graphique JCIA 2027.
+Elle ne contient aucun code, aucune clé et aucune donnée privée du site d'origine.
 
 ## Lancer
 
@@ -19,11 +19,35 @@ Sur ordinateur, l'app s'affiche dans un cadre de téléphone ; sur mobile, en pl
 | Billets | 5 billets → inscription en 4 étapes → billet (QR fictif) + visuel « I'll be there » |
 | Plus | Salon 100 % IA, Awards, Annuaire, Participants, Partenaires, FAQ, Contact |
 
+## Charte graphique appliquée (v1.0, octobre 2026)
+
+| Règle de la charte | Dans la maquette |
+|---|---|
+| Fond nuit `#0E1326`, orange `#F6A343` réservé aux actions et chiffres clés | Variables CSS `:root` en tête de `index.html` |
+| Police **Sora** (repli Arial) | Chargée depuis Google Fonts : **à héberger soi-même** en production (confidentialité, hors-ligne) |
+| 4 défis = 4 couleurs (orange, turquoise, terracotta, violet), cartes à rayon 22 px, filet de 5 px, numéro en filigrane | Classes `.chal .c1…c4` |
+| Bouton pilule dégradé, 44 px mini, **un seul bouton plein par écran** | Classe `.btn` (plein) / `.btn.secondary` (contour) |
+| Bande toghu sous l'en-tête | `assets/bande-toghu.png` |
+| Carte du Cameroun : une fois par page, jamais derrière un paragraphe | Accueil uniquement, à droite des dates |
+| Écriture : vouvoiement, « visés / attendus », pas de places restantes garanties, pas de code PIN | Appliquée aux textes |
+| Contraste 4,5:1, jamais l'état par la seule couleur | Onglet actif : couleur + barre ; billet choisi : bordure + « ✓ Sélectionné » |
+
+Les trois visuels de `assets/` ont été **extraits du PDF de la charte** : le logo est en 600 px (flou à grande taille).
+Demander à l'organisateur le logo en **SVG/PNG haute définition**, la carte et la bande en vectoriel.
+
 ## Ce qui est volontairement factice
 
 - Participants, billet, QR code, paiement : **données fictives**, rien n'est envoyé ni stocké.
 - Les boutons marqués « Maquette — … » indiquent une action à brancher (calendrier .ics, WhatsApp, formulaire de candidature, upload photo, PDF).
-- Les photos et logos du site ne sont pas copiés (avatars à initiales). Les droits des visuels appartiennent à l'organisateur.
+- Photos des intervenants et logos des partenaires : non copiés (avatars à initiales). Les droits appartiennent à l'organisateur.
+
+## Points à trancher avec l'organisateur
+
+- **Adresse du secrétariat** : le site indique « Rue Félicia Hôtel, Coron… », la charte « Rond-point Cami-Toyota, Coron… ». La maquette suit la charte.
+- **Téléphones** : la charte autorise 3 numéros (dont +237 222 306 079, absent du site).
+- **Intervenants visés** : « 80+ » (page 5 de la charte) contre « 40+ » (page 7 et site). La maquette n'affiche pas ce chiffre.
+- **Domaine** : jciacm.com ou jcia.cm (ouvert dans la charte, page 10).
+- **Offre −30 %** : fin au 31 décembre 2026, à confirmer.
 
 ## Pistes pour la vraie app (à valider par l'équipe)
 
