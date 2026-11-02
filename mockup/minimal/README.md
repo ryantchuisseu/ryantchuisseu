@@ -39,6 +39,19 @@ de grands titres, des gestes simples. La maquette complète précédente reste d
 
 **Limites** : l'export du visuel ne fonctionne pas depuis `index.html` ouvert en local (sécurité du navigateur) : utiliser les fichiers de `dist/` ou un petit serveur. Le partage natif dépend du téléphone (sinon, téléchargement). L'inclinaison au gyroscope demande une autorisation sur iPhone (au premier toucher du billet).
 
+## Parcours simplifiés (principes de psychologie appliqués honnêtement)
+
+| Principe | Ce qui a été fait |
+|---|---|
+| Choix par défaut | Billet **Standard** présélectionné, **+237** déjà saisi dans le champ WhatsApp, Mobile Money par défaut |
+| Boutons explicites | « Continuer avec Standard · 7 000 FCFA », « Continuer vers le paiement », « Confirmer mon billet gratuit », « Demander 15:20 avec … », « Voter pour le projet B », « Voir mes 6 sessions suggérées » |
+| Ne pas partir de zéro | Choisir ses thèmes est une **vraie** étape de la préparation (1/5 dès l'accueil terminé). Aucun faux progrès |
+| Donner avant de demander | Tout est utilisable sans compte ; les informations ne sont demandées qu'au moment du billet |
+| Ce que l'on a construit | À l'étape 2 du billet : « Votre programme (3 sessions) et vos thèmes seront rattachés à votre billet » |
+| Prix en contexte | Prix barrés de la vraie offre −30 % et **prix par jour** pour les billets de 2 jours |
+
+Volontairement **non appliqués** : culpabilisation au refus (« Je prends le risque »), faux prix de référence ou offre leurre, barre de progression préremplie sans action réelle, et tout ce qui rend le départ coûteux.
+
 ## Habillage « Léger » (inspiré d'Atoms)
 
 Même application, même code (`app.js`), avec une feuille de style en plus : `leger.css`, active seulement si `<html data-skin="leger">` (`?skin=leger`).

@@ -157,7 +157,7 @@ const defaults = () => ({ onboarded:false, ticket:null, fav:[], req:[], votes:{}
 let D = defaults();
 try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if(s && typeof s === "object") D = Object.assign(defaults(), s); } catch(e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(D)); } catch(e) {} };
-const S = { day:1, onlyFav:false, flow:{ step:1, id:"standard", first:"", last:"", email:"", wa:"", org:"", role:"", pay:"momo", terms:false }, mm:"sugg", plan:{ sel:null, cat:null }, vote:{ cat:0, pending:null }, bought:false };
+const S = { day:1, onlyFav:false, flow:{ step:1, id:"standard", first:"", last:"", email:"", wa:"+237 ", org:"", role:"", pay:"momo", terms:false }, mm:"sugg", plan:{ sel:null, cat:null }, vote:{ cat:0, pending:null }, bought:false };
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
@@ -289,6 +289,7 @@ const MM_TOPIC = { m1:"Santé", m2:"Fintech", m3:"Administration", m4:"Agricultu
 /* ---------- Préparation : une checklist FINIE (elle se termine et se tait) ---------- */
 function prep(){
   const steps = [
+    { id:"themes", done:!!(D.interests.length || D.profile), label:"Choisir mes thèmes", go:"prefs", ico:"sparkles" },
     { id:"ticket", done:!!D.ticket,           label:"Réserver mon billet",              go:"ticket",  ico:"ticket" },
     { id:"visual", done:!!D.visual,           label:"Créer mon visuel « Je serai là »", go:"badge",   ico:"camera" },
     { id:"fav",    done:D.fav.length >= 3,    label:"Choisir 3 sessions",               go:"program", ico:"star", extra:`${Math.min(3, D.fav.length)}/3` },
@@ -463,7 +464,7 @@ V.home = () => {
   const fy = SESSIONS.filter(s => forYou(s) && !D.fav.includes(s.id)).slice(0, 4);
   const foryou = (D.interests.length || D.profile)
     ? (fy.length ? `<h2>Pour vous</h2><div class="chips">${fy.map(s => `<div class="fycard"><span class="stag">${s.day === 1 ? "Mar. 27" : "Mer. 28"} · ${s.time.split(" – ")[0]}</span><b>${s.title}</b>
-        <button class="chipbtn" data-fav="${s.id}" aria-pressed="false" aria-label="Ajouter aux favoris : ${esc(s.title)}">${ic("star", 20)} Ajouter</button></div>`).join("")}</div>` : "")
+        <button class="chipbtn" data-fav="${s.id}" aria-pressed="false" aria-label="Ajouter aux favoris : ${esc(s.title)}">${ic("star", 20)} Ajouter</button></div>`).join("")}</div>` : "") + `<button class="btn alt" data-foryou>Voir mes ${SESSIONS.filter(forYou).length} sessions pour vous</button>`
     : `<button class="card feature" data-prefs>${ic("sparkles", 46)}<span class="grow"><b>Personnalisez votre programme</b><p>Choisissez vos thèmes : nous vous suggérons les bonnes sessions.</p></span>${flat("chevron", 20)}</button>`;
   return { home:true, html:`
     ${t ? `<p class="hello">Bonjour <span class="grad">${esc(t.first)}</span>,<br><span class="muted">bienvenue aux JCIA 2027.</span></p>` : ""}
@@ -483,7 +484,8 @@ V.home = () => {
 
 V.program = () => {
   const mine = SESSIONS.filter(s => D.fav.includes(s.id)), li = liveInfo();
-  const L = SESSIONS.filter(s => s.day === S.day && (!S.onlyFav || D.fav.includes(s.id)));
+  const L = SESSIONS.filter(s => s.day === S.day && (!S.onlyFav || D.fav.includes(s.id)) && (!S.onlyFy || forYou(s)));
+  const nfy = SESSIONS.filter(forYou).length;
   const rows = L.map(s => {
     const on = D.fav.includes(s.id), [a, b] = s.time.split(" – "), clash = on ? mine.filter(o => overlap(s, o)) : [];
     const now = li && li.c.day === s.day && li.cur.includes(s);
@@ -494,8 +496,8 @@ V.program = () => {
   }).join("");
   return { title:"Programme", html:`
     <div class="seg" role="group" aria-label="Jour"><button data-day="1" aria-pressed="${S.day === 1}">Mardi 27</button><button data-day="2" aria-pressed="${S.day === 2}">Mercredi 28</button></div>
-    <button class="chipbtn" data-onlyfav aria-pressed="${S.onlyFav}">${ic("star", 20)} Mes favoris${mine.length ? ` (${mine.length})` : ""}</button>
-    <div style="margin-top:8px">${rows || `<div class="card empty">${ic("star", 56)}<h3>Aucun favori ce jour-là</h3><p>Touchez l'étoile d'une session pour la retrouver ici.</p><button class="btn alt" data-onlyfav-off>Voir tout le programme</button></div>`}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap"><button class="chipbtn" data-onlyfav aria-pressed="${S.onlyFav}">${ic("star", 20)} Mes favoris${mine.length ? ` (${mine.length})` : ""}</button>${nfy ? `<button class="chipbtn" data-onlyfy aria-pressed="${!!S.onlyFy}">${ic("sparkles", 20)} Pour vous (${nfy})</button>` : ""}</div>
+    <div style="margin-top:8px">${rows || `<div class="card empty">${ic("star", 56)}<h3>${S.onlyFy && !S.onlyFav ? "Aucune suggestion ce jour-là" : "Aucun favori ce jour-là"}</h3><p>${S.onlyFy && !S.onlyFav ? "Regardez l'autre jour, ou affichez tout le programme." : "Touchez l'étoile d'une session pour la retrouver ici."}</p><button class="btn alt" data-onlyfav-off>Voir tout le programme</button></div>`}</div>
     ${mine.length ? `<button class="card switch" role="switch" aria-checked="${D.remind}" data-switch="remind" style="margin-top:14px"><span class="trk"></span><span class="grow"><b>Me prévenir 15 min avant</b><br><span class="muted">Pour vos sessions favorites</span></span></button>
       <button class="btn alt" data-ics>${flat("calendar", 20)} Ajouter mes favoris à mon calendrier</button>` : ""}`,
     after(){ const n = $(".srow.now"); if(n) n.scrollIntoView({ block:"center" }); } };
@@ -503,6 +505,14 @@ V.program = () => {
 
 /* Billet : choix → informations → paiement → billet */
 V.ticket = () => D.ticket ? passView() : flowView();
+function carryNote(){
+  const n = D.fav.length, th = D.interests, items = [];
+  if(n) items.push(`votre programme (${n} session${n > 1 ? "s" : ""})`);
+  if(th.length) items.push(`vos thèmes (${th.join(", ")})`);
+  if(!items.length) return "";
+  const txt = items.join(" et ");
+  return `<div class="hi" style="margin-bottom:16px">${ic("sparkles", 30)}<span>${txt.charAt(0).toUpperCase() + txt.slice(1)} ${items.length > 1 || !n ? "seront rattachés" : "sera rattaché"} à votre billet.</span></div>`;
+}
 function flowView(){
   const f = S.flow, t = TICKETS.find(x => x.id === f.id), n = f.step;
   const bar = `<div class="steps" aria-hidden="true">${[1,2,3].map(i => `<i class="${i <= n ? "on" : ""}"></i>`).join("")}</div><p class="stepl">Étape ${n} sur 3</p>`;
@@ -511,15 +521,15 @@ function flowView(){
     title = "Choisissez votre billet";
     body = `<p class="note">Offre de lancement −30 % jusqu'au 31 décembre 2026</p>` + TICKETS.map(x => `
       <button class="opt" data-pick="${x.id}" aria-pressed="${x.id === f.id}"><span class="radio">${flat("check", 14)}</span>
-        <span class="grow"><b>${x.name}</b>${x.reco ? `<span class="reco">Recommandé</span>` : ""}<br><span class="muted">${x.sub}</span></span>
+        <span class="grow"><b>${x.name}</b>${x.reco ? `<span class="reco">Recommandé</span>` : ""}<br><span class="muted">${x.sub}</span>${x.price ? `<br><span class="muted">soit ${(x.price / 2).toLocaleString("fr-FR")} F par jour</span>` : ""}</span>
         <span class="price">${x.old ? `<s>${x.old.toLocaleString("fr-FR")}</s>` : ""}${x.price ? x.price.toLocaleString("fr-FR") + " F" : "Gratuit"}</span></button>`).join("");
-    cta = `<button class="btn" data-step="1">Continuer</button>`;
+    cta = `<button class="btn" data-step="1">Continuer avec ${t.name} · ${fcfa(t.price)}</button>`;
   } else if(n === 2){
     title = "Vos informations";
     const fld = (id, lab, type, val, ac) => `<label for="${id}">${lab}</label><input id="${id}" type="${type}" value="${esc(val)}" autocomplete="${ac}">`;
-    body = `<p class="muted" style="margin-top:-8px">Elles figurent sur votre billet.</p>` + fld("f1","Prénom","text",f.first,"given-name") + fld("f2","Nom","text",f.last,"family-name") + fld("f3","E-mail","email",f.email,"email")
+    body = carryNote() + `<p class="muted" style="margin-top:-8px">Elles figurent sur votre billet.</p>` + fld("f1","Prénom","text",f.first,"given-name") + fld("f2","Nom","text",f.last,"family-name") + fld("f3","E-mail","email",f.email,"email")
       + fld("f4","WhatsApp (6XX XX XX XX ou +44…)","tel",f.wa,"tel") + fld("f5","Organisation","text",f.org,"organization") + fld("f6","Rôle","text",f.role,"organization-title");
-    cta = `<button class="btn" data-step="1">Continuer</button><button class="btn alt" data-step="-1">Retour</button>`;
+    cta = `<button class="btn" data-step="1">${t.price ? "Continuer vers le paiement" : "Continuer vers la confirmation"}</button><button class="btn alt" data-step="-1">Retour</button>`;
   } else {
     title = t.price ? "Paiement" : "Confirmation";
     body = `<div class="card row">${ic("ticket", 44)}<span class="grow"><b>Billet ${t.name}</b><br><span class="muted">${esc(f.first)} ${esc(f.last)}</span></span><b>${fcfa(t.price)}</b></div>
@@ -527,7 +537,7 @@ function flowView(){
         <button class="opt" data-pay="momo" aria-pressed="${f.pay === "momo"}"><span class="radio">${flat("check", 14)}</span>${ic("mobile", 34)}<span class="grow"><b>Mobile Money</b><br><span class="muted">MTN ou Orange · approbation sur votre téléphone</span></span></button>
         <button class="opt" data-pay="card" aria-pressed="${f.pay === "card"}"><span class="radio">${flat("check", 14)}</span>${ic("card", 34)}<span class="grow"><b>Carte ou PayPal</b><br><span class="muted">Page de paiement sécurisée</span></span></button>` : ""}
       <label class="check"><input type="checkbox" id="c1" ${f.terms ? "checked" : ""}><span>J'accepte les conditions d'utilisation et la politique de confidentialité.</span></label>`;
-    cta = `<button class="btn" id="go" data-step="1" ${f.terms ? "" : "disabled"}>${t.price ? "Payer " + fcfa(t.price) : "Confirmer"}</button><button class="btn alt" data-step="-1">Retour</button>`;
+    cta = `<button class="btn" id="go" data-step="1" ${f.terms ? "" : "disabled"}>${t.price ? "Payer " + fcfa(t.price) : "Confirmer mon billet gratuit"}</button><button class="btn alt" data-step="-1">Retour</button>`;
   }
   return { title, html: bar + body + `<div class="cta">${cta}</div>`, after(){ bindFlow(); } };
 }
@@ -736,13 +746,13 @@ function toast(msg, ico = "check"){
 
 /* ---------- Actions ---------- */
 document.addEventListener("click", e => {
-  const a = e.target.closest("[data-go],[data-day],[data-fav],[data-onlyfav],[data-onlyfav-off],[data-switch],[data-pick],[data-pay],[data-step],[data-mm],[data-req],[data-slot],[data-send],[data-cancel],[data-zone],[data-plancat],[data-votecat],[data-vote],[data-voteok],[data-close],[data-notif],[data-readall],[data-th],[data-icons],[data-reset],[data-stub],[data-ob],[data-search],[data-searchclose],[data-sres],[data-scan],[data-scanclose],[data-prefs],[data-prep],[data-where],[data-sim],[data-ics],[data-ics-event],[data-bshare],[data-bdl],[data-int],[data-prof]");
+  const a = e.target.closest("[data-go],[data-day],[data-fav],[data-onlyfav],[data-onlyfav-off],[data-switch],[data-pick],[data-pay],[data-step],[data-mm],[data-req],[data-slot],[data-send],[data-cancel],[data-zone],[data-plancat],[data-votecat],[data-vote],[data-voteok],[data-close],[data-notif],[data-readall],[data-th],[data-icons],[data-reset],[data-stub],[data-ob],[data-search],[data-searchclose],[data-sres],[data-scan],[data-scanclose],[data-prefs],[data-prep],[data-where],[data-sim],[data-ics],[data-ics-event],[data-bshare],[data-bdl],[data-int],[data-prof],[data-foryou],[data-onlyfy]");
   if(!a) return; const d = a.dataset;
 
   if(d.stub){ e.preventDefault(); toast("Maquette — " + d.stub, "bulb"); return; }
   if(d.ob !== undefined) return obAction(d.ob);
-  if(d.int){ const L = S.pick.interests, i = L.indexOf(d.int); if(i < 0 && L.length >= 4) return toast("4 thèmes au maximum", "warning"); i < 0 ? L.push(d.int) : L.splice(i, 1); a.setAttribute("aria-pressed", String(i < 0)); return buzz(6); }
-  if(d.prof){ S.pick.profile = S.pick.profile === d.prof ? null : d.prof; document.querySelectorAll("[data-prof]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.prof === S.pick.profile))); return buzz(6); }
+  if(d.int){ const L = S.pick.interests, i = L.indexOf(d.int); if(i < 0 && L.length >= 4) return toast("4 thèmes au maximum", "warning"); i < 0 ? L.push(d.int) : L.splice(i, 1); a.setAttribute("aria-pressed", String(i < 0)); refreshObCta(); return buzz(6); }
+  if(d.prof){ S.pick.profile = S.pick.profile === d.prof ? null : d.prof; document.querySelectorAll("[data-prof]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.prof === S.pick.profile))); refreshObCta(); return buzz(6); }
   if("search" in d) return openSearch();
   if("searchclose" in d) return closeSearch();
   if(d.sres !== undefined){ const it = $("#search")._idx[+d.sres]; closeSearch(); if(it.go === "program"){ S.day = it.arg; S.onlyFav = false; } if(it.go === "speakers") S.q = it.arg; return render(it.go); }
@@ -759,7 +769,9 @@ document.addEventListener("click", e => {
   if(d.go){ if(d.go === "ticket") S.bought = false; return render(d.go); }
   if(d.day){ S.day = +d.day; return render("program", again); }
   if("onlyfav" in d){ S.onlyFav = !S.onlyFav; return render("program", again); }
-  if("onlyfavOff" in d){ S.onlyFav = false; return render("program", again); }
+  if("onlyfavOff" in d){ S.onlyFav = false; S.onlyFy = false; return render("program", again); }
+  if("onlyfy" in d){ S.onlyFy = !S.onlyFy; return render("program", again); }
+  if("foryou" in d){ const first = SESSIONS.find(forYou); S.onlyFy = true; S.onlyFav = false; if(first) S.day = first.day; return render("program"); }
   if(d.fav){
     const i = D.fav.indexOf(d.fav), add = i < 0; add ? D.fav.push(d.fav) : D.fav.splice(i, 1); save();
     if(add){ burstAt(a); buzz(); }
@@ -776,6 +788,7 @@ document.addEventListener("click", e => {
     if(dir < 0){ f.step = Math.max(1, f.step - 1); return render("ticket", { anim:false }); }
     if(f.step === 2){
       if(![f.first, f.last, f.email, f.wa, f.org, f.role].every(v => v.trim())) return toast("Merci de remplir tous les champs.", "warning");
+      if(f.wa.replace(/\D/g, "").length < 9) return toast("Numéro WhatsApp incomplet.", "warning");
       if(!/^\S+@\S+\.\S+$/.test(f.email)) return toast("Adresse e-mail invalide.", "warning");
     }
     if(f.step === 3){ const t = TICKETS.find(x => x.id === f.id); if(t.price) return render("pay"); return createTicket(); }
@@ -787,9 +800,9 @@ document.addEventListener("click", e => {
     const p = MM.find(x => x.id === d.req), taken = D.req.map(r => r.slot); S.mmPid = p.id; S.mmSlot = null;
     return openSheet(`<h3>Rendez-vous avec ${esc(p.name)}</h3><p class="muted" style="margin-top:6px">20 minutes · Espace B2B / B2G, mardi 27 avril. Les créneaux du mercredi seront communiqués ultérieurement.</p>
       <div class="slots">${SLOTS.map(t => `<button class="chipbtn" data-slot="${t}" aria-pressed="false" ${taken.includes(t) ? "disabled" : ""}>${t}</button>`).join("")}</div>
-      <div class="stack" style="margin-top:22px"><button class="btn" id="sendbtn" data-send disabled>Envoyer la demande</button><button class="btn alt" data-close>Annuler</button></div>`);
+      <div class="stack" style="margin-top:22px"><button class="btn" id="sendbtn" data-send disabled>Choisissez un créneau</button><button class="btn alt" data-close>Annuler</button></div>`);
   }
-  if(d.slot){ S.mmSlot = d.slot; sheetNodes[1].querySelectorAll("[data-slot]").forEach(b => b.setAttribute("aria-pressed", String(b === a))); $("#sendbtn").disabled = false; return; }
+  if(d.slot){ S.mmSlot = d.slot; sheetNodes[1].querySelectorAll("[data-slot]").forEach(b => b.setAttribute("aria-pressed", String(b === a))); const sb = $("#sendbtn"); sb.disabled = false; sb.textContent = `Demander ${d.slot} avec ${MM.find(x => x.id === S.mmPid).name}`; return; }
   if("send" in d){
     const r = { id:"r" + Date.now(), pid:S.mmPid, slot:S.mmSlot, status:"wait" }; D.req.push(r); save(); closeSheet(true); scheduleConfirm(r);
     S.mm = "mine"; render("meet", { anim:false }); toast("Demande envoyée", "handshake"); return checkPrep();
@@ -803,7 +816,7 @@ document.addEventListener("click", e => {
   if(d.vote){
     const [c, l] = d.vote.split("-"); S.vote.pending = d.vote;
     return openSheet(`<h3>Confirmer votre vote ?</h3><p class="muted" style="margin:6px 0 22px">Catégorie « ${esc(SHORT[+c])} » · Projet exemple ${esc(l)}. Modifiable jusqu'à la clôture (règle à confirmer).</p>
-      <div class="stack"><button class="btn" data-voteok>Confirmer</button><button class="btn alt" data-close>Annuler</button></div>`);
+      <div class="stack"><button class="btn" data-voteok>Voter pour le projet ${esc(l)}</button><button class="btn alt" data-close>Annuler</button></div>`);
   }
   if("voteok" in d){ D.votes[+S.vote.pending.split("-")[0]] = S.vote.pending; save(); closeSheet(true); render("vote", again); burst({ y:.5, n:40, power:.7 }); buzz([10, 30, 10]); return toast("Vote enregistré", "heart"); }
   if("close" in d) return closeSheet();
@@ -812,7 +825,7 @@ document.addEventListener("click", e => {
   if("readall" in d){ D.notifs.forEach(n => n.read = true); save(); return render("notifs", again); }
   if(d.th){ D.theme = d.th; save(); applyTheme(); return render(current, again); }
   if(d.icons){ const u = new URL(location.href); u.searchParams.set("icons", d.icons); u.hash = "#explore"; location.href = u.toString(); return; }
-  if("reset" in d){ S.photo = null; D = defaults(); save(); applyTheme(); S.flow = { step:1, id:"standard", first:"", last:"", email:"", wa:"", org:"", role:"", pay:"momo", terms:false }; render(current, again); return toast("Démonstration réinitialisée", "check"); }
+  if("reset" in d){ S.photo = null; D = defaults(); save(); applyTheme(); S.flow = { step:1, id:"standard", first:"", last:"", email:"", wa:"+237 ", org:"", role:"", pay:"momo", terms:false }; render(current, again); return toast("Démonstration réinitialisée", "check"); }
 });
 document.addEventListener("keydown", e => {
   if(e.key === "Escape"){ closeSheet(); closeScan(); closeSearch(); }
@@ -850,8 +863,13 @@ function drawOb(){
   el.innerHTML = `<button class="ob-skip" data-ob="skip">${obOnly ? "Fermer" : "Passer"}</button>
     <div class="ob-top"><span class="blob b2"></span><span class="blob b1"></span>${s.ico.map((n, i) => `<span class="ob-ico ${pos[i]} ${f ? "flat" : ""}" ${s.prefs && i ? 'style="transform:scale(.7)"' : ""}>${ic(n, i === 0 ? big : (f ? 40 : (i === 1 ? 84 : 92)))}</span>`).join("")}</div>
     <div class="ob-sheet">${obOnly ? "" : `<div class="dots" role="img" aria-label="Étape ${obI + 1} sur ${OB.length}">${OB.map((_, i) => `<i class="${i === obI ? "on" : ""}"></i>`).join("")}</div>`}
-      <h1>${s.t}</h1><p>${s.p}</p>${chips}<button class="btn" data-ob="next">${obOnly ? "Enregistrer" : s.cta}</button></div>`;
+      <h1>${s.t}</h1><p>${s.p}</p>${chips}<button class="btn" id="obcta" data-ob="next">${s.prefs ? prefsCta() : (obOnly ? "Enregistrer" : s.cta)}</button></div>`;
 }
+function prefsCta(){
+  const n = SESSIONS.filter(s => (TOPICS[s.id] || []).some(t => S.pick.interests.includes(t)) || (PROFILE_PICKS[S.pick.profile] || []).includes(s.id)).length;
+  return n ? `Voir mes ${n} sessions suggérées` : (obOnly ? "Enregistrer" : "Commencer");
+}
+const refreshObCta = () => { const b = $("#obcta"); if(b) b.textContent = prefsCta(); };
 function obAction(a){
   if(a === "next"){ if(!obOnly && obI < OB.length - 1){ obI++; buzz(6); return drawOb(); } return endOb(true); }
   if(a === "prev"){ if(obI > 0){ obI--; drawOb(); } return; }
@@ -859,14 +877,17 @@ function obAction(a){
 }
 function endOb(keep){
   if(keep){ D.interests = S.pick.interests; D.profile = S.pick.profile; }
-  D.onboarded = true; save(); const el = $("#ob"); if(el) el.remove(); render(current, { anim:true });
+  D.onboarded = true; save(); const el = $("#ob"); if(el) el.remove();
+  const first = keep ? SESSIONS.find(forYou) : null;
+  if(first){ S.onlyFy = true; S.onlyFav = false; S.day = first.day; current = "program"; }   // le bouton promettait les suggestions : on les montre
+  render(current, { anim:true });
   if(keep && (D.interests.length || D.profile)) toast("Vos suggestions sont prêtes", "sparkles");
 }
 function openPrep(){
   const p = prep();
   openSheet(`<h3>Votre préparation</h3><p class="muted" style="margin:6px 0 8px">${p.n} étape${p.n > 1 ? "s" : ""} sur ${p.total} · tout est facultatif.</p>
     ${p.steps.map(s => `<div class="prow ${s.done ? "done" : ""}"><span class="st">${flat("check", 14)}</span>${ic(s.ico, 30)}<span class="grow"><b>${s.label}</b>${s.extra && !s.done ? `<br><span class="muted">${s.extra}</span>` : ""}</span>
-      ${s.done ? `<span class="muted">Fait</span>` : `<button class="link" data-go="${s.go}">Faire</button>`}</div>`).join("")}
+      ${s.done ? `<span class="muted">Fait</span>` : (s.go === "prefs" ? `<button class="link" data-prefs>Faire</button>` : `<button class="link" data-go="${s.go}">Faire</button>`)}</div>`).join("")}
     <div class="stack" style="margin-top:16px"><button class="btn alt" data-close>Fermer</button></div>`);
 }
 
