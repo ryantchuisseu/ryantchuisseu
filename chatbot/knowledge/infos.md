@@ -37,10 +37,19 @@
 - 15:00 – 18:00 : démos et rencontres d'affaires (B2B, B2G), lightning talks des exposants.
 - 18:00 : fin de la première journée.
 
-## Jour 2 (mercredi 28 avril 2027)
-- 09:00 – 12:00 : les quatre masterclasses, avec attestation : 1) IA générative et administration publique ; 2) IA et santé ; 3) IA, agriculture intelligente et sécurité alimentaire ; 4) Cybersécurité, données et gouvernance de l'IA.
-- Le soir : soirée de gala des Cameroon AI Awards, sur invitation.
-- Le programme détaillé du reste de la journée est sur https://jciacm.com/programme.
+## Jour 2 (mercredi 28 avril 2027) (source : jciacm.com/programme)
+- 09:00 – 12:00 : quatre masterclasses simultanées de 3 heures, avec exercices pratiques et attestation de participation. Places limitées.
+  1) IA générative et administration publique (public prioritaire : cadres des administrations).
+  2) IA et santé : diagnostic par l'image, télémédecine, surveillance épidémiologique, exigences réglementaires (professionnels de santé, startups).
+  3) IA, agriculture intelligente et sécurité alimentaire : maladies des cultures, conseil agronomique par mobile, prévision climatique (agronomes, coopératives, agritech).
+  4) Cybersécurité, données et gouvernance de l'IA : détection des menaces, désinformation, conformité, gestion des risques (DSI, RSSI, juristes, régulateurs).
+- 13:30 : Startup Pitch Competition, devant un panel d'investisseurs et de partenaires.
+- 15:00 : Women in AI Forum (leadership féminin, inclusion, lutte contre les biais).
+- 16:15 : Young AI Leaders Forum (travaux étudiants, programmes de mentorat).
+- Toute la journée : AI Career Fair, espace recrutement.
+- Les deux jours : rencontres B2B et B2G planifiées via l'application de l'événement.
+- 19:30 : gala des Cameroon AI Awards (cocktail diplomatique, dîner, remise des dix distinctions), sur invitation.
+- Le programme est communiqué sous réserve de modifications ; les intervenants sont annoncés progressivement.
 
 ## Salon National 100 % IA
 - Plus grande exposition du Cameroun dédiée à l'IA, sur les deux jours, dans les espaces d'exposition du Hilton.

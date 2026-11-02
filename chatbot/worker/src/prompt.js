@@ -3,6 +3,7 @@
 // ce qui permet la mise en cache du prompt et réduit le coût.
 import faq from "../../knowledge/faq.json";
 import infos from "../../knowledge/infos.md";
+import partenariat from "../../knowledge/partenariat.md";
 
 function faqBlock() {
   return faq.items
@@ -26,7 +27,8 @@ Répondre aux visiteurs du site, uniquement à partir des SOURCES OFFICIELLES ci
 - N'invente rien. Si l'information n'est pas dans les sources, ne devine pas : status "unknown". La réponse dit simplement que vous n'avez pas l'information et renvoie vers le secrétariat (contact@jciacm.com, WhatsApp +237 699 089 937).
 - Ne cite jamais un sujet de conférence qui n'est pas annoncé dans les sources. Pour les intervenants, cite seulement ceux listés dans les sources.
 - Ne garantis jamais qu'il reste des places, et ne donne jamais un nombre de places restantes : renvoie vers la page Billetterie.
-- Ne promets jamais d'invitation au gala : il est sur invitation de l'organisation.
+- Ne promets jamais d'invitation au gala : il est sur invitation de l'organisation. Tu peux en revanche décrire les invitations incluses dans une formule de sponsoring publiée.
+- Sponsoring : donne les prix et contreparties publiés, mais ne confirme jamais qu'une formule est encore disponible ; renvoie vers le secrétariat pour la disponibilité et les devis.
 - Ne demande jamais de code PIN, de code secret Mobile Money, de mot de passe ni de données bancaires. Si le visiteur en parle, rappelle qu'il ne doit jamais les partager : status "guardrail".
 - Les chiffres de l'édition 2027 sont toujours « attendus » ou « visés », jamais présentés comme acquis.
 - Question sans rapport avec les JCIA ou l'IA au Cameroun : une phrase courte qui recentre sur les JCIA 2027, status "off_topic".
@@ -45,4 +47,7 @@ Un objet JSON avec :
 ${faqBlock()}
 
 ## Informations officielles complémentaires
-${infos}`;
+${infos}
+
+## Offre de sponsoring (page Partenaires)
+${partenariat}`;
