@@ -47,7 +47,7 @@
   .topbar{background:var(--header);color:var(--text);padding:10px 16px;display:flex;align-items:center;gap:12px;min-height:56px}
   .topbar h1{font-size:17px;font-weight:700;flex:1}
   .topbar .back,.topbar .theme-btn{width:44px;height:44px;border-radius:50%;background:#182039;border:1px solid #2C3147;color:#fff;font-size:18px;flex:none}
-  .topbar .logo-day{display:none}
+  .topbar .logo-img.logo-day{display:none}
   .topbar .logo-img{width:150px;height:auto;display:block}
   .topbar .mini{font-size:12px;font-weight:800;letter-spacing:.04em;color:var(--muted)}
   .topbar .spacer{flex:1}
@@ -125,8 +125,8 @@
 
   .ticket{border:2px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px;background:var(--card);width:100%;text-align:left;display:block}
   .ticket[aria-pressed="true"]{border-color:var(--acc);background:var(--section)}
-  .ticket .sel{display:none;font-size:12px;font-weight:700;color:var(--acc)}
-  .ticket[aria-pressed="true"] .sel{display:inline}
+  .ticket .sel{display:none;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--acc)}
+  .ticket[aria-pressed="true"] .sel{display:inline-flex}
   .price{font-size:22px;font-weight:800;color:var(--acc)}
   .price s{font-size:13px;color:var(--muted);font-weight:400;margin-right:6px}
   .bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:8px}
@@ -177,6 +177,111 @@
   :root[data-theme="day"] .btn.secondary{background:#F2EDE7;border-color:#B7B6B8;color:var(--text)}
   :root[data-theme="day"] input,:root[data-theme="day"] select{background:#fff}
   :root[data-theme="day"] .phone{box-shadow:0 20px 60px rgba(25,32,58,.25)}
+
+  /* ===== v2 : icônes, animations, composants des nouveaux écrans ===== */
+  .ic{flex:none;display:inline-block;vertical-align:-4px}
+  .tile{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;flex:none;color:var(--c,var(--acc));background:color-mix(in srgb,var(--c,var(--acc)) 16%,transparent)}
+  .tabbar button .ico{display:grid;place-items:center}
+  .tabbar button[aria-current="page"] .ico svg{animation:pop .32s both}
+  .topbar .back .ic,.topbar .theme-btn .ic,.topbar .bell-btn .ic{display:block;margin:auto}
+  .topbar .bell-btn{position:relative;width:44px;height:44px;border-radius:50%;background:#182039;border:1px solid #2C3147;color:#fff;flex:none}
+  :root[data-theme="day"] .topbar .bell-btn{background:#fff;border-color:#D9CBB5;color:var(--text)}
+  .bell-btn .badge{position:absolute;top:-3px;right:-3px;min-width:19px;height:19px;padding:0 4px;border-radius:99px;background:var(--orange);color:var(--ink);font-size:11px;font-weight:800;display:grid;place-items:center;border:2px solid var(--header);line-height:1}
+  main:focus{outline:none}
+  .sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  .seg button{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px}
+  .seg button.wide{flex:1.7}
+
+  /* Raccourcis */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .short{display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;padding:14px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);color:var(--text);min-height:118px}
+  .short b{font-size:14px;line-height:1.3}
+  .short small{color:var(--muted);font-size:12px;line-height:1.3}
+  :root[data-theme="day"] .short{box-shadow:0 8px 24px rgba(25,32,58,.07)}
+  .menu small{font-size:12px}
+  .menu .grow{line-height:1.35}
+
+  /* Retour tactile et transitions */
+  .btn,.short,.menu a,.menu button,.tabbar button,.chipbtn,.fav,.notif,.switch{transition:transform .12s ease,box-shadow .2s ease,background-color .2s ease,border-color .2s ease}
+  .btn:active,.short:active,.menu a:active,.menu button:active,.tabbar button:active,.chipbtn:active,.notif:active{transform:scale(.97)}
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+  @keyframes shimmer{to{background-position:-200% 0}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pop{0%{transform:scale(.7)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+  @keyframes pulse{0%{r:5.5;opacity:.9}100%{r:15;opacity:0}}
+  main>*{animation:rise .42s cubic-bezier(.2,.7,.2,1) both}
+  main.noanim>*{animation:none}
+
+  /* Squelettes de chargement */
+  .sk{background:linear-gradient(90deg,var(--line) 25%,var(--section) 37%,var(--line) 63%);background-size:200% 100%;animation:shimmer 1.3s linear infinite;border-radius:12px}
+  .sk.line{height:12px}
+  .spinner{width:56px;height:56px;border-radius:50%;border:5px solid var(--line);border-top-color:var(--orange);animation:spin 1s linear infinite;margin:18px auto}
+  :root[data-theme="day"] .spinner{border-top-color:var(--acc)}
+  .burst{width:68px;height:68px;border-radius:50%;background:linear-gradient(90deg,var(--orange),var(--orange-2));color:var(--ink);display:grid;place-items:center;margin:0 auto 8px;animation:pop .55s both}
+
+  /* Feuille du bas (bottom sheet) */
+  .sheet-back{position:absolute;inset:0;background:rgba(8,11,23,.55);z-index:20;animation:fade .2s both}
+  .sheet{position:absolute;left:0;right:0;bottom:0;z-index:21;background:var(--night);color:var(--text);border-radius:26px 26px 0 0;padding:10px 16px calc(20px + env(safe-area-inset-bottom));max-height:82%;overflow:auto;animation:sheetUp .3s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 -10px 40px rgba(0,0,0,.35)}
+  .sheet:focus{outline:none}
+  .sheet .grab{width:42px;height:5px;border-radius:9px;background:var(--line);margin:0 auto 14px}
+  .sheet h3{font-size:18px}
+
+  /* Toast */
+  .toast{position:absolute;left:16px;right:16px;bottom:82px;background:#10142a;color:#fff;border:1px solid #2C3147;padding:12px 14px;border-radius:16px;font-size:14px;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.4);display:none;align-items:center;gap:10px}
+  .toast .ic{color:var(--orange)}
+  .toast.show{display:flex;animation:rise .25s both}
+
+  /* Puces, chips, interrupteurs */
+  .chips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 8px;padding:2px 16px 8px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chipbtn{flex:none;min-height:40px;padding:8px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--text);display:inline-flex;align-items:center;gap:6px}
+  .chipbtn[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:var(--ink)}
+  .chipbtn[disabled]{opacity:.45;cursor:not-allowed}
+  .chipbtn .sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+  .chipbtn .done{color:var(--k2)}
+  .switch{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;text-align:left;color:var(--text)}
+  .switch .trk{width:46px;height:28px;border-radius:99px;background:var(--line);position:relative;flex:none;transition:background-color .2s;border:1px solid var(--line)}
+  .switch .trk::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s}
+  .switch[aria-checked="true"] .trk{background:var(--acc);border-color:var(--acc)}
+  .switch[aria-checked="true"] .trk::after{transform:translateX(18px)}
+
+  /* Programme personnalisé */
+  .fav{position:absolute;top:6px;right:4px;width:44px;height:44px;border-radius:50%;color:var(--muted);display:grid;place-items:center}
+  .fav[aria-pressed="true"]{color:var(--acc)}
+  .fav[aria-pressed="true"] svg{fill:currentColor;animation:pop .32s both}
+  .timeline li.has-fav{padding-right:54px}
+  .warn{margin-top:8px;font-size:12.5px;font-weight:600;color:var(--acc);display:flex;gap:6px;align-items:flex-start}
+  .warn .ic{margin-top:2px}
+
+  /* Notifications */
+  .notif{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:14px;border-radius:18px;background:var(--card);border:1px solid var(--line);margin-bottom:8px;color:var(--text);position:relative}
+  .notif.unread{border-color:var(--acc)}
+  .notif .dot{position:absolute;top:14px;right:14px;width:10px;height:10px;border-radius:50%;background:var(--orange)}
+  .notif .t{font-weight:600;font-size:14px;padding-right:18px}
+  .notif.unread .t{font-weight:800}
+
+  /* Plan du Salon */
+  .plan{width:100%;height:auto;display:block;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);margin-bottom:12px}
+  .plan .z{cursor:pointer;transition:opacity .2s}
+  .plan .z rect{fill-opacity:.2;stroke-width:2;transition:fill-opacity .2s}
+  .plan .z text{font:700 9.5px Sora,Arial,sans-serif;fill:var(--text);pointer-events:none}
+  .plan .z.sel rect{fill-opacity:.6;stroke-width:3.5}
+  .plan.dim .z:not(.on){opacity:.25}
+  .plan .z:focus-visible{outline:none}
+  .plan .z:focus-visible rect{stroke-dasharray:5 3;stroke-width:3.5}
+  .plan .here circle{fill:var(--acc)}
+  .plan .pulse{fill:none;stroke:var(--acc);stroke-width:2;animation:pulse 1.8s ease-out infinite}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  }
+
+  .hero-when p{display:flex;align-items:center;gap:8px;line-height:1.8}
+  .hero-when .ic{color:var(--acc)}
+  h3 .ic{margin-right:6px;color:var(--acc);vertical-align:-3px}
+  .stack a{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none}
 </style>
 </head>
 <body>
@@ -274,14 +379,133 @@ const ATTENDEES = [
 ];
 
 /* ---------- État ---------- */
-const state = { day:1, reg:{ ticket:"standard", step:1, first:"", last:"", email:"", wa:"", org:"", role:"", listed:false, terms:false, pay:"momo" } };
+const state = { day:1, reg:{ ticket:"standard", step:1, first:"", last:"", email:"", wa:"", org:"", role:"", listed:false, terms:false, pay:"momo" },
+  mm:{ tab:"sugg", filter:"all", pid:null, slot:null }, plan:{ sel:null, cat:null }, vote:{ cat:0, pending:null } };
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fcfa = n => n === 0 ? "Gratuit" : n.toLocaleString("fr-FR") + " FCFA";
 const initials = n => n.split(" ").filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
 
-const TABS = [["home","🏠","Accueil"],["programme","📅","Programme"],["speakers","🎤","Intervenants"],["tickets","🎟️","Billets"],["more","☰","Plus"]];
+/* ---------- Icônes : SVG en ligne, trait 1,8 px, couleur = currentColor ---------- */
+const ICONS = {
+  home:'<path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5.5h4v5.5"/>',
+  calendar:'<rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/>',
+  mic:'<rect x="9" y="3" width="6" height="11.5" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/>',
+  ticket:'<path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4z"/><path d="M14.5 6.5v11" stroke-dasharray="1.6 2.4"/>',
+  menu:'<path d="M4 7h16M4 12h16M4 17h16"/>',
+  pin:'<path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1.5 1.5 0 0 1-1.6 1.5C10.7 20 4 13.3 3.5 5.6A1.5 1.5 0 0 1 5 4z"/>',
+  mail:'<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m4 7.5 8 6 8-6"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>',
+  moon:'<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/>',
+  back:'<path d="M15 5l-7 7 7 7"/>',
+  chevron:'<path d="M9 5l7 7-7 7"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  share:'<path d="M12 15V3.5M7.5 8 12 3.5 16.5 8"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/>',
+  bell:'<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 21a2.2 2.2 0 0 0 4 0"/>',
+  star:'<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9-4.3-4.1 5.9-.8z"/>',
+  building:'<rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 20.5v-4h4v4"/>',
+  trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v1.5A3 3 0 0 0 8 10.5M16 6h3v1.5a3 3 0 0 1-3 3M12 13v4M8.5 20h7M10 17h4"/>',
+  book:'<path d="M5 5a2 2 0 0 1 2-2h12v14H7a2 2 0 0 0-2 2z"/><path d="M5 19a2 2 0 0 0 2 2h12v-4"/>',
+  users:'<circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17.5 14.5A5 5 0 0 1 21.5 19"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
+  map:'<path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6z"/><path d="M9 4v14M15 6v14"/>',
+  heart:'<path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.2 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/>',
+  camera:'<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.5-2h5L16 7h2.5A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.3"/>',
+  user:'<circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z"/>',
+  tv:'<rect x="3" y="5" width="18" height="12" rx="2.5"/><path d="M8 20.5h8M12 17v3.5"/>',
+  briefcase:'<rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 13h17"/>',
+  spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
+  warning:'<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17.2h.01"/>',
+  mega:'<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17.5 9a4 4 0 0 1 0 6"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8h.01"/>',
+};
+const icon = (n, s = 20) => `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICONS[n] || ""}</svg>`;
+
+/* ---------- Programme : sessions identifiables (pour « Mon programme ») ---------- */
+function parseTime(str){
+  const m = str.match(/(\d{2}):(\d{2})(?:\s*–\s*(\d{2}):(\d{2}))?/);
+  if(!m) return null;
+  const s = +m[1]*60 + +m[2];
+  return [s, m[3] ? +m[3]*60 + +m[4] : s + 45];     // heure seule : durée supposée de 45 min
+}
+const SESSIONS = [DAY1, DAY2].flatMap((list, d) => list.map((e, i) => {
+  const t = parseTime(e[0]);
+  return { id:`d${d+1}-${i}`, day:d+1, time:e[0], tag:e[1], title:e[2], desc:e[3], start:t ? t[0] : null, end:t ? t[1] : null };
+}));
+const overlaps = (a, b) => a.id !== b.id && a.day === b.day && a.start != null && b.start != null && a.start < b.end && b.start < a.end;
+
+/* ---------- Données de démonstration — TOUTES FICTIVES (aucune vraie personne ni organisation) ---------- */
+const MM_PROFILES = [
+  { id:"m1", name:"Startup Démo Santé",        kind:"B2B", sector:"Santé",                  role:"Fondatrice",                           seeks:"Investisseurs, hôpitaux partenaires",       offers:"Aide au diagnostic par image (exemple)", score:94 },
+  { id:"m2", name:"Fonds Démo Impact",         kind:"B2B", sector:"Investissement",         role:"Chargé d'investissement",               seeks:"Startups agritech et fintech",              offers:"Financement d'amorçage (exemple)",       score:88 },
+  { id:"m3", name:"Ministère Démo — Numérique",kind:"B2G", sector:"Administration publique",role:"Direction des systèmes d'information", seeks:"Solutions de dématérialisation",            offers:"Commande publique innovante (exemple)",  score:81 },
+  { id:"m4", name:"Coopérative Démo Agri",     kind:"B2B", sector:"Agriculture",            role:"Responsable innovation",               seeks:"Conseil agronomique par mobile",            offers:"Terrains d'essai et données (exemple)",  score:76 },
+  { id:"m5", name:"Commune Démo",              kind:"B2G", sector:"Collectivité",           role:"Secrétaire général",                   seeks:"Outils de service aux citoyens",            offers:"Projets pilotes municipaux (exemple)",   score:70 },
+];
+const MM_SLOTS = ["15:00","15:20","15:40","16:00","16:20","16:40","17:00","17:20","17:40"];   // mardi 27, plage « rencontres » 15:00–18:00 du programme
+
+const DIRECTORY = [
+  { n:"Startup Démo Santé",   t:"Startups & solutions",     s:"Santé",            r:"Centre",        k:"Vision par ordinateur" },
+  { n:"Laboratoire Démo IA",  t:"Chercheurs & enseignants", s:"Recherche",        r:"Centre",        k:"Apprentissage automatique" },
+  { n:"AgriTech Démo",        t:"Startups & solutions",     s:"Agriculture",      r:"Ouest",         k:"Conseil agronomique mobile" },
+  { n:"Incubateur Démo",      t:"Incubateurs & hubs",       s:"Écosystème",       r:"Littoral",      k:"Accompagnement de startups" },
+  { n:"Fonds Démo Impact",    t:"Investisseurs",            s:"Finance",          r:"Littoral",      k:"Amorçage" },
+  { n:"Administration Démo",  t:"Administrations",          s:"Services publics", r:"Centre",        k:"Dématérialisation" },
+  { n:"Expert Démo Diaspora", t:"Diaspora",                 s:"Conseil",          r:"Hors Cameroun", k:"Gouvernance de l'IA" },
+  { n:"Université Démo",      t:"Universités & formations", s:"Éducation",        r:"Nord",          k:"Formation en IA" },
+];
+
+/* Plan indicatif : le plan officiel du Hilton n'est pas publié. Zones = espaces cités sur le site ; agencement fictif. */
+const CATS = {
+  expo:    { name:"Exposition",            c:"var(--k1)" },
+  conf:    { name:"Conférences",           c:"var(--k2)" },
+  b2b:     { name:"Rencontres & VIP",      c:"var(--k3)" },
+  master:  { name:"Masterclasses",         c:"var(--k4)" },
+  service: { name:"Services",              c:"var(--muted)" },
+};
+const ZONES = [
+  { id:"plen",    cat:"conf",    name:"Salle plénière",              x:16,  y:14,  w:180, h:84,  go:"programme",   desc:"Cérémonie d'ouverture et plénières (souveraineté numérique, financement). Retransmises en direct pour les billets en ligne." },
+  { id:"stage",   cat:"expo",    name:"Scène du Salon",              x:204, y:14,  w:140, h:84,  go:"salon",       desc:"Démos en continu et lightning talks des exposants, diffusés sur les écrans de l'événement." },
+  { id:"village", cat:"expo",    name:"Innovation Village · Startups",x:16, y:106, w:180, h:100, go:"salon",       desc:"Stands des startups et des solutions Made in Cameroon : 150+ exposants attendus." },
+  { id:"b2b",     cat:"b2b",     name:"Espaces B2B / B2G",           x:204, y:106, w:140, h:46,  go:"matchmaking", desc:"Rencontres planifiées via l'application entre startups, entreprises, investisseurs et administrations." },
+  { id:"career",  cat:"b2b",     name:"AI Career Fair",              x:204, y:160, w:140, h:46,  go:"programme",   desc:"Mercredi 28 avril : espace de recrutement des entreprises, laboratoires et administrations." },
+  { id:"m1",      cat:"master",  name:"Masterclass 1",               x:16,  y:214, w:76,  h:56,  go:"programme",   desc:"IA générative & administration publique · mercredi 28 avril, 09:00–12:00." },
+  { id:"m2",      cat:"master",  name:"Masterclass 2",               x:100, y:214, w:76,  h:56,  go:"programme",   desc:"IA & santé · mercredi 28 avril, 09:00–12:00." },
+  { id:"m3",      cat:"master",  name:"Masterclass 3",               x:184, y:214, w:76,  h:56,  go:"programme",   desc:"IA, agriculture intelligente & sécurité alimentaire · mercredi 28 avril, 09:00–12:00." },
+  { id:"m4",      cat:"master",  name:"Masterclass 4",               x:268, y:214, w:76,  h:56,  go:"programme",   desc:"Cybersécurité, données & gouvernance de l'IA · mercredi 28 avril, 09:00–12:00." },
+  { id:"accueil", cat:"service", name:"Accueil",                     x:16,  y:278, w:120, h:48,  desc:"Retrait des badges. Ouverture mardi 27 : 08:00 · mercredi 28 : 08:30 (jusqu'à 18:00)." },
+  { id:"vip",     cat:"b2b",     name:"Salon VIP & networking",      x:144, y:278, w:200, h:48,  desc:"Déjeuners et cocktails networking, selon votre billet." },
+];
+const GO_LABEL = { programme:"Voir au programme", salon:"Voir le Salon", matchmaking:"Planifier mes rendez-vous" };
+
+/* Vote du public (aperçu) : 10 catégories × 5 finalistes fictifs. */
+const SHORT = ["Santé","Agriculture","Éducation","Fintech","Administration","Cybersécurité","Langues & culture","Recherche","Femme de l'année","Jeune talent"];
+const LETTERS = ["A","B","C","D","E"];
+
+/* Notifications d'exemple (fictives) */
+const NOTIFS_SEED = [
+  { id:"n1", type:"session", title:"Rappel : Plénière 1 dans 30 minutes", body:"Souveraineté numérique et modèles d'IA africains · mar. 27 avril, 12:00", when:"Il y a 2 min", go:"programme", read:false },
+  { id:"n2", type:"news",    title:"Nouveau : Women in AI Forum",         body:"Mercredi 28 avril à 15:00. Ajoutez-le à votre programme.",             when:"Il y a 1 h",  go:"programme", read:false },
+  { id:"n3", type:"vote",    title:"Le vote du public ouvre le 20 mars",  body:"Découvrez les finalistes des 10 catégories des Cameroon AI Awards.",   when:"Hier",        go:"vote",      read:false },
+  { id:"n4", type:"ticket",  title:"Votre billet est confirmé",           body:"Présentez votre QR code à l'entrée du Hilton.",                         when:"Hier",        go:"confirmed", read:true  },
+];
+const NTYPE = { session:["clock","--k2"], meeting:["briefcase","--k3"], news:["mega","--k1"], vote:["heart","--k4"], ticket:["ticket","--k1"] };
+const PREF_OF = { session:"sessions", meeting:"meetings", news:"news", vote:"vote" };
+
+/* ---------- Données persistées localement (démo) ---------- */
+const STORE_KEY = "jcia-mock-v2";
+const defaults = () => ({ fav:[], votes:{}, prefs:{ sessions:true, meetings:true, news:true, vote:true }, req:[], notifs:NOTIFS_SEED.map(n => ({...n})) });
+let data = defaults();
+try { const s = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); if(s && typeof s === "object") data = Object.assign(defaults(), s); } catch(e) {}
+const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch(e) {} };
+
+const TABS = [["home","home","Accueil"],["programme","calendar","Programme"],["speakers","mic","Intervenants"],["tickets","ticket","Billets"],["more","menu","Plus"]];
 
 /* ---------- Vues ---------- */
 const views = {
@@ -292,7 +516,7 @@ const views = {
       <h2>Journées Camerounaises de l'<span class="grad">Intelligence Artificielle</span> 2027</h2>
       <p class="theme">Thème : « Penser l'intelligence artificielle <b style="color:var(--text)">au Cameroun</b>, <b style="color:var(--text)">pour le Cameroun</b> »</p>
       <div class="hero-meta">
-        <p>📅 27 &amp; 28 avril 2027<br>📍 Hilton Hotel, Yaoundé</p>
+        <div class="hero-when"><p>${icon("calendar",18)} 27 &amp; 28 avril 2027</p><p>${icon("pin",18)} Hilton Hotel, Yaoundé</p></div>
         <img class="map" src="assets/carte-cameroun.png" alt="" width="84" height="121">
       </div>
       <div class="countdown" id="cd" role="timer" aria-label="Compte à rebours avant l'ouverture"></div>
@@ -302,16 +526,23 @@ const views = {
       </div>
     </section>
 
+    <div class="grid2" style="margin-top:14px">
+      <button class="short" data-go="myprogram"><span class="tile" style="--c:var(--k1)">${icon("star",22)}</span><span><b>Mon programme</b><br><small>${data.fav.length ? data.fav.length + " session" + (data.fav.length > 1 ? "s" : "") : "Vos sessions favorites"}</small></span></button>
+      <button class="short" data-go="matchmaking"><span class="tile" style="--c:var(--k3)">${icon("briefcase",22)}</span><span><b>Rencontres B2B / B2G</b><br><small>Planifiez vos rendez-vous</small></span></button>
+      <button class="short" data-go="plan"><span class="tile" style="--c:var(--k2)">${icon("map",22)}</span><span><b>Plan du Salon</b><br><small>Zones, stands, salles</small></span></button>
+      <button class="short" data-go="vote"><span class="tile" style="--c:var(--k4)">${icon("heart",22)}</span><span><b>Vote des Awards</b><br><small>20 mars → 15 avril 2027</small></span></button>
+    </div>
+
     <p class="eyebrow dia" style="margin-top:26px">À propos</p>
     <h2 style="margin-top:6px">La plateforme nationale de l'<span class="grad">IA au Cameroun</span></h2>
     <p class="muted" style="font-size:14.5px">Depuis 2023, les Journées camerounaises de l'IA réunissent gouvernement, universités, entreprises, chercheurs, startups, société civile et partenaires internationaux autour d'un même programme : réflexion stratégique, démonstrations, formation et célébration de l'excellence.</p>
 
     <h2>Chiffres <span class="grad">attendus</span></h2>
     <div class="stats">
-      <div class="card"><b>7 000+</b><small>participants attendus</small></div>
-      <div class="card"><b>5 000+</b><small>participants en ligne attendus</small></div>
-      <div class="card"><b>150+</b><small>startups et exposants attendus</small></div>
-      <div class="card"><b>80+</b><small>organisations représentées (visé)</small></div>
+      <div class="card"><b data-count="7000" data-suffix="+">7 000+</b><small>participants attendus</small></div>
+      <div class="card"><b data-count="5000" data-suffix="+">5 000+</b><small>participants en ligne attendus</small></div>
+      <div class="card"><b data-count="150" data-suffix="+">150+</b><small>startups et exposants attendus</small></div>
+      <div class="card"><b data-count="80" data-suffix="+">80+</b><small>organisations représentées (visé)</small></div>
     </div>
 
     <h2>Quatre défis, <span class="grad">une ambition</span></h2>
@@ -331,27 +562,7 @@ const views = {
     <h2>La communauté <span class="grad">Cameroon AI Network</span></h2>
     <div class="card"><p class="muted">Forum WhatsApp quotidien, ouvert et gratuit : annonces, entraide, projets.</p>
       <div style="margin-top:10px"><a class="btn secondary" href="#" data-stub="Ouvre WhatsApp (lien du site d'origine)">Rejoindre la communauté</a></div></div>
-    `, after(){ startCountdown(); }};
-  },
-
-  programme(){
-    const list = state.day===1 ? DAY1 : DAY2;
-    return {title:"Programme", html:`
-    <div class="seg" role="group" aria-label="Choix du jour">
-      <button data-day="1" aria-pressed="${state.day===1}">Mar. 27 avril</button>
-      <button data-day="2" aria-pressed="${state.day===2}">Mer. 28 avril</button>
-    </div>
-    <p class="muted" style="margin-bottom:12px">${state.day===1?"Ouverture officielle, plénières et inauguration du Salon":"Masterclasses, forums, Startup Pitch et gala"}</p>
-    <ul class="timeline">${list.map(e=>`
-      <li class="card"><span class="time">${e[0]}</span> <span class="pill gray">${e[1]}</span>
-        <h3 style="margin-top:4px">${e[2]}</h3>${e[3]?`<p class="muted">${e[3]}</p>`:""}</li>`).join("")}
-    </ul>
-    ${state.day===2?`<h2>Les 4 masterclasses · 09:00–12:00</h2>
-      <p class="muted" style="margin-bottom:8px">3 h · exercices pratiques · certificat · places limitées</p>
-      ${MASTERCLASSES.map((m,i)=>`<div class="card"><span class="pill orange">0${i+1}</span><h3 style="margin-top:6px">${m[0]}</h3><p class="muted">Public : ${m[1]}</p></div>`).join("")}`:""}
-    <div class="row" style="margin-top:14px"><button class="btn secondary" data-stub="Télécharge un fichier .ics de l'événement">📆 Ajouter à mon calendrier</button></div>
-    <p class="muted" style="margin-top:12px">Programme susceptible d'évoluer. Sessions en français et en anglais.</p>
-    `};
+    `, after(){ startCountdown(); countUp(); }};
   },
 
   speakers(){
@@ -361,7 +572,7 @@ const views = {
     <div id="list"></div>
     <div class="card" style="margin-top:14px"><h3>Proposer une intervention</h3>
       <p class="muted">Titre, résumé (10 lignes), format souhaité et courte bio.</p>
-      <div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">✉️ E-mail</a><a class="btn secondary" href="tel:+237699089937">📞 Appeler</a></div></div>
+      <div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">${icon("mail",18)} E-mail</a><a class="btn secondary" href="tel:+237699089937">${icon("phone",18)} Appeler</a></div></div>
     `, after(){
       const draw = () => {
         const q = $("#q").value.trim().toLowerCase();
@@ -389,7 +600,7 @@ const views = {
         <button class="btn${t.id==='standard'?'':' secondary'}" style="margin-top:12px" data-buy="${t.id}">Choisir ce billet</button>
       </div></div>`).join("")}
     <div class="card"><h3>Groupes, entreprises, institutions</h3><p class="muted">Offre sur mesure et facturation au nom de votre organisation.</p>
-      <div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">✉️ Demander</a><a class="btn secondary" href="tel:+237699089937">📞 Appeler</a></div></div>
+      <div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">${icon("mail",18)} Demander</a><a class="btn secondary" href="tel:+237699089937">${icon("phone",18)} Appeler</a></div></div>
     <div class="card"><h3>Paiement 100 % mobile</h3><p class="muted">MTN Mobile Money · Orange Money · carte bancaire · PayPal. Nous ne demandons jamais votre code PIN.</p></div>
     `};
   },
@@ -400,7 +611,7 @@ const views = {
     let body = "";
     if(r.step===1) body = `<h2>Votre <span class="grad">billet</span></h2>${TICKETS.map(x=>`
       <button class="ticket" data-pick="${x.id}" aria-pressed="${x.id===r.ticket}">
-        <div class="row"><b class="grow">${x.name} <span class="sel">✓ Sélectionné</span></b><span class="price" style="font-size:16px">${fcfa(x.price)}</span></div></button>`).join("")}
+        <div class="row"><b class="grow">${x.name} <span class="sel">${icon("check",13)} Sélectionné</span></b><span class="price" style="font-size:16px">${fcfa(x.price)}</span></div></button>`).join("")}
       <p class="muted">Une inscription par participant.</p>`;
     if(r.step===2) body = `<h2>Vos <span class="grad">informations</span></h2>
       <p class="muted">Elles composent votre visuel « I'll be there » et votre profil.</p>
@@ -413,8 +624,8 @@ const views = {
     if(r.step===3) body = `<h2>Votre <span class="grad">photo</span></h2>
       <p class="muted">Elle apparaît sur votre visuel et votre profil. Recadrage en cercle avant utilisation.</p>
       <div class="card" style="text-align:center"><div class="avatar" style="width:96px;height:96px;margin:6px auto;font-size:28px">${initials((r.first+" "+r.last).trim()||"?")}</div>
-      <button class="btn secondary" data-stub="Ouvre l'appareil photo ou la galerie (JPG, PNG, WebP)">📷 Ajouter ma photo</button></div>
-      <div class="badge-vis"><b>I'LL BE THERE!</b><div class="circle">👤</div><b>${esc((r.first+" "+r.last).trim()||"Votre nom")}</b>
+      <button class="btn secondary" data-stub="Ouvre l'appareil photo ou la galerie (JPG, PNG, WebP)">${icon("camera",18)} Ajouter ma photo</button></div>
+      <div class="badge-vis"><b>I'LL BE THERE!</b><div class="circle">${icon("user",36)}</div><b>${esc((r.first+" "+r.last).trim()||"Votre nom")}</b>
       <p style="font-size:13px">${esc(r.role||"Votre rôle")} · ${esc(r.org||"votre organisation")}</p><p style="font-size:13px;margin-top:6px">27 &amp; 28 AVRIL 2027 · #JCIA2027</p></div>`;
     if(r.step===4) body = `<h2><span class="grad">Confirmation</span></h2>
       <div class="card"><div class="row"><b class="grow">${t.name}</b><b>${fcfa(t.price)}</b></div></div>
@@ -436,26 +647,14 @@ const views = {
     <div class="notice">Maquette : ce billet est fictif, aucun paiement ni e-mail n'a eu lieu.</div>
     <h2>Bonjour ${esc(r.first.trim()||"Alex")}, <span class="grad">à bientôt à Yaoundé</span></h2>
     <div class="card" style="text-align:center">
-      <span class="pill orange">${t.name}</span>
+      <div class="burst">${icon("check",34)}</div><span class="pill orange">${t.name}</span>
       <h3 style="margin:10px 0 0;font-size:19px">${esc((r.first+" "+r.last).trim()||"Participant Exemple")}</h3>
       <p class="muted">${esc(r.role||"Rôle")} · ${esc(r.org||"Organisation")}</p>
       <div class="qr" role="img" aria-label="QR code fictif"></div>
       <p class="muted">27 &amp; 28 avril 2027 · Hilton Hotel, Yaoundé<br>Pièce d'identité possible à l'entrée.</p>
     </div>
-    <div class="badge-vis"><b>I'LL BE THERE!</b><div class="circle">👤</div><b>${esc((r.first+" "+r.last).trim()||"Participant Exemple")}</b><p style="font-size:13px;margin-top:6px">#JCIA2027</p></div>
-    <div class="btn-row"><button class="btn" data-stub="Partager le visuel (Web Share)">Partager</button><button class="btn secondary" data-go="home">Accueil</button></div>
-    `};
-  },
-
-  more(){
-    return {title:"Plus", html:`
-    <div class="menu">
-      ${[["salon","🏛️","Salon National 100 % IA"],["awards","🏆","Cameroon AI Awards 2027"],["catalogue","📚","Annuaire national de l'IA"],["participants","👥","Participants"],["partners","🤝","Partenaires & sponsors"],["faq","❓","FAQ"],["contact","✉️","Contact & infos pratiques"]]
-        .map(m=>`<button data-go="${m[0]}"><span class="ico">${m[1]}</span><b class="grow">${m[2]}</b><span>›</span></button>`).join("")}
-    </div>
-    <div class="card"><h3>Apparence</h3><p class="muted">Suit par défaut le réglage de votre téléphone, comme le site. Vous pouvez forcer Nuit ou Jour.</p>
-      <div class="seg" style="margin:10px 0 0" role="group" aria-label="Apparence"><button data-theme-set="night" aria-pressed="${getTheme()==="night"}">🌙 Nuit</button><button data-theme-set="day" aria-pressed="${getTheme()==="day"}">☀️ Jour</button></div></div>
-    <div class="card"><h3>Langue</h3><div class="seg" style="margin:8px 0 0"><button aria-pressed="true" data-stub="Le site existe en FR et EN">Français</button><button aria-pressed="false" data-stub="Le site existe en FR et EN">English</button></div></div>
+    <div class="badge-vis"><b>I'LL BE THERE!</b><div class="circle">${icon("user",36)}</div><b>${esc((r.first+" "+r.last).trim()||"Participant Exemple")}</b><p style="font-size:13px;margin-top:6px">#JCIA2027</p></div>
+    <div class="btn-row"><button class="btn" data-stub="Partager le visuel (Web Share)">${icon("share",18)} Partager</button><button class="btn secondary" data-go="home">Accueil</button></div>
     `};
   },
 
@@ -465,12 +664,16 @@ const views = {
     <div class="stats three" style="margin:14px 0"><div class="card"><b>150+</b><small>exposants attendus</small></div><div class="card"><b>200</b><small>solutions présentées</small></div><div class="card"><b>100+</b><small>journalistes accrédités</small></div></div>
     ${[["Démos en continu","Créneaux sur la scène du Salon, diffusés sur écrans et en ligne."],["Networking structuré","Application de matchmaking pour planifier vos rendez-vous."],["Rencontres B2B","Espaces dédiés startups, entreprises, investisseurs."],["Rencontres B2G","Mettre en relation solutions camerounaises et commande publique."]]
       .map((x,i)=>`<div class="card row"><span class="pill orange">0${i+1}</span><div class="grow"><h3>${x[0]}</h3><p class="muted">${x[1]}</p></div></div>`).join("")}
+    <div class="grid2" style="margin:14px 0">
+      <button class="short" data-go="plan"><span class="tile" style="--c:var(--k2)">${icon("map",22)}</span><span><b>Plan du Salon</b><br><small>Zones, stands, salles</small></span></button>
+      <button class="short" data-go="matchmaking"><span class="tile" style="--c:var(--k3)">${icon("briefcase",22)}</span><span><b>Rencontres B2B / B2G</b><br><small>Via l'application</small></span></button>
+    </div>
     <h2>Qui expose ?</h2>
     <p class="muted">Startups · entreprises tech · laboratoires · administrations · universités · incubateurs · diaspora · institutions financières</p>
     <h2>Réserver un stand en 4 étapes</h2>
     <ol class="muted" style="margin-left:18px"><li>Contacter le secrétariat</li><li>Recevoir l'offre</li><li>Confirmer sa participation</li><li>Préparer sa démo</li></ol>
     <p class="muted" style="margin-top:8px"><b>À savoir :</b> les 50 projets présélectionnés aux Awards exposent gratuitement.</p>
-    <div class="btn-row"><a class="btn" href="mailto:contact@jciacm.com">Réserver un stand</a><a class="btn secondary" href="tel:+237699089937">📞 Appeler</a></div>
+    <div class="btn-row"><a class="btn" href="mailto:contact@jciacm.com">Réserver un stand</a><a class="btn secondary" href="tel:+237699089937">${icon("phone",18)} Appeler</a></div>
     `};
   },
 
@@ -481,6 +684,7 @@ const views = {
       <p>Sous le patronage de l'UNESCO (Bureau régional Afrique centrale) et du Haut-commissariat britannique.</p></div>
     <div class="stats three" style="margin-top:12px"><div class="card"><b>10</b><small>prix</small></div><div class="card"><b>50</b><small>présélectionnés</small></div><div class="card"><b>300</b><small>candidatures visées</small></div></div>
     <div class="btn-row"><button class="btn" data-stub="Ouvre le formulaire de candidature (Google Forms sur le site d'origine)">Candidater</button><button class="btn secondary" data-stub="Ouvre le PDF des termes de référence">Termes (PDF)</button></div>
+    <div class="menu" style="margin-top:14px"><button data-go="vote"><span class="tile" style="--c:var(--k4)">${icon("heart",22)}</span><span class="grow"><b>Vote du public</b><br><small class="muted">20 mars → 15 avril 2027 · 40 % de la note finale</small></span>${icon("chevron",18)}</button></div>
     <h2>Dix catégories</h2>
     ${AWARDS.map((a,i)=>`<div class="card row"><span class="pill gray">${String(i+1).padStart(2,"0")}</span><b class="grow">${a}</b></div>`).join("")}
     <h2>Calendrier</h2>
@@ -492,28 +696,6 @@ const views = {
     <details><summary>Qui peut candidater ?</summary><p>Ressortissants camerounais (au pays ou en diaspora), 18 ans révolus, à titre individuel ou en équipe (porteur camerounais).</p></details>
     <details><summary>Pièces à fournir</summary><p>CV (PDF) · photo du porteur · logo du projet · pièce d'identité (PDF) · lien vers une vidéo de pitch (3 min max) · fiche technique (PDF, 2 pages max).</p></details>
     <details><summary>Ce que reçoivent les lauréats</summary><p>Trophée et certificat officiels · mention « UNESCO Award Winner » · soutien gouvernemental · offres de financement · stages rémunérés · stand gratuit au Salon · préparation à la délégation de Genève · exposition médiatique.</p></details>
-    `};
-  },
-
-  catalogue(){
-    return {title:"Annuaire national", back:"more", html:`
-    <p class="muted">Première nationale : la base de référence, structurée et vérifiée, des acteurs de l'écosystème IA camerounais. Édition imprimée prestige + version numérique consultable. Objectif : 1 000+ acteurs.</p>
-    <div class="notice" style="margin-top:12px">Dans l'app, cet écran deviendra la recherche par compétence, secteur et région (aperçu ci-dessous, données fictives).</div>
-    <input type="search" placeholder="Rechercher par compétence, secteur, région" disabled>
-    <div class="row" style="margin:10px 0;flex-wrap:wrap"><span class="pill">Compétence</span><span class="pill">Secteur</span><span class="pill">Région</span></div>
-    <h2>Qui est référencé ?</h2>
-    <p class="muted">Chercheurs &amp; enseignants · experts &amp; consultants · startups &amp; solutions · entreprises · administrations · universités &amp; formations · incubateurs · investisseurs · diaspora · jeunes talents.</p>
-    <h2>Vos données, vos choix</h2>
-    <p class="muted">Consentement explicite · droit de rectification et de retrait · minimisation · respect du cadre camerounais de protection des données.</p>
-    <a class="btn" style="margin-top:14px" href="mailto:contact@jciacm.com?subject=Annuaire%20national">Demander à être référencé</a>
-    `};
-  },
-
-  participants(){
-    return {title:"Participants", back:"more", html:`
-    <div class="notice">Exemples fictifs. Dans l'app réelle, seules les personnes ayant coché « apparaître dans la liste publique » seront affichées (jamais e-mail ni WhatsApp).</div>
-    ${ATTENDEES.map(a=>`<div class="card row"><div class="avatar">${initials(a[0])}</div><div class="grow"><h3>${a[0]}</h3><p class="muted">${a[1]}</p></div><span class="pill ${a[3]==="VIP"?"orange":"gray"}">${a[3]}</span></div>`).join("")}
-    <button class="btn" data-go="tickets">Rejoignez-les</button>
     `};
   },
 
@@ -537,7 +719,7 @@ const views = {
     return {title:"FAQ", back:"more", html:`
     <input type="search" id="fq" placeholder="Rechercher une question">
     <div id="fl" style="margin-top:12px"></div>
-    <div class="card"><h3>Pas trouvé votre réponse ?</h3><div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">✉️ E-mail</a><a class="btn secondary" href="tel:+237699089937">📞 Appeler</a></div></div>
+    <div class="card"><h3>Pas trouvé votre réponse ?</h3><div class="btn-row"><a class="btn secondary" href="mailto:contact@jciacm.com">${icon("mail",18)} E-mail</a><a class="btn secondary" href="tel:+237699089937">${icon("phone",18)} Appeler</a></div></div>
     `, after(){
       const draw = () => { const q=$("#fq").value.toLowerCase();
         $("#fl").innerHTML = FAQ.filter(f=>(f[0]+f[1]).toLowerCase().includes(q)).map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("") || '<p class="muted">Aucun résultat.</p>'; };
@@ -547,17 +729,17 @@ const views = {
 
   contact(){
     return {title:"Contact & infos", back:"more", html:`
-    <div class="card"><h3>📍 Hilton Hotel, Yaoundé</h3><p class="muted">Salles de conférence et espaces d'exposition.</p>
+    <div class="card"><h3>${icon("pin",18)}Hilton Hotel, Yaoundé</h3><p class="muted">Salles de conférence et espaces d'exposition.</p>
       <a class="btn secondary" style="margin-top:10px" href="https://www.google.com/maps/search/?api=1&query=Hilton+Hotel+Yaound%C3%A9" target="_blank" rel="noopener">Itinéraire</a></div>
-    <div class="card"><h3>🕗 Horaires</h3><p class="muted">Mardi 27 : 08:00 – 18:00<br>Mercredi 28 : 08:30 – 18:00</p></div>
-    <div class="card"><h3>📺 En ligne</h3><p class="muted">Plénières, Startup Pitch et cérémonie des Awards en direct.</p></div>
-    <div class="card"><h3>🗣️ Langues</h3><p class="muted">Français et anglais.</p></div>
+    <div class="card"><h3>${icon("clock",18)}Horaires</h3><p class="muted">Mardi 27 : 08:00 – 18:00<br>Mercredi 28 : 08:30 – 18:00</p></div>
+    <div class="card"><h3>${icon("tv",18)}En ligne</h3><p class="muted">Plénières, Startup Pitch et cérémonie des Awards en direct.</p></div>
+    <div class="card"><h3>${icon("globe",18)}Langues</h3><p class="muted">Français et anglais.</p></div>
     <h2>Le secrétariat</h2>
     <div class="card stack">
-      <a href="mailto:contact@jciacm.com">✉️ contact@jciacm.com</a>
-      <a href="tel:+237699089937">📞 +237 699 089 937 (WhatsApp)</a>
-      <a href="tel:+237677238022">📞 +237 677 238 022</a>
-      <a href="tel:+237222306079">📞 +237 222 306 079</a>
+      <a href="mailto:contact@jciacm.com">${icon("mail",18)} contact@jciacm.com</a>
+      <a href="tel:+237699089937">${icon("phone",18)} +237 699 089 937 (WhatsApp)</a>
+      <a href="tel:+237677238022">${icon("phone",18)} +237 677 238 022</a>
+      <a href="tel:+237222306079">${icon("phone",18)} +237 222 306 079</a>
       <p class="muted">Rond-point Cami-Toyota, Coron, Immeuble Dangote, 2ᵉ étage, Yaoundé</p>
     </div>
     <h2>L'organisateur</h2>
@@ -565,6 +747,247 @@ const views = {
     `};
   },
 };
+
+/* ---------- Composants partagés ---------- */
+const skeletons = n => Array.from({length:n}, () => `<div class="card row"><div class="sk" style="width:48px;height:48px;border-radius:50%"></div><div class="grow"><div class="sk line" style="width:55%"></div><div class="sk line" style="width:85%;margin-top:9px"></div></div></div>`).join("");
+
+const sessionCard = (s, mine, showConflicts) => {
+  const on = data.fav.includes(s.id);
+  const clash = showConflicts ? mine.filter(o => overlaps(s, o)) : [];
+  return `<li class="card has-fav"><span class="time">${s.time}</span> <span class="pill gray">${s.tag}</span>
+    <h3 style="margin-top:4px">${s.title}</h3>${s.desc ? `<p class="muted">${s.desc}</p>` : ""}
+    ${clash.length ? `<p class="warn">${icon("warning",15)}<span>Chevauche : ${clash.map(c => esc(c.title)).join(" ; ")}</span></p>` : ""}
+    <button class="fav" data-fav="${s.id}" aria-pressed="${on}" aria-label="${on ? "Retirer de" : "Ajouter à"} mon programme : ${esc(s.title)}">${icon("star",22)}</button></li>`;
+};
+
+let sheetNodes = null, sheetOpener = null;
+function openSheet(html){
+  closeSheet(true);
+  sheetOpener = document.activeElement;
+  const back = document.createElement("div"); back.className = "sheet-back"; back.addEventListener("click", () => closeSheet());
+  const sh = document.createElement("div"); sh.className = "sheet"; sh.tabIndex = -1;
+  sh.setAttribute("role","dialog"); sh.setAttribute("aria-modal","true");
+  sh.innerHTML = `<div class="grab"></div>` + html;
+  $("#app").append(back, sh); sheetNodes = [back, sh]; sh.focus();
+}
+function closeSheet(silent){
+  if(!sheetNodes) return;
+  sheetNodes.forEach(n => n.remove()); sheetNodes = null;
+  if(!silent && sheetOpener && sheetOpener.isConnected) { try { sheetOpener.focus(); } catch(e) {} }
+}
+
+function addNotif(n){
+  const pref = PREF_OF[n.type];
+  if(pref && !data.prefs[pref]) return;                       // l'utilisateur a désactivé ce type
+  data.notifs.unshift(Object.assign({ id:"n"+Date.now()+Math.random().toString(36).slice(2,6), when:"À l'instant", read:false }, n));
+  save(); renderTopbar(lastV);
+  toast("Nouvelle notification : " + n.title, "bell");
+  if(current === "notifications") render("notifications", { anim:false, keepScroll:true });
+}
+/* Simulation : le « serveur » confirme la demande de rendez-vous quelques secondes plus tard. */
+function scheduleConfirm(r){
+  setTimeout(() => {
+    const x = data.req.find(q => q.id === r.id);
+    if(!x || x.status !== "pending") return;
+    x.status = "confirmed"; save();
+    const p = MM_PROFILES.find(q => q.id === x.pid);
+    addNotif({ type:"meeting", title:"Rendez-vous confirmé", body:`${p.name} · mar. 27 avril, ${x.slot}`, go:"matchmaking" });
+    if(current === "matchmaking") render("matchmaking", { anim:false, keepScroll:true });
+  }, 3500);
+}
+data.req.filter(r => r.status === "pending").forEach(scheduleConfirm);
+
+/* ---------- Écrans ajoutés ou remplacés ---------- */
+Object.assign(views, {
+
+  programme(){
+    const mine = SESSIONS.filter(s => data.fav.includes(s.id));
+    const mode = state.day;
+    const seg = `<div class="seg" role="group" aria-label="Affichage du programme">
+      <button data-day="1" aria-pressed="${mode===1}">27 avril</button>
+      <button data-day="2" aria-pressed="${mode===2}">28 avril</button>
+      <button class="wide" data-day="3" aria-pressed="${mode===3}">${icon("star",15)} Mon programme${mine.length ? ` (${mine.length})` : ""}</button></div>`;
+    let body = "";
+    if(mode === 3){
+      if(!mine.length){
+        body = `<div class="card" style="text-align:center;padding:26px 18px"><div class="tile" style="--c:var(--k1);margin:0 auto 12px;width:56px;height:56px">${icon("star",28)}</div>
+          <h3>Votre programme est vide</h3><p class="muted" style="margin:6px 0 14px">Touchez l'étoile d'une session pour l'ajouter. Nous vous prévenons en cas de chevauchement.</p>
+          <button class="btn secondary" data-day="1">Parcourir le programme</button></div>`;
+      } else {
+        body = [1,2].map(d => {
+          const L = mine.filter(s => s.day === d).sort((a,b) => (a.start ?? 1e9) - (b.start ?? 1e9));
+          return L.length ? `<h2>${d===1 ? "Mardi 27 avril" : "Mercredi 28 avril"}</h2><ul class="timeline">${L.map(s => sessionCard(s, mine, true)).join("")}</ul>` : "";
+        }).join("") + `<div class="card"><button class="switch" role="switch" aria-checked="${data.prefs.sessions}" data-switch="sessions"><span class="trk"></span>
+          <span class="grow"><b>Me rappeler 15 min avant</b><br><small class="muted">Notification avant chaque session de votre programme</small></span></button></div>`;
+      }
+    } else {
+      body = `<p class="muted" style="margin-bottom:12px">${mode===1 ? "Ouverture officielle, plénières et inauguration du Salon" : "Masterclasses, forums, Startup Pitch et gala"}</p>
+        <ul class="timeline">${SESSIONS.filter(s => s.day === mode).map(s => sessionCard(s, mine, false)).join("")}</ul>`;
+      if(mode === 2) body += `<h2>Les 4 masterclasses · 09:00–12:00</h2>
+        <p class="muted" style="margin-bottom:8px">3 h · exercices pratiques · certificat · places limitées</p>
+        ${MASTERCLASSES.map((m,i) => `<div class="card"><span class="pill orange">0${i+1}</span><h3 style="margin-top:6px">${m[0]}</h3><p class="muted">Public : ${m[1]}</p></div>`).join("")}`;
+    }
+    return { title:"Programme", html: seg + body + `
+      <div class="row" style="margin-top:14px"><button class="btn secondary" data-stub="Télécharge un fichier .ics de l'événement">${icon("calendar",18)} Ajouter à mon calendrier</button></div>
+      <p class="muted" style="margin-top:12px">Programme susceptible d'évoluer. Sessions en français et en anglais.</p>` };
+  },
+  myprogram(){ state.day = 3; return views.programme(); },
+
+  more(){
+    const unread = data.notifs.filter(n => !n.read).length;
+    const pending = data.req.length;
+    const voted = Object.keys(data.votes).length;
+    const item = (go, ic, c, label, sub) => `<button data-go="${go}"><span class="tile" style="--c:var(${c})">${icon(ic,22)}</span><span class="grow"><b>${label}</b>${sub ? `<br><small class="muted">${sub}</small>` : ""}</span>${icon("chevron",18)}</button>`;
+    return { title:"Plus", html:`
+    <p class="eyebrow dia">Pendant l'événement</p>
+    <div class="menu" style="margin-top:10px">
+      ${item("myprogram","star","--k1","Mon programme", data.fav.length ? `${data.fav.length} session${data.fav.length>1?"s":""}` : "Ajoutez vos sessions")}
+      ${item("matchmaking","briefcase","--k3","Rencontres B2B / B2G", pending ? `${pending} demande${pending>1?"s":""}` : "Planifiez vos rendez-vous")}
+      ${item("plan","map","--k2","Plan du Salon","Zones, stands et salles")}
+      ${item("vote","heart","--k4","Vote des Awards", `${voted} / 10 catégories`)}
+      ${item("notifications","bell","--k1","Notifications", unread ? `${unread} non lue${unread>1?"s":""}` : "Tout est lu")}
+    </div>
+    <p class="eyebrow dia" style="margin-top:22px">Découvrir</p>
+    <div class="menu" style="margin-top:10px">
+      ${item("salon","building","--k1","Salon National 100 % IA")}
+      ${item("awards","trophy","--k1","Cameroon AI Awards 2027")}
+      ${item("catalogue","book","--k2","Annuaire national de l'IA")}
+      ${item("participants","users","--k4","Participants")}
+      ${item("partners","link","--k3","Partenaires & sponsors")}
+      ${item("faq","help","--k2","FAQ")}
+      ${item("contact","mail","--k1","Contact & infos pratiques")}
+    </div>
+    <div class="card"><h3>Apparence</h3><p class="muted">Suit par défaut le réglage de votre téléphone, comme le site. Vous pouvez forcer Nuit ou Jour.</p>
+      <div class="seg" style="margin:10px 0 0" role="group" aria-label="Apparence"><button data-theme-set="night" aria-pressed="${getTheme()==="night"}">${icon("moon",16)} Nuit</button><button data-theme-set="day" aria-pressed="${getTheme()==="day"}">${icon("sun",16)} Jour</button></div></div>
+    <div class="card"><h3>Langue</h3><div class="seg" style="margin:8px 0 0"><button aria-pressed="true" data-stub="Le site existe en FR et EN">Français</button><button aria-pressed="false" data-stub="Le site existe en FR et EN">English</button></div></div>
+    <button class="btn secondary" data-reset>Réinitialiser les données de démonstration</button>
+    `};
+  },
+
+  matchmaking(){
+    const mm = state.mm, reqs = [...data.req].sort((a,b) => a.slot.localeCompare(b.slot));
+    const seg = `<div class="seg" role="group" aria-label="Rencontres">
+      <button data-mm-tab="sugg" aria-pressed="${mm.tab==="sugg"}">Suggestions</button>
+      <button data-mm-tab="mine" aria-pressed="${mm.tab==="mine"}">Mes demandes${reqs.length ? ` (${reqs.length})` : ""}</button></div>`;
+    let body = "";
+    if(mm.tab === "sugg"){
+      const list = MM_PROFILES.filter(p => mm.filter === "all" || p.kind === mm.filter);
+      body = `<div class="chips" role="group" aria-label="Type de rencontre">${[["all","Tous"],["B2B","B2B · Entreprises"],["B2G","B2G · Public"]].map(f => `<button class="chipbtn" data-mm-filter="${f[0]}" aria-pressed="${mm.filter===f[0]}">${f[1]}</button>`).join("")}</div>
+        ${list.map(p => { const done = data.req.some(r => r.pid === p.id); return `
+        <div class="card"><div class="row"><div class="avatar">${initials(p.name)}</div><div class="grow"><h3>${p.name}</h3><p class="muted">${p.role} · ${p.sector}</p></div><span class="pill ${p.kind==="B2G" ? "violet" : "orange"}">${p.kind}</span></div>
+          <p class="muted" style="margin-top:10px"><b style="color:var(--text)">Recherche :</b> ${p.seeks}</p>
+          <p class="muted"><b style="color:var(--text)">Propose :</b> ${p.offers}</p>
+          <div class="row" style="margin-top:10px"><span class="muted grow">Compatibilité avec votre profil</span><b>${p.score} %</b></div><div class="bar"><i style="width:${p.score}%"></i></div>
+          <button class="btn secondary" style="margin-top:12px" data-mm-req="${p.id}" ${done ? "disabled" : ""}>${done ? `${icon("check",16)} Demande envoyée` : "Demander un rendez-vous"}</button></div>`; }).join("")}`;
+    } else if(!reqs.length){
+      body = `<div class="card" style="text-align:center;padding:26px 18px"><div class="tile" style="--c:var(--k3);margin:0 auto 12px;width:56px;height:56px">${icon("briefcase",28)}</div>
+        <h3>Aucune demande pour l'instant</h3><p class="muted" style="margin:6px 0 14px">Choisissez un profil dans les suggestions et proposez un créneau.</p>
+        <button class="btn secondary" data-mm-tab="sugg">Voir les suggestions</button></div>`;
+    } else {
+      body = reqs.map(r => { const p = MM_PROFILES.find(q => q.id === r.pid); const ok = r.status === "confirmed"; return `
+        <div class="card"><div class="row"><div class="avatar">${initials(p.name)}</div><div class="grow"><h3>${p.name}</h3><p class="muted">Mar. 27 avril · ${r.slot} · Espace B2B / B2G</p></div>
+          <span class="pill ${ok ? "orange" : ""}">${ok ? icon("check",12) + " Confirmé" : icon("clock",12) + " En attente"}</span></div>
+          <button class="btn secondary" style="margin-top:12px;min-height:40px" data-mm-cancel="${r.id}">Annuler la demande</button></div>`; }).join("")
+        + `<p class="muted">Simulation : la confirmation arrive automatiquement après quelques secondes.</p>`;
+    }
+    return { title:"Rencontres B2B / B2G", back:"more", html:`
+      <p class="muted">Planifiez vos rendez-vous avant l'événement : B2B (entreprises, startups, investisseurs) et B2G (administrations).</p>
+      <div class="notice" style="margin:12px 0">Inclus avec les billets Standard, VIP et En ligne. Profils et rendez-vous : <b>exemples fictifs</b>.</div>${seg}${body}` };
+  },
+
+  plan(){
+    const p = state.plan, sel = ZONES.find(z => z.id === p.sel);
+    const svg = `<svg class="plan ${p.cat ? "dim" : ""}" viewBox="0 0 360 340" role="group" aria-label="Plan indicatif du Hilton Yaoundé">
+      ${ZONES.map(z => `<g class="z ${p.cat && z.cat === p.cat ? "on" : ""} ${z.id === p.sel ? "sel" : ""}" data-zone="${z.id}" role="button" tabindex="0" aria-label="${esc(z.name)}" aria-pressed="${z.id === p.sel}" style="--c:${CATS[z.cat].c}">
+        <rect x="${z.x}" y="${z.y}" width="${z.w}" height="${z.h}" rx="10" style="fill:var(--c);stroke:var(--c)"/>
+        <text x="${z.x + z.w/2}" y="${z.y + z.h/2}" text-anchor="middle" dominant-baseline="middle">${esc(z.name)}</text></g>`).join("")}
+      <g class="here" aria-hidden="true"><circle class="pulse" cx="28" cy="288" r="5.5"/><circle cx="28" cy="288" r="5.5"/></g></svg>`;
+    const info = sel
+      ? `<div class="card" style="border-top:5px solid ${CATS[sel.cat].c}"><h3>${esc(sel.name)}</h3><p class="muted">${esc(sel.desc)}</p>${sel.go ? `<button class="btn secondary" style="margin-top:12px" data-go="${sel.go}">${GO_LABEL[sel.go]}</button>` : ""}</div>`
+      : `<div class="card"><p class="muted">Touchez une zone pour voir ce qu'elle accueille.</p></div>`;
+    return { title:"Plan du Salon", back:"more", html:`
+      <div class="notice">Plan <b>indicatif</b> : le plan officiel du Hilton n'est pas encore publié. Les zones reprennent les espaces cités sur le site, l'agencement est fictif.</div>
+      <div class="chips" role="group" aria-label="Filtrer par type d'espace">${Object.entries(CATS).filter(([k]) => k !== "service").map(([k,v]) => `<button class="chipbtn" data-plan-cat="${k}" aria-pressed="${p.cat === k}"><span class="sw" style="background:${v.c}"></span>${v.name}</button>`).join("")}</div>
+      ${svg}${info}
+      <details><summary>Liste des zones</summary><div class="stack" style="margin-top:10px">${ZONES.map(z => `<button class="chipbtn" style="width:100%;justify-content:flex-start" data-zone="${z.id}" aria-pressed="${z.id === p.sel}"><span class="sw" style="background:${CATS[z.cat].c}"></span>${esc(z.name)}</button>`).join("")}</div></details>
+      <p class="muted" style="margin-top:12px"><span style="color:var(--acc)">●</span> Le point pulsant marque l'accueil, où vous entrez.</p>` };
+  },
+
+  vote(){
+    const v = state.vote, c = v.cat, done = Object.keys(data.votes).length;
+    const chosen = data.votes[c];
+    return { title:"Vote des Awards", back:"awards", html:`
+      <div class="hero" style="padding:16px"><span class="chip">Vote du public · 20 mars → 15 avril 2027</span>
+        <h2 style="font-size:20px;margin-top:12px">Votez pour vos <span class="grad">favoris</span></h2>
+        <p class="theme">Le public pèse 40 % de la note finale, le jury 60 %. Résultats au gala du 28 avril.</p></div>
+      <div class="notice" style="margin:12px 0">Aperçu : <b>finalistes fictifs</b>. La liste officielle (5 projets par catégorie) est publiée le 15 mars 2027. Les règles de vote (un vote par catégorie, modification possible) sont à confirmer.</div>
+      <div class="card"><div class="row"><b class="grow">Votre participation</b><b>${done} / 10</b></div><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${done}"><i style="width:${done*10}%"></i></div></div>
+      <div class="chips" role="group" aria-label="Catégories">${SHORT.map((s,i) => `<button class="chipbtn" data-vote-cat="${i}" aria-pressed="${i === c}">${data.votes[i] ? `<span class="done">${icon("check",14)}</span>` : ""}${s}</button>`).join("")}</div>
+      <h2 style="margin-top:6px">${AWARDS[c]}</h2>
+      ${LETTERS.map(l => { const id = `${c}-${l}`, mine = chosen === id; return `
+        <div class="card" ${mine ? 'style="border-color:var(--acc)"' : ""}><div class="row"><div class="avatar">${l}</div><div class="grow"><h3>Projet exemple ${l}</h3><p class="muted">Description fictive d'un projet finaliste : problème, solution et impact.</p></div></div>
+          <button class="btn ${mine ? "" : "secondary"}" style="margin-top:12px" data-vote="${id}" ${mine ? "disabled" : ""}>${mine ? icon("check",16) + " Votre vote" : (chosen ? "Voter pour celui-ci" : "Voter")}</button></div>`; }).join("")}` };
+  },
+
+  notifications(){
+    const list = data.notifs, unread = list.filter(n => !n.read).length;
+    const sw = (k, label, sub) => `<button class="switch" role="switch" aria-checked="${data.prefs[k]}" data-switch="${k}"><span class="trk"></span><span class="grow"><b>${label}</b><br><small class="muted">${sub}</small></span></button>`;
+    return { title:"Notifications", back:"more", html:`
+      <div class="row" style="margin-bottom:12px"><p class="muted grow">${unread ? `${unread} non lue${unread>1 ? "s" : ""}` : "Tout est lu"} · exemples fictifs</p>
+        ${unread ? `<button class="btn secondary" style="width:auto;min-height:40px;padding:6px 16px;font-size:13px" data-notif-all>Tout marquer comme lu</button>` : ""}</div>
+      ${list.length ? list.map(n => { const t = NTYPE[n.type] || NTYPE.news; return `
+        <button class="notif ${n.read ? "" : "unread"}" data-notif="${n.id}"><span class="tile" style="--c:var(${t[1]})">${icon(t[0],20)}</span>
+          <span class="grow"><span class="t">${esc(n.title)}</span><br><span class="muted">${esc(n.body)}</span><br><small class="muted">${esc(n.when)}</small></span>
+          ${n.read ? "" : `<span class="dot" aria-hidden="true"></span><span class="sr">Non lue</span>`}</button>`; }).join("") : `<div class="card" style="text-align:center">Aucune notification.</div>`}
+      <h2>Préférences</h2>
+      <div class="card stack">${sw("sessions","Rappels de sessions","15 minutes avant les sessions de Mon programme")}${sw("meetings","Rendez-vous B2B / B2G","Confirmations et changements de créneau")}${sw("news","Annonces de l'organisateur","Programme, intervenants, informations pratiques")}${sw("vote","Vote des Awards","Ouverture et clôture du vote du public")}</div>
+      <p class="muted">Dans l'app réelle, l'autorisation d'envoi de notifications (push) est demandée au premier lancement.</p>` };
+  },
+
+  processing(){
+    const r = state.reg, t = TICKETS.find(x => x.id === r.ticket);
+    return { title:"Paiement", html:`
+      <div class="card" style="text-align:center;padding:26px 18px"><div class="spinner" role="progressbar" aria-label="Paiement en cours"></div>
+        <h2 style="margin:8px 0">En attente de votre validation</h2>
+        <p class="muted">${r.pay === "momo" ? `Une demande de paiement de ${fcfa(t.price)} a été envoyée sur votre téléphone. Approuvez-la pour confirmer votre billet.` : "Redirection vers la page de paiement sécurisée…"}</p>
+        <p class="muted" style="margin-top:10px">Simulation : confirmation automatique dans quelques secondes.</p></div>
+      <button class="btn secondary" data-go="register">Annuler</button>`,
+      after(){ payTimer = setTimeout(() => { if(current === "processing") confirmTicket(); }, 2600); } };
+  },
+
+  catalogue(){
+    const types = ["Tous", ...new Set(DIRECTORY.map(d => d.t))];
+    return { title:"Annuaire national", back:"more", html:`
+      <p class="muted">Première nationale : la base de référence, structurée et vérifiée, des acteurs de l'écosystème IA camerounais. Édition imprimée prestige + version numérique consultable. Objectif : 1 000+ acteurs.</p>
+      <div class="notice" style="margin:12px 0">Aperçu de la recherche (par compétence, secteur et région) : <b>résultats fictifs</b>.</div>
+      <input type="search" id="dq" placeholder="Nom, compétence, secteur ou région" aria-label="Rechercher dans l'annuaire">
+      <div class="chips" id="dchips" style="margin-top:10px" role="group" aria-label="Type d'acteur">${types.map((t,i) => `<button class="chipbtn" data-dir-type="${i ? esc(t) : "all"}" aria-pressed="${i === 0}">${t}</button>`).join("")}</div>
+      <div id="dlist">${skeletons(4)}</div>
+      <h2>Vos données, <span class="grad">vos choix</span></h2>
+      <p class="muted">Consentement explicite · droit de rectification et de retrait · minimisation · respect du cadre camerounais de protection des données.</p>
+      <a class="btn" style="margin-top:14px" href="mailto:contact@jciacm.com?subject=Annuaire%20national">Demander à être référencé</a>`,
+      after(){
+        let ready = false, type = "all";
+        const draw = () => {
+          if(!ready) return;
+          const q = $("#dq").value.trim().toLowerCase();
+          const r = DIRECTORY.filter(d => (type === "all" || d.t === type) && Object.values(d).join(" ").toLowerCase().includes(q));
+          $("#dlist").innerHTML = r.map(d => `<div class="card row"><div class="avatar">${initials(d.n)}</div><div class="grow"><h3>${d.n}</h3><p class="muted">${d.t} · ${d.s}</p><p class="muted">${d.r} · ${d.k}</p></div></div>`).join("") || `<p class="muted">Aucun résultat.</p>`;
+        };
+        $("#dq").addEventListener("input", draw);
+        $("#dchips").addEventListener("click", e => { const b = e.target.closest("[data-dir-type]"); if(!b) return; type = b.dataset.dirType; $("#dchips").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); draw(); });
+        setTimeout(() => { if(current === "catalogue"){ ready = true; draw(); } }, 700);   // simule le chargement réseau
+      } };
+  },
+
+  participants(){
+    return { title:"Participants", back:"more", html:`
+      <div class="notice">Exemples fictifs. Dans l'app réelle, seules les personnes ayant coché « apparaître dans la liste publique » seront affichées (jamais e-mail ni WhatsApp).</div>
+      <div id="plist">${skeletons(4)}</div>
+      <button class="btn" data-go="tickets">Rejoignez-les</button>`,
+      after(){ setTimeout(() => { if(current === "participants") $("#plist").innerHTML = ATTENDEES.map(a => `<div class="card row"><div class="avatar">${initials(a[0])}</div><div class="grow"><h3>${a[0]}</h3><p class="muted">${a[1]}</p></div><span class="pill ${a[3] === "VIP" ? "orange" : "gray"}">${a[3]}</span></div>`).join(""); }, 700); } };
+  },
+});
 
 /* ---------- Logique ---------- */
 function bindRegister(){
@@ -593,7 +1016,7 @@ function setTheme(t){
 }
 function themeBtn(){
   const day = getTheme()==="day";
-  return `<button class="theme-btn" data-theme-toggle aria-label="${day?"Passer à la version Nuit":"Passer à la version Jour"}">${day?"🌙":"☀️"}</button>`;
+  return `<button class="theme-btn" data-theme-toggle aria-label="${day?"Passer à la version Nuit":"Passer à la version Jour"}">${day?icon("moon",20):icon("sun",20)}</button>`;
 }
 (function initTheme(){
   let t = (window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches) ? "night" : "day";
@@ -603,21 +1026,34 @@ function themeBtn(){
   document.documentElement.dataset.theme = t==="day" ? "day" : "night";
 })();
 
-let current = "home", timer = null;
-function render(name){
+let current = "home", timer = null, payTimer = null, lastV = null;
+const TAB_OF = { register:"tickets", confirmed:"tickets", processing:"tickets", myprogram:"programme" };
+const TRANSIENT = ["register","processing","confirmed"];      // écrans qu'on ne restaure pas depuis l'URL
+
+function renderTopbar(v){
+  const unread = data.notifs.filter(n => !n.read).length;
+  const bell = `<button class="bell-btn" data-go="notifications" aria-label="Notifications${unread ? `, ${unread} non lue${unread > 1 ? "s" : ""}` : ""}">${icon("bell",20)}${unread ? `<span class="badge" aria-hidden="true">${unread}</span>` : ""}</button>`;
+  $("#topbar").innerHTML = v.title === null
+    ? `<img class="logo-img logo-night" src="assets/logo-jcia.png" alt="JCIA — Journées Camerounaises de l'Intelligence Artificielle, Hilton Yaoundé, 27 et 28 avril 2027" width="150" height="65"><img class="logo-img logo-day" src="assets/logo-jcia-jour.png" alt="" aria-hidden="true" width="150" height="65"><span class="spacer"></span>${bell}${themeBtn()}`
+    : `${v.back ? `<button class="back" data-go="${v.back}" aria-label="Retour">${icon("back",20)}</button>` : ""}<h1>${v.title}</h1>${bell}${themeBtn()}`;
+}
+
+function render(name, opts = {}){
   current = name;
   if(timer){ clearInterval(timer); timer = null; }
-  const v = views[name]();
-  const top = $("#topbar");
-  top.innerHTML = v.title === null
-    ? `<img class="logo-img logo-night" src="assets/logo-jcia.png" alt="JCIA — Journées Camerounaises de l'Intelligence Artificielle, Hilton Yaoundé, 27 et 28 avril 2027" width="150" height="65"><img class="logo-img logo-day" src="assets/logo-jcia-jour.png" alt="" aria-hidden="true" width="150" height="65"><span class="spacer"></span>${themeBtn()}`
-    : `${v.back?`<button class="back" data-go="${v.back}" aria-label="Retour">←</button>`:""}<h1>${v.title}</h1><span class="mini">JCIA <b>2027</b></span>${themeBtn()}`;
-  $("#view").innerHTML = v.html;
-  $("#view").scrollTop = 0;
-  const activeTab = ["register","confirmed"].includes(name) ? "tickets" : (TABS.find(t=>t[0]===name) ? name : "more");
-  $("#tabbar").innerHTML = TABS.map(t=>`<button data-go="${t[0]}" ${t[0]===activeTab?'aria-current="page"':""}><span class="ico">${t[1]}</span>${t[2]}</button>`).join("");
+  clearTimeout(payTimer); closeSheet(true);
+  const v = views[name](); lastV = v;
+  const main = $("#view"), keep = main.scrollTop, noAnim = opts.anim === false;
+  renderTopbar(v);
+  main.classList.toggle("noanim", noAnim);
+  main.innerHTML = v.html;
+  if(!noAnim) [...main.children].forEach((el, i) => { el.style.animationDelay = Math.min(i, 9) * 45 + "ms"; });   // apparition en cascade
+  main.style.scrollBehavior = "auto"; main.scrollTop = opts.keepScroll ? keep : 0; main.style.scrollBehavior = "";
+  const active = TAB_OF[name] || (TABS.find(t => t[0] === name) ? name : "more");
+  $("#tabbar").innerHTML = TABS.map(t => `<button data-go="${t[0]}" ${t[0] === active ? 'aria-current="page"' : ""}><span class="ico">${icon(t[1],22)}</span>${t[2]}</button>`).join("");
   if(v.after) v.after();
-  history.replaceState(null,"","#"+name);
+  history.replaceState(null, "", "#" + name);
+  if(!opts.keepScroll && !noAnim) main.focus({ preventScroll:true });
 }
 
 function startCountdown(){
@@ -629,36 +1065,132 @@ function startCountdown(){
   };
   tick(); timer = setInterval(tick, 1000);
 }
+/* Chiffres clés qui « montent » à l'affichage (désactivé si l'utilisateur réduit les animations) */
+function countUp(){
+  if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll("[data-count]").forEach(el => {
+    const to = +el.dataset.count, suffix = el.dataset.suffix || "", t0 = performance.now();
+    const step = t => { const p = Math.min(1, (t - t0)/900); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString("fr-FR") + suffix; if(p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+}
+
+function confirmTicket(){
+  render("confirmed");
+  addNotif({ type:"ticket", title:"Votre billet est confirmé", body:"Présentez votre QR code à l'entrée du Hilton.", go:"confirmed" });
+}
+
+/* ---------- Actions (délégation d'événements) ---------- */
+function handleAction(e){
+  const a = e.target.closest("[data-fav],[data-mm-tab],[data-mm-filter],[data-mm-req],[data-slot],[data-mm-confirm],[data-mm-cancel],[data-zone],[data-plan-cat],[data-vote-cat],[data-vote],[data-vote-confirm],[data-sheet-close],[data-notif],[data-notif-all],[data-switch],[data-reset]");
+  if(!a) return false;
+  const d = a.dataset, again = { anim:false, keepScroll:true };
+
+  if(d.fav){
+    const i = data.fav.indexOf(d.fav), adding = i < 0;
+    if(adding) data.fav.push(d.fav); else data.fav.splice(i, 1);
+    save(); toast(adding ? "Ajouté à Mon programme" : "Retiré de Mon programme");
+    render(current, again);
+    const b = document.querySelector(`[data-fav="${d.fav}"]`); if(b) b.focus();
+    return true;
+  }
+  if(d.mmTab){ state.mm.tab = d.mmTab; render("matchmaking", { anim:false }); return true; }
+  if(d.mmFilter){ state.mm.filter = d.mmFilter; render("matchmaking", again); return true; }
+  if(d.mmReq){
+    const p = MM_PROFILES.find(x => x.id === d.mmReq), taken = data.req.map(r => r.slot);
+    state.mm.pid = p.id; state.mm.slot = null;
+    openSheet(`<h3>Rendez-vous avec ${esc(p.name)}</h3>
+      <p class="muted" style="margin:6px 0 14px">20 minutes · Espace B2B / B2G, Hilton Yaoundé. Mardi 27 avril ; les créneaux du mercredi 28 seront communiqués ultérieurement.</p>
+      <div class="chips" style="flex-wrap:wrap;overflow:visible;margin:0;padding:0" role="group" aria-label="Créneaux">${MM_SLOTS.map(t => `<button class="chipbtn" data-slot="${t}" aria-pressed="false" ${taken.includes(t) ? "disabled" : ""}>${t}${taken.includes(t) ? " · pris" : ""}</button>`).join("")}</div>
+      <div class="btn-row" style="margin-top:18px"><button class="btn secondary" data-sheet-close>Annuler</button><button class="btn" id="slotok" data-mm-confirm disabled>Envoyer</button></div>`);
+    return true;
+  }
+  if(d.slot){
+    state.mm.slot = d.slot;
+    sheetNodes[1].querySelectorAll("[data-slot]").forEach(b => b.setAttribute("aria-pressed", String(b === a)));
+    $("#slotok").disabled = false; return true;
+  }
+  if("mmConfirm" in d){
+    const r = { id:"r" + Date.now(), pid:state.mm.pid, slot:state.mm.slot, status:"pending" };
+    data.req.push(r); save(); closeSheet(true); scheduleConfirm(r);
+    state.mm.tab = "mine"; render("matchmaking", { anim:false }); toast("Demande envoyée");
+    return true;
+  }
+  if(d.mmCancel){ data.req = data.req.filter(r => r.id !== d.mmCancel); save(); toast("Demande annulée"); render("matchmaking", again); return true; }
+  if(d.zone){
+    state.plan.sel = state.plan.sel === d.zone ? null : d.zone; render("plan", again);
+    const n = document.querySelector(`[data-zone="${d.zone}"][role=button]`); if(n && e.detail === 0) n.focus();
+    return true;
+  }
+  if(d.planCat){ state.plan.cat = state.plan.cat === d.planCat ? null : d.planCat; render("plan", again); return true; }
+  if(d.voteCat){ state.vote.cat = +d.voteCat; render("vote", again); return true; }
+  if(d.vote){
+    const [c, l] = d.vote.split("-"); state.vote.pending = d.vote;
+    openSheet(`<h3>Confirmer votre vote ?</h3>
+      <p class="muted" style="margin:6px 0 14px">Catégorie « ${esc(SHORT[+c])} » · Projet exemple ${esc(l)}. Vous pourrez le modifier jusqu'à la clôture, le 15 avril 2027 (règle à confirmer avec l'organisateur).</p>
+      <div class="btn-row"><button class="btn secondary" data-sheet-close>Annuler</button><button class="btn" data-vote-confirm>Confirmer</button></div>`);
+    return true;
+  }
+  if("voteConfirm" in d){
+    data.votes[+state.vote.pending.split("-")[0]] = state.vote.pending; save(); closeSheet(true);
+    render("vote", again); toast("Vote enregistré"); return true;
+  }
+  if("sheetClose" in d){ closeSheet(); return true; }
+  if(d.notif){
+    const n = data.notifs.find(x => x.id === d.notif); if(n){ n.read = true; save(); }
+    render(n && n.go && views[n.go] ? n.go : current); return true;
+  }
+  if("notifAll" in d){ data.notifs.forEach(n => n.read = true); save(); render("notifications", again); return true; }
+  if(d.switch){
+    data.prefs[d.switch] = !data.prefs[d.switch]; save();
+    a.setAttribute("aria-checked", String(data.prefs[d.switch])); return true;
+  }
+  if("reset" in d){ data = defaults(); save(); render(current, again); toast("Données de démonstration réinitialisées"); return true; }
+  return false;
+}
 
 document.addEventListener("click", e => {
+  if(handleAction(e)) return;
   const th = e.target.closest("[data-theme-toggle],[data-theme-set]");
-  if(th){ setTheme(th.dataset.themeSet || (getTheme()==="day" ? "night" : "day")); return render(current); }
+  if(th){ setTheme(th.dataset.themeSet || (getTheme()==="day" ? "night" : "day")); return render(current, { anim:false, keepScroll:true }); }
   const t = e.target.closest("[data-go],[data-day],[data-buy],[data-step],[data-stub]");
   if(!t) return;
-  if(t.dataset.stub){ e.preventDefault(); toast("Maquette — " + t.dataset.stub); return; }
+  if(t.dataset.stub){ e.preventDefault(); toast("Maquette — " + t.dataset.stub, "info"); return; }
   if(t.dataset.go) return render(t.dataset.go);
-  if(t.dataset.day){ state.day = +t.dataset.day; return render("programme"); }
+  if(t.dataset.day){ state.day = +t.dataset.day; return render("programme", { anim:false }); }
   if(t.dataset.buy){ state.reg.ticket = t.dataset.buy; state.reg.step = 2; return render("register"); }
   if(t.dataset.step){
-    const r = state.reg, d = +t.dataset.step;
-    if(d<0){ if(r.step===1) return render("tickets"); r.step--; return render("register"); }
-    if(r.step===2){ const err = validStep2(); if(err) return toast(err); }
-    if(r.step===4) return render("confirmed");
-    r.step++; render("register");
+    const r = state.reg, dir = +t.dataset.step;
+    if(dir < 0){ if(r.step === 1) return render("tickets"); r.step--; return render("register", { anim:false }); }
+    if(r.step === 2){ const err = validStep2(); if(err) return toast(err, "warning"); }
+    if(r.step === 4){ const tk = TICKETS.find(x => x.id === r.ticket); return tk.price > 0 ? render("processing") : confirmTicket(); }
+    r.step++; render("register", { anim:false });
   }
 });
 
-function toast(msg){
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeSheet();
+  const z = e.target.closest && e.target.closest("[data-zone][role=button]");
+  if(z && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); z.dispatchEvent(new MouseEvent("click", { bubbles:true })); }
+  if(e.key === "Tab" && sheetNodes){                                   // piège le focus dans la feuille ouverte
+    const f = [...sheetNodes[1].querySelectorAll("button:not([disabled]),a[href],input,select")];
+    if(!f.length) return;
+    const first = f[0], last = f[f.length - 1], cur = document.activeElement;
+    if(e.shiftKey && (cur === first || cur === sheetNodes[1])){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && cur === last){ e.preventDefault(); first.focus(); }
+  }
+});
+
+function toast(msg, ic = "check"){
   let n = $("#toast");
-  if(!n){ n = document.createElement("div"); n.id="toast"; n.setAttribute("role","status");
-    n.style.cssText="position:absolute;left:16px;right:16px;bottom:80px;background:#111;color:#fff;padding:12px 14px;border-radius:12px;font-size:14px;z-index:9;box-shadow:0 6px 20px rgba(0,0,0,.4)";
-    $("#app").appendChild(n); }
-  n.textContent = msg; n.style.display = "block";
-  clearTimeout(n._t); n._t = setTimeout(()=>n.style.display="none", 2600);
+  if(!n){ n = document.createElement("div"); n.id = "toast"; n.className = "toast"; n.setAttribute("role","status"); $("#app").appendChild(n); }
+  n.innerHTML = `${icon(ic,18)}<span>${esc(msg)}</span>`;
+  n.classList.remove("show"); void n.offsetWidth; n.classList.add("show");
+  clearTimeout(n._t); n._t = setTimeout(() => n.classList.remove("show"), 2800);
 }
 
 const start = location.hash.slice(1);
-render(views[start] ? start : "home");
+render(views[start] && !TRANSIENT.includes(start) ? start : "home");
 </script>
 </body>
 </html>

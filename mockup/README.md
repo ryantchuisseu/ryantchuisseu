@@ -13,11 +13,33 @@ Sur ordinateur, l'app s'affiche dans un cadre de téléphone ; sur mobile, en pl
 
 | Onglet | Écrans |
 |---|---|
-| Accueil | Hero, compte à rebours, chiffres, défis, parcours, communauté |
-| Programme | Jour 1 / Jour 2, masterclasses |
+| Accueil | Hero, compte à rebours, **4 raccourcis**, à propos, chiffres animés, défis, parcours, communauté |
+| Programme | Jour 1 / Jour 2 / **Mon programme** (étoile par session, détection des chevauchements, rappels), masterclasses |
 | Intervenants | Liste + recherche |
-| Billets | 5 billets → inscription en 4 étapes → billet (QR fictif) + visuel « I'll be there » |
-| Plus | Salon 100 % IA, Awards, Annuaire, Participants, Partenaires, FAQ, Contact, choix Nuit / Jour |
+| Billets | 5 billets → inscription en 4 étapes → **attente de paiement** → billet (QR fictif) + visuel « I'll be there » |
+| Plus | **Mon programme, Rencontres B2B/B2G, Plan du Salon, Vote des Awards, Notifications**, puis Salon 100 % IA, Awards, Annuaire, Participants, Partenaires, FAQ, Contact ; choix Nuit / Jour ; réinitialisation de la démo |
+
+Les cinq écrans en gras correspondent aux fonctions que le site annonce pour l'« app événement » : programme personnalisé, matchmaking B2B/B2G, notifications, plans du Salon, plus le vote du public des Awards.
+
+## Version 2 : finitions et écrans ajoutés
+
+- **Icônes** : SVG en ligne (`ICONS` dans `index.html`, trait 1,8 px, couleur héritée) à la place des emojis.
+- **Animations** : apparition en cascade des écrans, retour tactile sur les boutons, feuille du bas (« bottom sheet »), squelettes de chargement (Annuaire, Participants), écran d'attente de paiement, chiffres clés animés, point pulsant « vous êtes ici » sur le plan. Tout est désactivé si l'utilisateur règle « réduire les animations » (`prefers-reduced-motion`).
+- **Accessibilité** : interrupteurs `role="switch"`, feuilles `role="dialog"` avec piège de focus et fermeture par Échap, zones du plan utilisables au clavier (Entrée/Espace) avec liste alternative, texte « Non lue » pour lecteurs d'écran.
+- **Données locales** : favoris, votes, demandes de rendez-vous, notifications et préférences sont mémorisés dans le navigateur (clé `jcia-mock-v2`). Plus → « Réinitialiser les données de démonstration » remet tout à zéro.
+- **Correctif** : en version Nuit, le logo de la version Jour s'affichait aussi (ordre de règles CSS).
+
+### Hypothèses de la maquette à faire valider
+
+| Sujet | Hypothèse prise | À confirmer |
+|---|---|---|
+| Vote du public | Un vote par catégorie, modifiable jusqu'au 15 avril ; 5 finalistes fictifs par catégorie | Règles officielles, authentification (billet ? e-mail ?), anti-fraude |
+| Rendez-vous B2B/B2G | Créneaux de 20 min le mardi 27, 15:00–18:00 (plage « rencontres » du programme) ; confirmation simulée après 3,5 s | Créneaux du mercredi, qui confirme, lieu exact, billets concernés |
+| Compatibilité (%) | Valeur fictive | Algorithme de recommandation, ou on l'enlève |
+| Plan du Salon | Plan **fictif** ; zones reprises des espaces cités sur le site | Plan officiel du Hilton |
+| Rappels | 15 minutes avant chaque session | Délai souhaité |
+| Notifications | 5 types (sessions, rendez-vous, annonces, vote, billet) | Liste réelle, fréquence, textes |
+| Durée d'une session sans heure de fin | 45 min (sert à détecter les chevauchements) | Horaires exacts du programme |
 
 ## Charte graphique appliquée (v1.0, octobre 2026)
 
@@ -65,7 +87,9 @@ Demander à l'organisateur le logo en **SVG/PNG haute définition**, la carte et
 - Données (programme, intervenants, billets) à servir par une API, pas en dur dans le JS.
 - Paiement (Mobile Money / Stripe, via le prestataire existant) et QR code à générer côté serveur.
 - Liste des participants : afficher uniquement les personnes ayant donné leur consentement ; ne jamais exposer e-mail ni WhatsApp.
-- Sections manquantes dans la maquette : espace connecté, matchmaking B2B/B2G, vote du public des Awards, notifications, plan du Salon (annoncés sur le site comme « app événement »).
+- Notifications : vrais envois push (APNs / FCM) et autorisation demandée au premier lancement ; ici les notifications sont simulées.
+- Rendez-vous B2B/B2G et vote : à brancher sur un serveur (authentification, quotas, anti-doublons) ; ici tout est local au navigateur.
+- Encore absents de la maquette : espace connecté (compte, connexion), « I'll be there » avec photo réelle et recadrage, version anglaise complète, mode hors-ligne.
 
 ## Limites du relevé
 
