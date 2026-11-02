@@ -7,7 +7,9 @@
    ===================================================================== */
 "use strict";
 const qs = new URLSearchParams(location.search);
-const STYLE = ["3d","flat"].includes(qs.get("icons")) ? qs.get("icons") : (window.JCIA_ICONS || "3d");
+const SKIN = ["leger"].includes(qs.get("skin")) ? qs.get("skin") : (window.JCIA_SKIN || "");   // habillage optionnel « Léger »
+if(SKIN) document.documentElement.dataset.skin = SKIN;
+const STYLE = ["3d","flat"].includes(qs.get("icons")) ? qs.get("icons") : (window.JCIA_ICONS || (SKIN === "leger" ? "flat" : "3d"));
 const IMG = window.JCIA_IMG || {}, ASSET = window.JCIA_ASSET || {};
 const asset = n => ASSET[n] || ({ logo:"../assets/logo-jcia.png", logoDay:"../assets/logo-jcia-jour.png", band:"../assets/bande-toghu.png", map:"../assets/carte-cameroun.png" })[n];
 const EVENT_START = new Date("2027-04-27T07:00:00Z");
@@ -166,7 +168,7 @@ const initials = n => n.split(" ").filter(Boolean).slice(0, 2).map(w => w[0]).jo
 const mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
 function applyTheme(){
   const q = qs.get("theme"), p = D.theme || "auto";
-  const t = (q === "day" || q === "night") ? q : (p === "auto" ? (mq && mq.matches ? "night" : "day") : p);
+  const t = SKIN === "leger" ? "day" : (q === "day" || q === "night") ? q : (p === "auto" ? (mq && mq.matches ? "night" : "day") : p);
   document.documentElement.dataset.theme = t;
 }
 if(mq && mq.addEventListener) mq.addEventListener("change", applyTheme);
@@ -639,8 +641,8 @@ V.explore = () => {
       ${sw("haptics", "Vibrations", "Un léger retour au toucher")}
       ${sw("sound", "Sons", "Un petit carillon lors des réussites")}
     </div>
-    <h2>Apparence</h2>
-    <div class="seg" role="group" aria-label="Apparence">${[["auto","Auto"],["night","Nuit"],["day","Jour"]].map(x => `<button data-th="${x[0]}" aria-pressed="${D.theme === x[0]}">${x[0] === "night" ? flat("moon", 18) : x[0] === "day" ? flat("sun", 18) : ""} ${x[1]}</button>`).join("")}</div>
+    ${SKIN === "leger" ? "" : `<h2>Apparence</h2>
+    <div class="seg" role="group" aria-label="Apparence">${[["auto","Auto"],["night","Nuit"],["day","Jour"]].map(x => `<button data-th="${x[0]}" aria-pressed="${D.theme === x[0]}">${x[0] === "night" ? flat("moon", 18) : x[0] === "day" ? flat("sun", 18) : ""} ${x[1]}</button>`).join("")}</div>`}
     ${window.JCIA_ICONS_FIXED ? "" : `<div class="seg" role="group" aria-label="Style d'icônes"><button data-icons="3d" aria-pressed="${STYLE === "3d"}">Icônes 3D</button><button data-icons="flat" aria-pressed="${STYLE === "flat"}">Icônes plates</button></div>`}
     <h2>Mode démonstration</h2>
     <p class="sub" style="margin-top:-6px">Pour présenter l'app : simulez l'événement en cours.</p>
@@ -825,10 +827,10 @@ document.addEventListener("keydown", e => {
 
 /* ---------- Écrans d'accueil (3 étapes + choix des thèmes) ---------- */
 const OB = [
-  { c:"#F6A343", ico:["rocket","sparkles","robot"],      t:"Bienvenue aux JCIA 2027",         p:"Les Journées camerounaises de l'IA, les 27 et 28 avril au Hilton Yaoundé.", cta:"Continuer" },
-  { c:"#2DB8BD", ico:["calendar","star","clock"],        t:"Composez votre programme",        p:"Mettez vos sessions en favori. Nous vous prévenons avant qu'elles commencent.", cta:"Continuer" },
-  { c:"#5D4696", ico:["handshake","briefcase","ticket"], t:"Rencontrez les bonnes personnes", p:"Planifiez vos rendez-vous B2B et B2G, et gardez votre billet à portée de main.", cta:"Continuer" },
-  { c:"#CD6035", ico:["brain","bulb","sparkles"], prefs:true, t:"Qu'est-ce qui vous intéresse ?", p:"Choisissez jusqu'à 4 thèmes : nous vous suggérerons les bonnes sessions et rencontres.", cta:"Commencer" },
+  { c:"#F6A343", ico:["rocket","sparkles","robot"],      t:"Bienvenue aux <em>JCIA 2027</em>",         p:"Les Journées camerounaises de l'IA, les 27 et 28 avril au Hilton Yaoundé.", cta:"Continuer" },
+  { c:"#2DB8BD", ico:["calendar","star","clock"],        t:"Composez <em>votre</em> programme",        p:"Mettez vos sessions en favori. Nous vous prévenons avant qu'elles commencent.", cta:"Continuer" },
+  { c:"#5D4696", ico:["handshake","briefcase","ticket"], t:"Rencontrez les <em>bonnes</em> personnes", p:"Planifiez vos rendez-vous B2B et B2G, et gardez votre billet à portée de main.", cta:"Continuer" },
+  { c:"#CD6035", ico:["brain","bulb","sparkles"], prefs:true, t:"Qu'est-ce qui vous <em>intéresse</em> ?", p:"Choisissez jusqu'à 4 thèmes : nous vous suggérerons les bonnes sessions et rencontres.", cta:"Commencer" },
 ];
 let obI = 0, obOnly = false;
 function showOnboarding(startAt = 0, only = false){

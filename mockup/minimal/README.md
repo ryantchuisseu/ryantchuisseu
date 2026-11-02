@@ -7,6 +7,7 @@ de grands titres, des gestes simples. La maquette complète précédente reste d
 |---|---|
 | `dist/jcia-minimal-3d.html` | **Icônes 3D** (autonome : s'ouvre d'un double-clic) |
 | `dist/jcia-minimal-flat.html` | **Icônes plates** à traits (autonome) |
+| `dist/jcia-leger.html` | **Habillage « Léger »** inspiré de l'app *Atoms* (autonome) |
 | `index.html` + `style.css` + `app.js` | Code source lisible, même code pour les deux variantes (`?icons=3d` ou `?icons=flat`) |
 | `build.py` | Régénère les deux fichiers de `dist/` : `python3 build.py` |
 
@@ -37,6 +38,17 @@ de grands titres, des gestes simples. La maquette complète précédente reste d
 **Choix éthiques assumés** : pas de récompense aléatoire, pas de série à perdre, pas de classement public, pas de pression pour revenir. La préparation est finie, les sons sont désactivés par défaut, et tout effet de mouvement est coupé si l'utilisateur réduit les animations.
 
 **Limites** : l'export du visuel ne fonctionne pas depuis `index.html` ouvert en local (sécurité du navigateur) : utiliser les fichiers de `dist/` ou un petit serveur. Le partage natif dépend du téléphone (sinon, téléchargement). L'inclinaison au gyroscope demande une autorisation sur iPhone (au premier toucher du billet).
+
+## Habillage « Léger » (inspiré d'Atoms)
+
+Même application, même code (`app.js`), avec une feuille de style en plus : `leger.css`, active seulement si `<html data-skin="leger">` (`?skin=leger`).
+
+- Fond blanc cassé `#F7F5F0`, beaucoup d'air, cartes très arrondies (30 à 40 px) à ombre quasi invisible.
+- Typographie éditoriale : Sora pour le texte, **Instrument Serif** pour les grands titres et les mots en italique (« Bienvenue aux *JCIA 2027* »).
+- Galets pastel en décor (pêche, sauge, lavande, jaune), icônes à trait fin, boutons pilule encre.
+- Version jour uniquement (le choix Nuit / Jour est masqué).
+
+**Écarts à la charte, à valider** : police serif ajoutée à Sora, bouton principal encre au lieu du dégradé orange, teintes pastel dérivées de la palette, carte du Cameroun et bande toghu retirées de l'accueil.
 
 ## Les deux variantes d'icônes
 

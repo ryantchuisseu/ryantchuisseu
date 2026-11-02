@@ -1,0 +1,102 @@
+/* JCIA 2027 — habillage « Léger » (inspiration : app Atoms).
+   Fond blanc cassé, beaucoup d'air, cartes très arrondies à ombre quasi invisible,
+   typographie éditoriale (sans-serif + mots en serif italique), galets pastel en décor, icônes fines, boutons encre.
+   Actif seulement si <html data-skin="leger"> : n'affecte pas les autres variantes.
+   ÉCARTS À LA CHARTE (à valider) : police serif Instrument Serif en complément de Sora, bouton principal encre
+   au lieu du dégradé orange, teintes pastel dérivées de la palette. */
+
+:root[data-skin="leger"] {
+  --bg:#F7F5F0; --card:#FFFFFF; --bar:#FFFFFF; --line:#ECE7DE; --text:#19203A; --muted:#696D7A; --acc:#B8502A; --stage:#E9E5DC;
+  --shadow:0 1px 2px rgba(25,32,58,.04), 0 12px 32px rgba(25,32,58,.06);
+  --k1:#C2620F; --k2:#1B7F84; --k3:#B8502A; --k4:#5D4696;
+  --p1:#FBE3C4; --p2:#CFE3D2; --p3:#F6D8CC; --p4:#E7DFF8; --p5:#FBE9A6;
+  --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --blob:46% 54% 52% 48% / 52% 44% 56% 48%;
+  color-scheme:light;
+}
+
+/* Typographie éditoriale */
+:root[data-skin="leger"] .title { font-family:var(--serif); font-weight:400; font-size:42px; line-height:1.02; letter-spacing:-.01em; margin:10px 0 18px; }
+:root[data-skin="leger"] .grad { background:none; -webkit-background-clip:border-box; background-clip:border-box; color:inherit; -webkit-text-fill-color:currentColor; font-family:var(--serif); font-style:italic; font-weight:400; }
+:root[data-skin="leger"] .hello { font-family:var(--serif); font-weight:400; font-size:36px; line-height:1.05; }
+:root[data-skin="leger"] .hello .muted { font-family:"Sora", Arial, sans-serif; font-size:15px; }
+:root[data-skin="leger"] h2 { font-size:15px; font-weight:600; letter-spacing:.01em; margin:30px 0 12px; }
+:root[data-skin="leger"] .ic { stroke-width:1.5; }
+:root[data-skin="leger"] .sbody b, :root[data-skin="leger"] .fycard b, :root[data-skin="leger"] .pass .body h3,
+:root[data-skin="leger"] .empty h3, :root[data-skin="leger"] .sheet h3 { font-family:var(--serif); font-weight:400; }
+:root[data-skin="leger"] .sbody b { font-size:22px; line-height:1.12; margin:4px 0; }
+:root[data-skin="leger"] .fycard b { font-size:21px; line-height:1.12; }
+:root[data-skin="leger"] .pass .body h3 { font-size:28px; }
+:root[data-skin="leger"] .empty h3 { font-size:26px; }
+:root[data-skin="leger"] .sheet h3 { font-size:28px; line-height:1.1; }
+:root[data-skin="leger"] .stag { color:var(--muted); letter-spacing:.08em; }
+
+/* Accueil : grande carte blanche, gros chiffre serif, galets pastel */
+:root[data-skin="leger"] .hero { background:#fff; border-radius:40px; padding:28px 24px 24px; box-shadow:var(--shadow); }
+:root[data-skin="leger"] .hero::before { content:""; position:absolute; width:150px; height:140px; right:-30px; top:-26px; background:var(--p2); border-radius:var(--blob); }
+:root[data-skin="leger"] .hero::after { content:""; position:absolute; width:92px; height:86px; right:76px; top:-40px; background:var(--p5); border-radius:42% 58% 47% 53% / 55% 45% 55% 45%; }
+:root[data-skin="leger"] .hero > * { position:relative; z-index:1; }
+:root[data-skin="leger"] .hero .map, :root[data-skin="leger"] .hero .band { display:none; }
+:root[data-skin="leger"] .hero .eyebrow { color:var(--muted); font-weight:600; letter-spacing:.14em; }
+:root[data-skin="leger"] .hero .big { font-family:var(--serif); font-weight:400; font-style:normal; font-size:104px; line-height:.88; margin:16px 0 8px; }
+:root[data-skin="leger"] .hero .big span { font-style:italic; font-size:32px !important; font-weight:400 !important; }
+:root[data-skin="leger"] .hero .when { margin-bottom:22px; }
+:root[data-skin="leger"] .hero .btn { margin-bottom:0; }
+:root[data-skin="leger"] .nowt { font-family:var(--serif); font-weight:400; font-size:34px; line-height:1.05; }
+:root[data-skin="leger"] .hero.live .bar i { background:#19203A; }
+
+/* Boutons : pilule encre, secondaire blanc filet */
+:root[data-skin="leger"] .btn { background:#19203A; color:#fff; box-shadow:none; font-weight:600; }
+:root[data-skin="leger"] .btn.alt { background:#fff; border:1px solid var(--line); color:var(--text); }
+:root[data-skin="leger"] .btn[disabled] { opacity:.35; }
+:root[data-skin="leger"] .link { color:var(--text); text-decoration:underline; text-underline-offset:4px; font-weight:600; }
+
+/* Surfaces */
+:root[data-skin="leger"] .card { border-radius:30px; }
+:root[data-skin="leger"] .item, :root[data-skin="leger"] .opt, :root[data-skin="leger"] .notif, :root[data-skin="leger"] details { border-radius:26px; }
+:root[data-skin="leger"] .iconbtn { box-shadow:none; border:1px solid var(--line); }
+:root[data-skin="leger"] .tile { position:relative; overflow:hidden; border-radius:34px; min-height:156px; }
+:root[data-skin="leger"] .tile::before { content:""; position:absolute; left:12px; top:12px; width:70px; height:64px; border-radius:var(--blob); background:var(--p1); }
+:root[data-skin="leger"] .tile:nth-child(2)::before { background:var(--p2); border-radius:55% 45% 48% 52% / 46% 56% 44% 54%; }
+:root[data-skin="leger"] .tile:nth-child(3)::before { background:var(--p4); border-radius:50% 50% 42% 58% / 58% 44% 56% 42%; }
+:root[data-skin="leger"] .tile:nth-child(4)::before { background:var(--p5); }
+:root[data-skin="leger"] .tile > * { position:relative; }
+:root[data-skin="leger"] .tile > .ic { margin:6px 0 0 8px; color:var(--text); }
+:root[data-skin="leger"] .fycard { background:linear-gradient(140deg,#FFF1E1 0%,#F3EAFC 100%); border-radius:28px; }
+:root[data-skin="leger"] .seg { background:#fff; border:1px solid var(--line); box-shadow:none; }
+:root[data-skin="leger"] .seg button[aria-pressed="true"], :root[data-skin="leger"] .chipbtn[aria-pressed="true"] { background:#19203A; color:#fff; }
+:root[data-skin="leger"] .chipbtn { background:#fff; border:1px solid var(--line); box-shadow:none; }
+:root[data-skin="leger"] .opt[aria-pressed="true"] { border-color:#19203A; }
+:root[data-skin="leger"] .opt[aria-pressed="true"] .radio { background:#19203A; border-color:#19203A; color:#fff; }
+:root[data-skin="leger"] .reco { background:var(--p5); }
+:root[data-skin="leger"] .steps i.on, :root[data-skin="leger"] .bar i { background:#19203A; }
+:root[data-skin="leger"] .avatar { background:var(--p4); color:var(--text); }
+:root[data-skin="leger"] .pill.v, :root[data-skin="leger"] .pill.fy { background:var(--p4); color:#3B2D6E; }
+:root[data-skin="leger"] .pill.live { background:var(--p3); color:#7A2F14; }
+:root[data-skin="leger"] .pill.o { background:var(--p1); color:#6B3A08; }
+:root[data-skin="leger"] .hi { background:#262626; color:#fff; box-shadow:none; }
+:root[data-skin="leger"] .notice { border:1px solid var(--line); background:#fff; }
+:root[data-skin="leger"] .switch[aria-checked="true"] .trk { background:#19203A; }
+:root[data-skin="leger"] .prow.done .st { background:#19203A; border-color:#19203A; color:#fff; }
+:root[data-skin="leger"] .toast { background:#262626; border-radius:20px; }
+:root[data-skin="leger"] .sheet { background:#fff; border-radius:36px 36px 0 0; }
+
+/* Billet : dégradé pêche → lavande (comme le « Hall of Fame ») */
+:root[data-skin="leger"] .pass { border-radius:32px; }
+:root[data-skin="leger"] .pass .head { background:linear-gradient(120deg,#FFD9A8 0%,#F8C8B8 45%,#E9D3FA 100%); color:var(--text); }
+
+/* Barre de navigation : blanche et aérienne */
+:root[data-skin="leger"] .nav::before { background:#fff; box-shadow:0 -1px 0 var(--line), 0 10px 30px rgba(25,32,58,.08); }
+:root[data-skin="leger"] .bubble { background:#fff; color:var(--text); box-shadow:0 6px 18px rgba(25,32,58,.12); }
+
+/* Écrans d'accueil : fond clair, galet pastel, icônes cernées d'un trait d'encre */
+:root[data-skin="leger"] .ob { background:#F7F5F0; }
+:root[data-skin="leger"] .ob-skip { background:transparent; color:var(--muted); border:1px solid var(--line); }
+:root[data-skin="leger"] .ob-top .b2 { display:none; }
+:root[data-skin="leger"] .ob-top .b1 { width:300px; height:276px; margin:-138px 0 0 -150px; border-radius:var(--blob); background:color-mix(in srgb, var(--c) 24%, #fff); }
+:root[data-skin="leger"] .ob-ico.flat { background:#fff; color:#19203A; border:1.5px solid #19203A; border-radius:var(--blob); box-shadow:none; }
+:root[data-skin="leger"] .ob-ico.c.flat { border-radius:44% 56% 50% 50% / 52% 46% 54% 48%; }
+:root[data-skin="leger"] .ob-sheet { background:#fff; border-radius:40px 40px 0 0; box-shadow:0 -10px 40px rgba(25,32,58,.06); }
+:root[data-skin="leger"] .ob-sheet h1 { font-family:var(--serif); font-weight:400; font-size:40px; line-height:1.02; }
+:root[data-skin="leger"] .dots i.on { background:#19203A; }
+:root[data-skin="leger"] .ob.prefs .ob-sheet h1 { font-size:34px; }
