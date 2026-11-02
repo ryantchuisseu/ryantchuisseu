@@ -41,6 +41,11 @@ Les cinq écrans en gras correspondent aux fonctions que le site annonce pour l'
 | Notifications | 5 types (sessions, rendez-vous, annonces, vote, billet) | Liste réelle, fréquence, textes |
 | Durée d'une session sans heure de fin | 45 min (sert à détecter les chevauchements) | Horaires exacts du programme |
 
+## Maquette minimaliste (2 variantes)
+
+Une version **épurée**, avec navigation à bulle, écrans d'accueil en 3 étapes et deux rendus d'icônes (3D et plat) : voir [`minimal/README.md`](minimal/README.md).
+Fichiers à ouvrir directement : `minimal/dist/jcia-minimal-3d.html` et `minimal/dist/jcia-minimal-flat.html`.
+
 ## Charte graphique appliquée (v1.0, octobre 2026)
 
 | Règle de la charte | Dans la maquette |
