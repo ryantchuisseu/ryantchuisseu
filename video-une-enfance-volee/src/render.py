@@ -24,18 +24,18 @@ RED = (178, 28, 24)
 
 # (image, start, end, words, red-word indexes, tag, pan(dx,dy), zoom(a,b), italic)
 S = [
- ("s1", 0.0, 4.6, "« Je n'ai pas été le père que vous méritiez. »", {6}, "Alain, le père, au soir de sa vie", (0.00, -0.03), (1.10, 1.00), True),
- ("s2", 4.6, 9.6, "Ce soir-là, à Yaoundé, Alain, mourant, réunit ses enfants.", {5}, "Villa d'Ékounou, Yaoundé · chapitre 1", (0.00, 0.03), (1.00, 1.12), False),
- ("s3", 9.6, 14.8, "Quatre enfants. Quatre mères. Aucun ne connaît les autres.", {0, 2}, "Le salon d'Alain · la réunion", (0.02, 0.00), (1.12, 1.02), False),
- ("s4", 14.8, 20.4, "Kegne n'a connu son père que sous la forme d'un billet plié dans une enveloppe.", {10}, "Kegne et sa mère Fondjo · marché de Balengou", (-0.03, 0.0), (1.02, 1.12), False),
- ("s5", 20.4, 26.0, "Sa demi-sœur Ndutu l'a humiliée. Elles ne se sont jamais revues… jusqu'à ce soir.", {4}, "Kegne et Ndutu · au collège", (0.0, -0.03), (1.14, 1.02), False),
- ("s6", 26.0, 31.4, "« Va te plaindre chez ton père. » Mais quel père ? Elle ne lui avait jamais vu le visage.", {9}, "Hermine · Bertoua", (0.02, 0.02), (1.00, 1.12), False),
- ("s7", 31.4, 36.8, "Franck attendait un appel. Chaque fois qu'il le guettait, la sonnerie se taisait.", {3}, "Franck Ella · Ngaoundéré", (-0.02, 0.0), (1.12, 1.02), False),
- ("s8", 36.8, 43.2, "Et il y a elle. Trois ans qu'elle sert cet homme… sans savoir qu'il est son père.", {4, 16}, "Mariana · la domestique de la villa", (0.03, 0.0), (1.00, 1.14), False),
- ("s9", 43.2, 48.4, "Pour comprendre, il faut remonter jusqu'à un village appelé Wara…", {9}, "Le regard d'Alain", (0.0, 0.0), (1.00, 1.30), False),
+ ("s1", 0.0, 3.3, "« Je n'ai pas été le père que vous méritiez. »", {6}, "Alain, le père, au soir de sa vie", (0.00, -0.03), (1.10, 1.00), True, (0.4, 2.72)),
+ ("s2", 3.3, 8.5, "Ce soir-là, à Yaoundé, Alain est mourant. Il réunit ses enfants.", {6}, "Villa d'Ékounou, Yaoundé · chapitre 1", (0.00, 0.03), (1.00, 1.12), False, (3.54, 8.16)),
+ ("s3", 8.5, 13.2, "Quatre enfants. Quatre mères. Et aucun ne connaît les autres.", {0, 2}, "Le salon d'Alain · la réunion", (0.02, 0.00), (1.12, 1.02), False, (8.75, 12.7)),
+ ("s4", 13.2, 17.5, "Kegne n'a connu son père que sous la forme d'un billet plié dans une enveloppe.", {10}, "Kegne et sa mère Fondjo · marché de Balengou", (-0.03, 0.0), (1.02, 1.12), False, (13.43, 17.18)),
+ ("s5", 17.5, 23.6, "Sa demi-sœur Ndutu l'a humiliée. Elles ne se sont jamais revues… jusqu'à ce soir.", {4}, "Kegne et Ndutu · au collège", (0.0, -0.03), (1.14, 1.02), False, (17.71, 23.21)),
+ ("s6", 23.6, 29.7, "« Va te plaindre chez ton père. » Mais quel père ? Hermine ne lui avait jamais vu le visage.", {9}, "Hermine · Bertoua", (0.02, 0.02), (1.00, 1.12), False, (23.81, 29.38)),
+ ("s7", 29.7, 34.7, "Franck attendait un appel. Chaque fois qu'il le guettait… la sonnerie se taisait.", {3}, "Franck Ella · Ngaoundéré", (-0.02, 0.0), (1.12, 1.02), False, (29.89, 34.26)),
+ ("s8", 34.7, 40.5, "Et puis il y a elle. Trois ans qu'elle sert cet homme… sans savoir qu'il est son père.", {5, 17}, "Mariana · la domestique de la villa", (0.03, 0.0), (1.00, 1.14), False, (34.94, 40.1)),
+ ("s9", 40.5, 45.4, "Pour comprendre, il faut remonter loin… jusqu'à un village appelé Wara.", {10}, "Le regard d'Alain", (0.0, 0.0), (1.00, 1.30), False, (40.72, 45.07)),
 ]
-END_T = 48.4
-TOTAL = 56.0
+END_T = 45.4
+TOTAL = 57.0
 XF = 0.45  # crossfade
 
 def load(name):
@@ -107,12 +107,17 @@ def wrap(words, font, maxw, draw):
     if cur: lines.append(cur)
     return lines
 
-def subtitle(draw, text, reds, p, italic, alpha, y0=1270):
+def subtitle(draw, text, reds, p, italic, alpha, y0=1270, win=None, t=0):
     font = f_subi if italic else f_sub
     words = text.split()
     lines = wrap(words, font, 900, draw)
     n = len(words)
-    shown = p * n / 0.72  # words revealed over first 72% of scene
+    if win:
+        cum = np.cumsum([len(w) + 1 for w in words]); cum = np.concatenate([[0], cum]) / cum[-1]
+        q = (t - win[0]) / (win[1] - win[0])
+        shown = float(np.interp(q, cum, np.arange(n + 1))) + (0.0 if q < 0 else 0.35)
+    else:
+        shown = p * n / 0.72
     sp = draw.textlength(" ", font=font)
     lh = 84
     y = y0
@@ -134,7 +139,7 @@ def subtitle(draw, text, reds, p, italic, alpha, y0=1270):
         y += lh
 
 def scene_frame(sc, t):
-    name, t0, t1, text, reds, ttl, pan, zoom, ital = sc
+    name, t0, t1, text, reds, ttl, pan, zoom, ital, _w = sc
     p = (t - t0) / (t1 - t0)
     zz = zoom
     focus = (0.5, 0.5)
@@ -154,7 +159,7 @@ def ui(img, sc, t, a_ui=1.0):
     d = ImageDraw.Draw(ov)
     fin = min((t - t0) / 0.35, 1) * min((t1 - t) / 0.3, 1)
     tag(d, ttl, max(fin, 0) * a_ui)
-    subtitle(d, text, reds, p, ital := sc[8], max(fin, 0) * a_ui)
+    subtitle(d, text, reds, p, sc[8], max(fin, 0) * a_ui, win=sc[9], t=t)
     d.text((40, H - 70), "AI-generated", font=f_small, fill=(230, 220, 200, 120))
     img = img.convert("RGBA"); img.alpha_composite(ov)
     return img.convert("RGB")
@@ -174,20 +179,24 @@ def end_frame(t):
     ImageDraw.Draw(sh).rectangle([60, 70, cw + 60, ch + 70], fill=(0, 0, 0, 200))
     sh = sh.filter(ImageFilter.GaussianBlur(25))
     img = img.convert("RGBA"); img.alpha_composite(sh, (cx - 60, cy - 60)); img.paste(cv, (cx, cy))
-    d = ImageDraw.Draw(img)
+    ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(ov)
     def ctext(y, s, f, col, a):
         w = d.textlength(s, font=f); d.text(((W - w) / 2, y), s, font=f, fill=col + (int(255 * a),))
-    a1 = ease((t - END_T - 0.3) / 0.8)
+    a1 = ease((t - END_T - 0.1) / 0.6)
     ctext(200, "L E   R O M A N", f_e1, CREAM, a1)
-    a2 = ease((t - END_T - 1.2) / 0.8)
+    a2 = ease((t - END_T - 0.2) / 0.6)
     ctext(cy + ch + 50, "Une enfance volée", f_e2, CREAM, a2)
+    a2 = ease((t - END_T - 3.2) / 0.6)
     ctext(cy + ch + 108, "Un père mal connu · Pouni Ichaka Hamadjoda", f_e3, (220, 200, 170), a2)
-    a3 = ease((t - END_T - 2.2) / 0.7)
+    a3 = ease((t - END_T - 5.8) / 0.5)
     s = "DISPONIBLE SUR BOOKSHOP.ORG"; w = d.textlength(s, font=f_e4)
     by = cy + ch + 190
     d.rectangle([(W - w) / 2 - 30, by, (W + w) / 2 + 30, by + 74], fill=RED + (int(255 * a3),))
     d.text(((W - w) / 2, by + 17), s, font=f_e4, fill=(255, 245, 235, int(255 * a3)))
+    a3 = ease((t - END_T - 8.5) / 0.5)
     ctext(by + 100, "Broché · 17,99 $  —  lien en bio", f_e3, CREAM, a3)
+    img.alpha_composite(ov)
     return img.convert("RGB")
 
 def frame(t):
