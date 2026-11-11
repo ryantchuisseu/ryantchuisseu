@@ -61,9 +61,12 @@ Durée réelle : **≈ 50 s** (hors écran de fin fixe).
 
 ---
 
-## 4. Points à valider avant production
+## 4. Version produite (v1)
 
-1. Lien Amazon exact + prix (non inventés ici).
-2. Couverture officielle du livre (le PDF n'en contient pas, seulement la page de titre).
-3. Voix off : voix de synthèse ou la voix de l'auteur ?
-4. Le texte lu n'a été vérifié que jusqu'à la **p. 27 sur 193** : aucun spoiler au-delà.
+- Fichier : `une-enfance-volee-promo.mp4` — 1080×1920, 30 fps, 56 s, H.264 + AAC.
+- Illustrations : 9 images IA (Figma, gpt-image) dans `visuels/`.
+- Écran de fin : couverture officielle + « Disponible sur Bookshop.org · Broché 17,99 $ · lien en bio ».
+- Lien : https://bookshop.org/p/books/une-enfance-volee-un-pere-mal-connu/656aaae5d9cd052a
+- Sans voix off : sous-titres mot à mot + bande-son synthétisée (drone, piano, tic-tac, sonnerie, cœur).
+- Scripts de rendu : `src/render.py` (image) et `src/audio.py` (son).
+- Texte vérifié jusqu'à la **p. 27 sur 193** : aucun spoiler au-delà.
