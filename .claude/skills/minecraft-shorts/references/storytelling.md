@@ -26,3 +26,20 @@ Music bed by mood (`happy|calm|tense|epic`), whoosh on cuts, thud on stamps. Voi
 
 ## Anti-patterns
 Explaining the concept over a static scene; more than ~2.5 s without a visual change; captions over the face; fake income/results claims in any hook.
+
+## Script anatomy (measured on the full English script of video 3, ~1M-view style, 119 s)
+378 words → **3.2 words/s**, 40 sentences, **9.4 words/sentence**. Target for a 2-min episode: 360-400 words (a 60 s episode: ~190).
+
+| Time | Beat | What it does |
+|---|---|---|
+| 0-16 s | **Rule + absurd fact** ("you're never allowed to touch the water. And the craziest part…") | Prohibition in sentence 1, an open loop in sentence 2 |
+| 16-31 s | **Narrator + daily life** (name, "12 platforms every morning", zip lines, bridges, playground) | Concrete number, plants every prop that pays off later |
+| 31-36 s | **Rule restated + name of the threat** ("We call them the Watchers") | Gives the danger a name |
+| 36-57 s | **Two-level escalation** ("But that's nothing compared to the dark zone") + "Nobody goes there anymore. At least, nobody is supposed to." | Plants the forbidden place |
+| 57-71 s | **Incident with the friend** ("suddenly, crack!") | First loss of control |
+| 71-92 s | **Rescue + collapse** (threat approaches, platform breaks) | Tension at its peak |
+| 92-107 s | **Forced choice** ("We had no choice") → the planted zip line leads into the forbidden zone, then it breaks | The set-up pays off; no way back |
+| 107-119 s | **Whisper + twist** ("Look at the water… someone who looked exactly like me") | Last 5 words = the hook for part 2 |
+
+Techniques: every prop is mentioned early and used later (zip lines at ~20 s → escape at ~95 s; dark zone at ~40 s → entered at ~96 s); "But" pivots every ~20 s; the hero is named at 16 s and the friend at 57 s; ends unresolved.
+Template for the opening: *"In this [place], you're never allowed to [rule]. And the craziest part, [absurd fact about the world]."*
