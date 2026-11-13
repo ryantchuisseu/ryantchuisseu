@@ -21,8 +21,10 @@ Observed on two videos with ~1M likes: a one-rule world, one hero with a persona
 ## Caption style
 1–3 words per chunk (single yellow word also works), huge, centered, thick black outline, keyword in uppercase or yellow. Set `E.CAP.y` (0.2 top / 0.5 center / 0.78 low), `E.CAP.hl` (highlight colour), `E.HL=[words]` in voice mode.
 
-## Audio
-Music bed by mood (`happy|calm|tense|epic`), whoosh on cuts, thud on stamps. Voice-over (user's MP3) ducks the music automatically.
+## Audio (measured on the 3 reference shorts: voice hides the music, so these are signal-level estimates)
+Music = dark cinematic ambient, no drums: sustained A-minor pad, a sub drone (A1/A2) that swells in the last third (+10-13 dB sub-bass in the final act), slow heartbeat-like pulse (~55-70 bpm), a few big impacts at plot beats. Reference script for a custom bed: `channel/projects/day01/music.py` (edit CHORDS / INT / HITS / RISERS / HEART to re-time).
+
+Built-in beds by mood (`happy|calm|tense|epic`), whoosh on cuts, thud on stamps. Voice-over (user's MP3) ducks the music automatically.
 
 ## Anti-patterns
 Explaining the concept over a static scene; more than ~2.5 s without a visual change; captions over the face; fake income/results claims in any hook.
