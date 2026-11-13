@@ -43,3 +43,15 @@ Explaining the concept over a static scene; more than ~2.5 s without a visual ch
 
 Techniques: every prop is mentioned early and used later (zip lines at ~20 s → escape at ~95 s; dark zone at ~40 s → entered at ~96 s); "But" pivots every ~20 s; the hero is named at 16 s and the friend at 57 s; ends unresolved.
 Template for the opening: *"In this [place], you're never allowed to [rule]. And the craziest part, [absurd fact about the world]."*
+
+## Second measured script (zombie/bunker story, 128 s)
+~370 words, ~2.9 words/s. Same engine as the water-town story:
+| Beat | Zombie/bunker story | Water-town story |
+|---|---|---|
+| Hook (sentence 1) | "everyone has a bunker, **except me**" (exclusion) | "you're **never allowed** to touch the water" (prohibition) |
+| Escalating tour | 4 numbered bunkers, each stranger than the last (glass/ocean → luxury → silence → 100 doors, last never opened) | 2 threats, "that's nothing compared to the dark zone" |
+| Hero's anomaly | the zombies never attack me | the old zip line leads into the forbidden zone |
+| Mystery object | the unopenable last door → **Bunker 100** opens when touched | the dark zone |
+| Reveal | "That baby was me… built to protect everyone **from me**" (the hero is the threat) | someone under the water who looks exactly like me |
+| Last line | countdown 10-9-8 + "Phase 2 has begun" | whisper + doppelgänger |
+Common engine: **bounded strange world → hero who doesn't fit → forbidden/odd place → reveal that reframes everything (hero = the secret) → countdown / unresolved last line.** Rule of thumb: the twist re-explains an early detail (bunkers' purpose, "never touch the water").
