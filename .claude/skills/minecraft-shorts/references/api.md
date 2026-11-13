@@ -28,8 +28,8 @@ Automatic: fade in/out, whoosh on cuts, caption pops (no voice), vignette, subtl
 Stage with characters at `y:.9, z:-4.3`, x∈[-2,2]; sign board centre (0,4.5,-6.4); lamps x=±2.9; crowd spots `E.crowdSpots` (9 villagers, `crowd[0..8]`, `crowdLook(u, opts|fn(i), except[], target)`); houses/trees around. `E.hideWorld()` hides all default decor to build your own with `E.box(w,h,d,E.M.planks,x,y,z)`, `E.house(x,z,rot)`, `E.tree(x,z,h)`, `E.lamp(x,z)`. Materials `E.M`: grass stone planks bricks log leaves cobble glow carpet gold sand water dirt plazaStone glass iron. `E.setSky(bg,fog,hemiTop,hemiBottom,sun)` for night/sunset moods (`E.setSky('#0b1030','#0b1030','#40508f','#101020','#8da2ff')`).
 
 ## Characters
-`makeChar({skin,hair,eye,shirt,sleeve,longSleeve,pants,shoes,collar,tie,buttons,belt,badge,glasses,beard,cap,brim,helmet,hat,crown,cape,bald})` → 2 units tall; `.scale` for giants.
-`pose(c,{x,y,z,ry,t:u,walk:u|-1,wave,armsUp,point,cross,salute,headTilt,talk})` — gestures 0..1; `talk:true` opens/closes the mouth in rhythm; `walk` animates legs; `ry` via `E.faceTo(x,z,tx,tz)`. Arm override after `pose`: `c.armR.rotation.set(-1.1,0,.5)`. `hide(c)`.
+`makeChar({skin,hair,eye,shirt,sleeve,longSleeve,pants,shoes,collar,tie,buttons,belt,badge,glasses,beard,cap,brim,helmet,hat,crown,cape,bald,smile,blank})` → 2 units tall; `.scale` for giants.
+`pose(c,{x,y,z,ry,t:u,walk:u|-1,wave,armsUp,point,cross,salute,headTilt,talk,lie})` (`lie:1` = lying face-up, head toward -z) — gestures 0..1; `talk:true` opens/closes the mouth in rhythm; `walk` animates legs; `ry` via `E.faceTo(x,z,tx,tz)`. Arm override after `pose`: `c.armR.rotation.set(-1.1,0,.5)`. `hide(c)`.
 
 ## Sprites and effects
 `textSprite(text,{font,color,bg,scale})` name tags (set `.visible=true` and `.position` in `run`); ready-made `qMarks[0..4]` (?), `exMarks[0..2]` (!), `checkMark`. `poof(V(x,0,z),u-t0,seed)` smoke puff (hide the character right after). `confettiRain(u,t0)`.

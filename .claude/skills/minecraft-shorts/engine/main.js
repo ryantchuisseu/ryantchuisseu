@@ -141,8 +141,10 @@ function faceTex(o,open){
     g.fillStyle=o.skin; g.fillRect(0,0,8,8);
     g.fillStyle=o.hair; g.fillRect(0,0,8,2); g.fillRect(0,2,1,1); g.fillRect(7,2,1,1);
     if(o.glasses){g.fillStyle='#111'; g.fillRect(1,3,6,2); g.fillStyle='#444'; g.fillRect(2,3,1,1); g.fillRect(5,3,1,1);}
+    else if(o.blank){g.fillStyle='#f4f4f4'; g.fillRect(1,3,2,2); g.fillRect(5,3,2,2);}   // empty white eyes
     else {g.fillStyle='#fff'; g.fillRect(1,4,1,1); g.fillRect(6,4,1,1); g.fillStyle=o.eye||'#3a2a8a'; g.fillRect(2,4,1,1); g.fillRect(5,4,1,1);}
-    if(open){g.fillStyle='#5a1f1a'; g.fillRect(3,6,2,2);} else {g.fillStyle=o.mouth||'rgba(80,30,20,.55)'; g.fillRect(3,6,2,1);}
+    if(o.smile){g.fillStyle='#2a1a1a'; g.fillRect(2,6,4,1); g.fillRect(1,5,1,1); g.fillRect(6,5,1,1);}   // wide fixed smile
+    else if(open){g.fillStyle='#5a1f1a'; g.fillRect(3,6,2,2);} else {g.fillStyle=o.mouth||'rgba(80,30,20,.55)'; g.fillRect(3,6,2,1);}
     if(o.beard){g.fillStyle=o.hair; g.fillRect(1,6,1,2); g.fillRect(6,6,1,2); g.fillRect(2,7,4,1); if(open){g.fillStyle='#5a1f1a';g.fillRect(3,6,2,1);} }
   });
 }
@@ -155,7 +157,7 @@ function shirtTex(o){return pixTex(8,(g)=>{noisePainter(o.shirt,.08,5)(g,8);
   if(o.badge){g.fillStyle=o.badge;g.fillRect(1,2,2,2);} });}
 const ALLCHARS=[], ALLSPRITES=[];
 /* makeChar options: skin, hair, eye, shirt, sleeve, longSleeve, pants, shoes, collar, tie, buttons, belt, badge,
-   glasses, beard, cap, brim, helmet, crown, cape, hat (top hat), bald */
+   glasses, beard, cap, brim, helmet, crown, cape, hat (top hat), bald, smile (fixed wide smile), blank (empty white eyes) */
 function makeChar(o){
   o=Object.assign({skin:'#c8956a',hair:'#3b2716',shirt:'#3aa7a7',pants:'#3b3fa8',shoes:'#333'},o);
   const root=new THREE.Group(); scene.add(root); const body=new THREE.Group(); root.add(body);
@@ -185,8 +187,8 @@ function makeChar(o){
   const C={root,body,head,armL,armR,legL,legR,o,faceClosed,faceOpen,hm,headMats,scale:1}; ALLCHARS.push(C); return C;
 }
 /* pose(c,{x,y,z,ry,t,walk,wave,armsUp,point,cross,headTilt,talk,crouch}) — walk: local time (>=0) animates legs; talk: truthy opens/closes mouth with t */
-function pose(c,{x=0,y=0,z=0,ry=0,walk=-1,t=0,wave=0,armsUp=0,point=0,cross=0,headTilt=0,talk=false,salute=0}={}){
-  c.root.position.set(x,y,z); c.root.rotation.y=ry; c.root.visible=true; c.root.scale.setScalar(c.scale||1);
+function pose(c,{x=0,y=0,z=0,ry=0,walk=-1,t=0,wave=0,armsUp=0,point=0,cross=0,headTilt=0,talk=false,salute=0,lie=0}={}){
+  c.root.position.set(x,y+(lie?.25*lie:0),z); c.root.rotation.set(-Math.PI/2*lie,ry,0,'YXZ'); c.root.visible=true; c.root.scale.setScalar(c.scale||1);
   let la=0,ra=0,ll=0,rl=0,laz=0,raz=0;
   if(walk>=0){const s=Math.sin(walk*Math.PI*2*1.8);la=s*.7;ra=-s*.7;ll=-s*.7;rl=s*.7;c.body.position.y=Math.abs(Math.cos(walk*Math.PI*2*1.8))*.05;}
   else {c.body.position.y=Math.sin(t*2.2)*.012; la=Math.sin(t*1.7)*.05; ra=-Math.sin(t*1.7)*.05;}
