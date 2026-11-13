@@ -45,7 +45,7 @@ Techniques: every prop is mentioned early and used later (zip lines at ~20 s →
 Template for the opening: *"In this [place], you're never allowed to [rule]. And the craziest part, [absurd fact about the world]."*
 
 ## Second measured script (zombie/bunker story, 128 s)
-~370 words, ~2.9 words/s. Same engine as the water-town story:
+309 words, 2.4 words/s, 39 sentences (7.9 words/sentence). Same engine as the water-town story:
 | Beat | Zombie/bunker story | Water-town story |
 |---|---|---|
 | Hook (sentence 1) | "everyone has a bunker, **except me**" (exclusion) | "you're **never allowed** to touch the water" (prohibition) |
