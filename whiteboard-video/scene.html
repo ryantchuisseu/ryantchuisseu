@@ -1,0 +1,276 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>html,body{margin:0;background:#fff}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const INK = '#1d1d1f', ORANGE = '#e8772e', BLUE = '#1f7fc4', SKIN = '#f6d2b0';
+
+/* ---------- utils ---------- */
+function rng(seed){ let s = (seed*9301+49297) % 233280 || 1; return () => (s = (s*16807) % 2147483647) / 2147483647; }
+const ease = t => t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+let SEED = 1;
+
+// roughen a polyline into a dense wobbly one
+function rough(pts, amp=1.8){
+  const r = rng(SEED++), p1=r()*6.28, p2=r()*6.28, f1=.012+r()*.01, f2=.045+r()*.02;
+  const out = []; let s = 0;
+  for (let i=0;i<pts.length-1;i++){
+    const [x0,y0]=pts[i], [x1,y1]=pts[i+1];
+    const L = Math.hypot(x1-x0,y1-y0) || 1, nx=-(y1-y0)/L, ny=(x1-x0)/L;
+    const n = Math.max(1, Math.ceil(L/6));
+    for (let k=(i?1:0);k<=n;k++){
+      const u=k/n, ss=s+u*L, o=amp*(Math.sin(ss*f1+p1)*.75+Math.sin(ss*f2+p2)*.25);
+      out.push([x0+(x1-x0)*u+nx*o, y0+(y1-y0)*u+ny*o]);
+    }
+    s += L;
+  }
+  return out;
+}
+const line = (a,b) => [a,b];
+function rect(x,y,w,h){ return [[x+4,y],[x+w,y+2],[x+w-2,y+h],[x,y+h-2],[x+2,y-3],[x+20,y+1]]; }
+function circle(cx,cy,r,a0=-1.9,turn=1.08,ry=r){ const p=[];const n=48;for(let i=0;i<=n;i++){const a=a0+i/n*Math.PI*2*turn;p.push([cx+Math.cos(a)*r,cy+Math.sin(a)*ry]);}return p; }
+function arc(cx,cy,r,a0,a1){ const p=[];const n=24;for(let i=0;i<=n;i++){const a=a0+(a1-a0)*i/n;p.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r]);}return p; }
+function curve(a,b,bend){ const mx=(a[0]+b[0])/2, my=(a[1]+b[1])/2, dx=b[0]-a[0], dy=b[1]-a[1];
+  const c=[mx-dy*bend, my+dx*bend]; const p=[]; for(let i=0;i<=20;i++){const t=i/20;p.push([(1-t)*(1-t)*a[0]+2*(1-t)*t*c[0]+t*t*b[0],(1-t)*(1-t)*a[1]+2*(1-t)*t*c[1]+t*t*b[1]]);} return p; }
+function arrow(a,b,bend=.2,hs=22){ const c=curve(a,b,bend); const e=c[c.length-1], q=c[c.length-4];
+  const ang=Math.atan2(e[1]-q[1],e[0]-q[0]);
+  return [c,[[e[0]-Math.cos(ang-.5)*hs,e[1]-Math.sin(ang-.5)*hs],e,[e[0]-Math.cos(ang+.5)*hs,e[1]-Math.sin(ang+.5)*hs]]]; }
+
+/* ---------- timeline ---------- */
+const EL = []; let T = 0; const SPEED = 0.74; const M = {}; const mark = n => M[n] = T;
+function at(t){ T = t; }
+function wait(d){ T += d; }
+// paths: array of polylines
+function draw(dur, paths, o={}){
+  const P = paths.map(p => rough(p, o.amp ?? 1.6));
+  const lens = P.map(p => { let L=0; for(let i=1;i<p.length;i++) L+=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]); return L; });
+  dur*=SPEED; EL.push({kind:'path', t0:T, dur, P, lens, total:lens.reduce((a,b)=>a+b,0), color:o.color||INK, w:o.w||5, fill:o.fill, fillColor:o.fillColor||INK});
+  T += dur;
+}
+function text(dur, str, x, y, o={}){
+  dur*=SPEED;
+  EL.push({kind:'text', t0:T, dur, str, x, y, size:o.size||40, font:o.font||'Kalam', weight:o.weight||'700', color:o.color||INK, align:o.align||'center', maxW:o.maxW, rot:o.rot||0});
+  T += dur;
+}
+
+/* ===== TITLE ===== */
+at(0.3);
+text(1.4, 'MENTALITÉ PAUVRE,', 540, 190, {size:104, font:'Permanent Marker', weight:'400', maxW:1000});
+text(1.4, 'MENTALITÉ RICHE', 540, 310, {size:104, font:'Permanent Marker', weight:'400', maxW:1000});
+draw(.5, [[[150,345],[930,350]]], {w:6, color:BLUE});
+/* ===== DIVIDER + LABELS ===== */
+mark('div');
+draw(.6, [[[540,395],[542,1290]]], {color:ORANGE, w:6});
+draw(.5, [rect(80,400,380,130)], {w:5});
+text(.6, 'PAUVRE', 270, 455, {size:56, font:'Kalam'});
+text(.8, '« Je n\'ai pas les moyens »', 270, 508, {size:34, color:ORANGE, font:'Patrick Hand', weight:'400'});
+
+/* ===== POOR FIGURE ===== */
+mark('poorFig');
+draw(.35, [circle(280,690,55)], {w:5});
+draw(.35, [[[226,676],[238,640],[253,656],[264,626],[281,648],[294,624],[306,648],[320,630],[334,672]]], {w:5});
+draw(.35, [circle(258,698,16), [[274,698],[286,698]], circle(302,698,16)], {w:4});
+draw(.25, [[[242,668],[268,676]], [[292,676],[318,668]]], {w:4});
+draw(.2,  [arc(280,748,15,Math.PI+.45,2*Math.PI-.45)], {w:4});
+draw(.25, [[[352,640],[345,660],[352,668],[359,660],[352,640]], [[370,672],[364,688],[370,694],[376,688],[370,672]]], {w:3, color:BLUE});
+draw(.5,  [[[266,745],[266,768],[205,786],[196,1010],[364,1010],[355,786],[294,768],[294,745]], [[266,768],[280,800],[294,768]]], {w:5});
+draw(.35, [[[274,804],[286,804],[293,930],[280,950],[267,930],[274,804]]], {w:4, fill:true});
+draw(.45, [[[206,800],[168,900],[182,962],[232,958]], rect(150,880,100,24), rect(156,904,94,24), rect(148,928,104,24)], {w:4});
+draw(.45, [[[355,800],[402,880],[422,826]], circle(424,814,13), rect(390,690,105,120)], {w:4});
+text(.3, 'DIPLÔME', 442, 730, {size:22, rot:-.05});
+draw(.25, [circle(442,775,14), [[436,787],[430,805]], [[448,787],[454,805]]], {w:3, color:ORANGE});
+draw(.5,  [[[205,1010],[215,1228],[266,1228],[280,1062],[294,1228],[346,1228],[356,1010]]], {w:5, fill:true});
+draw(.35, [[[214,1228],[200,1256],[270,1258],[266,1228]], [[294,1228],[290,1258],[360,1256],[346,1228]]], {w:5, fill:true});
+draw(.25, [[[170,1270],[390,1272]]], {w:3, color:'#999'});
+
+/* poor icons */
+mark('poorIcons');
+function doc(x,y,label,col){ draw(.35,[rect(x,y,100,128),[[x+20,y+95],[x+80,y+95]],[[x+20,y+108],[x+66,y+108]]],{w:4}); text(.25,label,x+50,y+30,{size:22}); text(.2,'€',x+50,y+78,{size:46,color:col}); }
+doc(28,600,'FACTURE',ORANGE);
+draw(.3, arrow([80,740],[70,850],-.25), {color:ORANGE, w:5});
+doc(22,870,'LOYER',ORANGE);
+draw(.3, arrow([75,1010],[95,1120],-.2), {color:ORANGE, w:5});
+doc(32,1130,'CRÉDIT',ORANGE);
+draw(.3, arrow([450,825],[455,935],.25), {color:ORANGE, w:5});
+doc(400,945,'IMPÔTS',ORANGE);
+draw(.3, arrow([455,1085],[445,1200],.25), {color:ORANGE, w:5});
+text(.3, '- €', 470, 1245, {size:44, color:ORANGE});
+
+/* ===== RICH SIDE ===== */
+mark('rich');
+draw(.5, [rect(620,400,380,130)], {w:5});
+text(.6, 'RICHE', 810, 455, {size:56});
+text(.8, '« Comment me l\'offrir ? »', 810, 508, {size:34, color:BLUE, font:'Patrick Hand', weight:'400'});
+
+mark('richFig');
+draw(.35, [circle(800,690,55)], {w:5});
+draw(.35, [[[744,682],[748,640],[767,656],[774,618],[795,646],[810,614],[822,646],[843,626],[840,660],[857,684]]], {w:5});
+draw(.2,  [circle(782,690,4), circle(818,690,4)], {w:5});
+draw(.2,  [[[768,672],[790,668]], [[810,668],[832,672]]], {w:4});
+draw(.25, [arc(800,708,24,.35,Math.PI-.35)], {w:4});
+draw(.5,  [[[786,745],[786,768],[726,786],[720,1010],[880,1010],[874,786],[814,768],[814,745]], [[786,768],[796,804],[800,792],[804,804],[814,768]]], {w:5});
+draw(.25, [circle(800,840,4), circle(800,880,4), circle(800,920,4)], {w:4});
+draw(.4,  [[[727,792],[704,900],[738,1004]], [[748,840],[736,905],[756,990]], [[873,792],[896,900],[862,1004]], [[852,840],[864,905],[844,990]]], {w:4});
+draw(.5,  [[[720,1010],[730,1228],[781,1228],[800,1062],[819,1228],[870,1228],[880,1010]]], {w:5, fill:true});
+draw(.35, [[[730,1228],[716,1260],[786,1262],[781,1228]], [[819,1228],[815,1262],[885,1260],[870,1228]]], {w:5});
+draw(.25, [[[690,1272],[910,1270]]], {w:3, color:'#999'});
+
+/* rich icons */
+mark('richIcons');
+draw(.4, [rect(565,700,22,50), rect(597,680,22,70), rect(629,650,22,100), [[555,752],[665,752]]], {w:4, color:BLUE});
+draw(.3, arrow([560,690],[660,615],.08,18), {w:5, color:BLUE});
+text(.3, 'INVESTIT', 612, 790, {size:26});
+draw(.3, arrow([612,880],[612,815],-.1,16), {w:4, color:BLUE});
+draw(.4, [[[560,960],[612,912],[664,960]], [[570,952],[570,1015],[654,1015],[654,952]], rect(600,975,24,40)], {w:4});
+text(.3, 'ACTIFS', 612, 1050, {size:26});
+text(.3, 'qui rapportent', 612, 1080, {size:22, font:'Patrick Hand', weight:'400'});
+draw(.3, arrow([612,1180],[612,1105],-.1,16), {w:4, color:BLUE});
+draw(.4, [circle(612,1210,22,0,1.05,8), circle(612,1196,22,0,1.05,8), circle(612,1182,22,0,1.05,8), [[590,1182],[590,1210]], [[634,1182],[634,1210]]], {w:4, color:BLUE});
+text(.3, 'REVENUS PASSIFS', 612, 1252, {size:22});
+
+draw(.4, [circle(985,665,28), [[973,693],[975,715],[995,715],[997,693]], [[977,723],[993,723]]], {w:4});
+draw(.3, [[[985,620],[985,600]], [[1022,640],[1036,628]], [[948,640],[934,628]], [[1030,672],[1050,672]]], {w:4, color:BLUE});
+text(.3, 'IDÉES', 985, 760, {size:26});
+draw(.3, arrow([985,860],[985,790],-.1,16), {w:4, color:BLUE});
+draw(.4, [rect(940,880,90,48), circle(985,904,13), rect(948,890,90,48)], {w:4, color:BLUE});
+text(.3, 'LIBERTÉ', 985, 975, {size:26});
+draw(.3, arrow([985,1080],[985,1005],-.1,16), {w:4, color:BLUE});
+draw(.4, [[[935,1180],[960,1150],[985,1160],[1030,1105]], [[1010,1105],[1030,1105],[1030,1125]], [[930,1195],[1040,1195]]], {w:5, color:BLUE});
+text(.3, 'CROISSANCE', 985, 1235, {size:22});
+
+/* ===== BOTTOM BOXES ===== */
+mark('box1');
+draw(.5, [rect(30,1320,490,340)], {w:5});
+text(.5, 'SUBIT L\'ARGENT', 275, 1378, {size:44, color:ORANGE});
+const L1 = ['Travaille pour l\'argent','Dépense d\'abord','Vit de paie en paie','Accumule des dettes'];
+L1.forEach((s,i)=>{ const y=1440+i*54; draw(.15,[[[62,y-26],[84,y-4]],[[84,y-26],[62,y-4]]],{w:4,color:ORANGE}); text(.4,s,100,y-6,{size:36,font:'Patrick Hand',weight:'400',align:'left'}); });
+mark('box2');
+draw(.5, [rect(560,1320,490,340)], {w:5});
+text(.5, 'FAIT TRAVAILLER L\'ARGENT', 805, 1378, {size:38, color:BLUE, maxW:460});
+const L2 = ['L\'argent travaille pour lui','S\'investit d\'abord','Crée des actifs','Bâtit un patrimoine'];
+L2.forEach((s,i)=>{ const y=1440+i*54; draw(.15,[[[590,y-14],[600,y-4],[620,y-30]]],{w:5,color:BLUE}); text(.4,s,632,y-6,{size:36,font:'Patrick Hand',weight:'400',align:'left'}); });
+
+/* ===== BANNER ===== */
+mark('banner');
+draw(.6, [rect(50,1710,980,170), rect(58,1718,964,156)], {w:5, color:BLUE});
+draw(.4, [circle(140,1780,30), [[127,1810],[129,1834],[151,1834],[153,1810]], [[100,1745],[88,1735]], [[180,1745],[192,1735]], [[140,1730],[140,1714]]], {w:4, color:BLUE});
+text(.8, 'CE QUE L\'ÉCOLE', 590, 1782, {size:66, font:'Permanent Marker', weight:'400', color:BLUE});
+text(.8, 'NE T\'APPREND PAS', 590, 1856, {size:66, font:'Permanent Marker', weight:'400', color:BLUE});
+const DRAW_END = T;
+const DURATION = T + 3.2;
+
+/* ---------- camera ---------- */
+const CAM = [ // t, cx, cy, zoom
+  [0, 540, 250, 1.12], [M.div-.2, 540, 260, 1.08],
+  [M.div+.7, 290, 600, 1.6], [M.poorFig+.5, 285, 800, 1.55], [M.poorIcons, 280, 900, 1.5],
+  [M.rich-.3, 260, 930, 1.4], [M.rich+.5, 800, 620, 1.6], [M.richFig+2.5, 800, 860, 1.5], [M.box1-.4, 820, 950, 1.4],
+  [M.box1+.4, 280, 1490, 1.6], [M.box2-.3, 285, 1495, 1.55], [M.box2+.4, 800, 1490, 1.6], [M.banner-.3, 805, 1495, 1.55],
+  [M.banner+.5, 540, 1720, 1.2], [DRAW_END, 540, 1650, 1.12], [DRAW_END+1.4, 540, 960, 1.0], [999, 540, 960, 1.0]
+];
+function camAt(t){
+  for (let i=0;i<CAM.length-1;i++){ const a=CAM[i], b=CAM[i+1];
+    if (t<=b[0]){ const u=ease(clamp((t-a[0])/(b[0]-a[0]),0,1)); return [a[1]+(b[1]-a[1])*u, a[2]+(b[2]-a[2])*u, a[3]+(b[3]-a[3])*u]; } }
+  return [540,960,1];
+}
+
+/* ---------- paper ---------- */
+const paper = document.createElement('canvas'); paper.width=W; paper.height=H;
+(function(){ const p=paper.getContext('2d'); p.fillStyle='#fcfbf7'; p.fillRect(0,0,W,H);
+  const r=rng(7); const img=p.getImageData(0,0,W,H);
+  for (let i=0;i<img.data.length;i+=4){ const n=(r()-.5)*10; img.data[i]+=n; img.data[i+1]+=n; img.data[i+2]+=n; }
+  p.putImageData(img,0,0); })();
+
+/* ---------- render ---------- */
+function textMetrics(e){
+  ctx.font = `${e.weight} ${e.size}px "${e.font}"`;
+  let w = ctx.measureText(e.str).width, sc = 1;
+  if (e.maxW && w > e.maxW){ sc = e.maxW / w; w = e.maxW; }
+  const x0 = e.align==='center' ? e.x - w/2 : e.x;
+  return {w, sc, x0};
+}
+function renderEl(e, t){
+  const u = clamp((t-e.t0)/e.dur, 0, 1);
+  if (u <= 0) return null;
+  let tip = null;
+  if (e.kind === 'path'){
+    let remain = u * e.total;
+    ctx.strokeStyle = e.color; ctx.lineWidth = e.w; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (let k=0;k<e.P.length;k++){
+      const p = e.P[k]; if (remain <= 0) break;
+      ctx.beginPath(); ctx.moveTo(p[0][0], p[0][1]); tip = p[0];
+      for (let i=1;i<p.length;i++){
+        const d = Math.hypot(p[i][0]-p[i-1][0], p[i][1]-p[i-1][1]);
+        if (remain >= d){ ctx.lineTo(p[i][0],p[i][1]); remain -= d; tip = p[i]; }
+        else { const f = remain/d; tip = [p[i-1][0]+(p[i][0]-p[i-1][0])*f, p[i-1][1]+(p[i][1]-p[i-1][1])*f]; ctx.lineTo(tip[0],tip[1]); remain = 0; break; }
+      }
+      if (e.fill && u >= 1){ const a = clamp((t-e.t0-e.dur)/.35,0,1); ctx.save(); ctx.globalAlpha=a*.92; ctx.fillStyle=e.fillColor; ctx.fill(); ctx.restore(); }
+      ctx.stroke();
+    }
+  } else {
+    const m = textMetrics(e);
+    ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(e.rot); ctx.translate(-e.x, -e.y);
+    ctx.beginPath(); ctx.rect(m.x0-10, e.y-e.size*1.2, m.w*u+10, e.size*2); ctx.clip();
+    ctx.fillStyle = e.color; ctx.textBaseline = 'alphabetic';
+    ctx.translate(m.x0, e.y); ctx.scale(m.sc, 1); ctx.textAlign='left'; ctx.fillText(e.str, 0, 0);
+    ctx.restore();
+    const wob = Math.sin(u*e.str.length*3.1)*e.size*.28;
+    tip = [m.x0 + m.w*u, e.y - e.size*.3 + wob];
+  }
+  return u < 1 ? tip : null;
+}
+function startTip(e){ if (e.kind==='path') return e.P[0][0]; const m=textMetrics(e); return [m.x0, e.y-e.size*.3]; }
+function endTip(e){ if (e.kind==='path'){ const p=e.P[e.P.length-1]; return p[p.length-1]; } const m=textMetrics(e); return [m.x0+m.w, e.y-e.size*.3]; }
+
+function penAt(t){
+  // active element tip, else interpolate between previous end and next start
+  let prev=null, next=null;
+  for (const e of EL){ if (t>=e.t0 && t<e.t0+e.dur) return {active:true}; if (e.t0+e.dur<=t) prev=e; else if (!next) next=e; }
+  if (!next){ const p = prev ? endTip(prev) : [W,H]; const u=ease(clamp((t-DRAW_END)/.9,0,1)); return {pos:[p[0]+(1300-p[0])*u, p[1]+(2300-p[1])*u]}; }
+  if (!prev){ const s=startTip(next); const u=ease(clamp(t/next.t0,0,1)); return {pos:[1300+(s[0]-1300)*u, 2300+(s[1]-2300)*u]}; }
+  const a=endTip(prev), b=startTip(next), g0=prev.t0+prev.dur, u=ease(clamp((t-g0)/Math.max(.01,next.t0-g0),0,1));
+  return {pos:[a[0]+(b[0]-a[0])*u, a[1]+(b[1]-a[1])*u - Math.sin(u*Math.PI)*25]};
+}
+
+function drawHand(x, y){
+  ctx.save(); ctx.translate(x, y); ctx.rotate(-0.55);
+  // shadow
+  ctx.save(); ctx.globalAlpha=.12; ctx.fillStyle='#000'; ctx.translate(18,22);
+  ctx.beginPath(); ctx.ellipse(150,40,120,70,0,0,7); ctx.fill(); ctx.fillRect(10,-14,300,28); ctx.restore();
+  // marker
+  ctx.fillStyle='#111'; ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(26,-9); ctx.lineTo(26,9); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#2b2b2e'; ctx.fillRect(24,-17,330,34);
+  ctx.fillStyle='#e9e9e9'; ctx.fillRect(150,-17,90,34);
+  ctx.fillStyle='#111'; ctx.fillRect(330,-19,40,38);
+  // hand
+  ctx.lineWidth=4; ctx.strokeStyle='#c99a77'; ctx.fillStyle=SKIN;
+  ctx.beginPath(); ctx.ellipse(175,52,120,72,.08,0,7); ctx.fill(); ctx.stroke();
+  for (const [fx,fy,rx,ry] of [[92,6,42,24],[118,-24,40,22],[160,-30,42,23],[202,-26,40,22]]){
+    ctx.beginPath(); ctx.ellipse(fx,fy,rx,ry,-.2,0,7); ctx.fill(); ctx.stroke(); }
+  ctx.beginPath(); ctx.ellipse(70,34,48,22,-.5,0,7); ctx.fill(); ctx.stroke(); // thumb
+  ctx.restore();
+}
+
+window.DURATION = DURATION;
+window.renderAt = function(t){
+  const [cx, cy, z] = camAt(t);
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.fillStyle='#fcfbf7'; ctx.fillRect(0,0,W,H);
+  let ox = W/2 - cx*z, oy = H/2 - cy*z;
+  ox = clamp(ox, W - W*z, 0); oy = clamp(oy, H - H*z, 0);
+  ctx.setTransform(z,0,0,z,ox,oy);
+  ctx.drawImage(paper,0,0);
+  let tip = null;
+  for (const e of EL){ const r = renderEl(e, t); if (r) tip = r; }
+  const pen = penAt(t);
+  const p = tip || pen.pos;
+  ctx.setTransform(1,0,0,1,0,0);
+  if (p) drawHand(p[0]*z+ox, p[1]*z+oy);
+  return !!tip; // drawing active (for sound)
+};
+window.timeline = () => EL.map(e => ({t0:e.t0, dur:e.dur, kind:e.kind}));
+</script></body></html>
