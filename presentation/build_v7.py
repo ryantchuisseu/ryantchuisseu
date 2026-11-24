@@ -354,13 +354,19 @@ CHROME[len(prs.slides) - 1] = (M, W - M)
 
 
 # 15 — ÉCOSYSTÈME DE PARTENAIRES : logos dans l'ordre (patronage d'abord)
-s = slide(notes='Ordre : patronage du Ministère des Postes et Télécommunications et de la Commission nationale pour l’UNESCO ; Geneva AI Governance Institute (GAIGI) ; Road to Geneva AI Summit (21–22 juin 2027) ; UIT – Membre de Secteur ; Université Bordeaux Montaigne ; Global Technology & Associates (GTA) ; Cyber Inno Shield Foundation ; Selam ; Hakkilo XR. Partenaires des éditions précédentes : AUF, Gouvernement du Canada, Business France, MILA, ENSPY, IRIC, ESSFAR, Atos, Huawei, Port Autonome de Kribi…')
+s = slide(notes='Ordre : patronage du Ministère des Postes et Télécommunications et de la Commission nationale pour l’UNESCO ; Geneva AI Governance Institute (GAIGI) ; Road to Geneva AI Summit (21–22 juin 2027) ; UIT – Membre de Secteur ; Université Bordeaux Montaigne ; Global Technology & Associates (GTA) ; Cyber Inno Shield Foundation ; Selam ; Bureau régional de l’UNESCO (logo à insérer). Partenaires des éditions précédentes : AUF, Gouvernement du Canada, Business France, MILA, ENSPY, IRIC, ESSFAR, Atos, Huawei, Port Autonome de Kribi…')
 head(s, 'Un écosystème de partenaires de premier plan', 'Ils nous ont fait confiance.')
-ORDER = ['patronage', 'gaigi', 'road_to_geneva', 'itu', 'bordeaux_montaigne', 'gta', 'cyber_inno_shield', 'selam', 'hakkilo_xr']
+ORDER = ['patronage', 'gaigi', 'road_to_geneva', 'itu', 'bordeaux_montaigne', 'gta', 'cyber_inno_shield', 'selam', 'unesco_regional']
 gx, gy = Inches(0.3), Inches(0.22)
 cw = (W - 2 * M - gx * 2) / 3; ch = Inches(1.22)
 for i, n in enumerate(ORDER):
     x = int(M + (i % 3) * (cw + gx)); y = int(Inches(2.5) + (i // 3) * (ch + gy))
+    if n == 'unesco_regional':
+        # emplacement réservé : logo du Bureau régional de l’UNESCO à insérer
+        c = box(s, x, y, int(cw), ch, NUIT, MSO_SHAPE.ROUNDED_RECTANGLE); c.adjustments[0] = 0.12
+        c.line.color.rgb = GRIS; c.line.width = Pt(1.25); c.line.dash_style = 4
+        tx(s, x, y, int(cw), ch, [[('BUREAU RÉGIONAL UNESCO', {'font': F_SEMI, 'size': 11, 'color': ORANGE, 'track': 150, 'after': 2})], [('Logo à insérer', {'font': F_LIGHT, 'size': 11, 'color': GRIS})]], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        continue
     c = box(s, x, y, int(cw), ch, BLANC, MSO_SHAPE.ROUNDED_RECTANGLE); c.adjustments[0] = 0.12
     if i == 0:
         c.line.color.rgb = ORANGE; c.line.width = Pt(2.5)
