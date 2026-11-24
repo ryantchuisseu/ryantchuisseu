@@ -425,20 +425,20 @@ for i, (n, p, pl, perks) in enumerate(offers):
         tx(s, x + Inches(0.36), yy, int(cw) - Inches(0.5), Inches(0.6), pk, font=F_LIGHT, size=11, color=fg, spacing=1.05)
 tx(s, LX, Inches(6.9), Inches(11.5), Inches(0.25), 'Formules à la carte et contributions en nature possibles  ·  dossier complet sur jciacm.com', font=F_LIGHT, size=11, color=GRIS)
 
-# 17 — CLÔTURE
-s = slide(chrome=False, notes='Merci. Contacts du secrétariat : contact@jciacm.com, +237 699 089 937 (WhatsApp), +237 677 238 022. Site : www.jciacm.com. Fond : dossier de présentation JCIA 2027.')
-photo(s, 'affiche_bg', 0, 0, W, H, 0.42)
-gradient(s, 0, 0, W, H, [(0, 90), (40, 80), (62, 30), (100, 12)], 0)
-s.shapes.add_picture(LOGO, M, Inches(0.7), width=Inches(2.9))
-tx(s, M, Inches(2.4), Inches(6.5), Inches(1.8), [[('Rendez-vous', {})], [('au Hilton de Yaoundé.', {'color': ORANGE})]], font=F_DISPLAY, size=40, spacing=1.0)
-tx(s, M, Inches(4.1), Inches(6.2), Inches(0.5), '27 & 28 avril 2027', font=F_SEMI, size=20, color=BLANC)
-tx(s, M, Inches(4.65), Inches(5.6), Inches(0.8), 'Participez, exposez, candidatez aux Awards ou devenez partenaire.', font=F_LIGHT, size=15, color=GRIS, spacing=1.3)
+# 17 — CLÔTURE : photo du Hilton de nuit en fond, texte dans le ciel à droite
+s = slide(chrome=False, notes='Merci. Contacts du secrétariat : contact@jciacm.com, +237 699 089 937 (WhatsApp), +237 677 238 022. Site : www.jciacm.com. Photo : Hilton Hotel, Yaoundé.')
+photo(s, 'hilton_nuit', 0, 0, W, H, 0.5)
+gradient(s, 0, 0, W, H, [(0, 0), (58, 0), (68, 60), (100, 85)], 0)
+HX = Inches(8.85)
+s.shapes.add_picture(LOGO, HX, Inches(0.6), width=Inches(2.5))
+tx(s, HX, Inches(2.3), Inches(4.2), Inches(1.9), [[('Rendez-vous', {})], [('au Hilton de', {'color': ORANGE})], [('Yaoundé.', {'color': ORANGE})]], font=F_DISPLAY, size=32, spacing=1.0)
+tx(s, HX, Inches(4.2), Inches(4.2), Inches(0.5), '27 & 28 avril 2027', font=F_SEMI, size=20, color=BLANC)
+tx(s, HX, Inches(4.75), Inches(4.2), Inches(0.9), 'Participez, exposez, candidatez aux Awards ou devenez partenaire.', font=F_LIGHT, size=14, color=BLANC, spacing=1.3)
 for i, (k, v) in enumerate([('Site', 'www.jciacm.com'), ('E-mail', 'contact@jciacm.com'), ('WhatsApp', '+237 699 089 937')]):
-    y = Inches(5.5 + i * 0.4)
-    tx(s, M, y, Inches(1.3), Inches(0.35), k.upper(), font=F_SEMI, size=10, color=ORANGE, track=200)
-    tx(s, M + Inches(1.4), y - Inches(0.03), Inches(4), Inches(0.35), v, font=F_SEMI, size=14, color=BLANC)
+    y = Inches(5.8 + i * 0.4)
+    tx(s, HX, y, Inches(1.2), Inches(0.35), k.upper(), font=F_SEMI, size=10, color=ORANGE, track=200)
+    tx(s, HX + Inches(1.3), y - Inches(0.03), Inches(3.0), Inches(0.35), v, font=F_SEMI, size=12, color=BLANC)
 toghu(s, height=Inches(0.5))
-
 
 from lxml import etree as _et
 _PNS = 'http://schemas.openxmlformats.org/presentationml/2006/main'
