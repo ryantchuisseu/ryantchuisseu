@@ -366,7 +366,7 @@ CHROME[len(prs.slides) - 1] = (M, W - M)
 
 
 # 15 — ÉCOSYSTÈME DE PARTENAIRES : logos dans l'ordre (patronage d'abord)
-s = slide(notes='Ordre : patronage du Ministère des Postes et Télécommunications et de la Commission nationale pour l’UNESCO ; Geneva AI Governance Institute (GAIGI) ; Road to Geneva AI Summit (21–22 juin 2027) ; UIT – Membre de Secteur ; Université Bordeaux Montaigne ; Global Technology & Associates (GTA) ; Cyber Inno Shield Foundation ; Selam ; Bureau régional de l’UNESCO (logo à insérer). Partenaires des éditions précédentes : AUF, Gouvernement du Canada, Business France, MILA, ENSPY, IRIC, ESSFAR, Atos, Huawei, Port Autonome de Kribi…')
+s = slide(notes='Ordre : patronage du Ministère des Postes et Télécommunications et de la Commission nationale pour l’UNESCO ; Geneva AI Governance Institute (GAIGI) ; Road to Geneva AI Summit (21–22 juin 2027) ; UIT – Membre de Secteur ; Université Bordeaux Montaigne ; Global Technology & Associates (GTA) ; Cyber Inno Shield Foundation ; Selam ; Bureau régional de l’UNESCO . Partenaires des éditions précédentes : AUF, Gouvernement du Canada, Business France, MILA, ENSPY, IRIC, ESSFAR, Atos, Huawei, Port Autonome de Kribi…')
 head(s, 'Un écosystème de partenaires de premier plan', 'Ils nous ont fait confiance.')
 ORDER = ['patronage', 'gaigi', 'road_to_geneva', 'itu', 'bordeaux_montaigne', 'gta', 'cyber_inno_shield', 'selam', 'unesco_regional']
 gx, gy = Inches(0.3), Inches(0.22)
@@ -374,10 +374,11 @@ cw = (W - 2 * M - gx * 2) / 3; ch = Inches(1.22)
 for i, n in enumerate(ORDER):
     x = int(M + (i % 3) * (cw + gx)); y = int(Inches(2.5) + (i // 3) * (ch + gy))
     if n == 'unesco_regional':
-        # emplacement réservé : logo du Bureau régional de l’UNESCO à insérer
-        c = box(s, x, y, int(cw), ch, NUIT, MSO_SHAPE.ROUNDED_RECTANGLE); c.adjustments[0] = 0.12
-        c.line.color.rgb = GRIS; c.line.width = Pt(1.25); c.line.dash_style = 4
-        tx(s, x, y, int(cw), ch, [[('BUREAU RÉGIONAL UNESCO', {'font': F_SEMI, 'size': 11, 'color': ORANGE, 'track': 150, 'after': 2})], [('Logo à insérer', {'font': F_LIGHT, 'size': 11, 'color': GRIS})]], align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        c = box(s, x, y, int(cw), ch, BLANC, MSO_SHAPE.ROUNDED_RECTANGLE); c.adjustments[0] = 0.12
+        path = os.path.join(LOGO_DIR, 'unesco_regional.png'); iw, ih = Image.open(path).size
+        mw, mh = int(cw) - Inches(0.8), ch - Inches(0.36)
+        sc = min(mw / iw, mh / ih); pw, ph = int(iw * sc), int(ih * sc)
+        s.shapes.add_picture(path, x + (int(cw) - pw) // 2, y + (ch - ph) // 2, pw, ph)
         continue
     c = box(s, x, y, int(cw), ch, BLANC, MSO_SHAPE.ROUNDED_RECTANGLE); c.adjustments[0] = 0.12
     if i == 0:
@@ -418,8 +419,8 @@ tx(s, M, Inches(6.9), Inches(11.8), Inches(0.3), 'Formules à la carte et contri
 # =============================================================
 # 17 — CLÔTURE : fond du dossier de présentation (flouté), contenu inchangé
 s = slide(chrome=False, notes='Merci. Contacts du secrétariat : contact@jciacm.com, +237 699 089 937 (WhatsApp), +237 677 238 022. Site : www.jciacm.com. Fond : dossier de présentation JCIA 2027.')
-photo(s, 'dossier_bg', 0, 0, W, H, 0.5)
-gradient(s, 0, 0, W, H, [(0, 72), (100, 72)], 0)
+photo(s, 'affiche_bg', 0, 0, W, H, 0.42)
+gradient(s, 0, 0, W, H, [(0, 90), (40, 80), (62, 30), (100, 12)], 0)
 s.shapes.add_picture(LOGO, M, Inches(0.7), width=Inches(2.9))
 tx(s, M, Inches(2.4), Inches(6.5), Inches(1.8), [[('Rendez-vous', {})], [('au Hilton de Yaoundé.', {'color': ORANGE})]], font=F_DISPLAY, size=40, spacing=1.0)
 tx(s, M, Inches(4.1), Inches(6.2), Inches(0.5), '27 & 28 avril 2027', font=F_SEMI, size=20, color=BLANC)
