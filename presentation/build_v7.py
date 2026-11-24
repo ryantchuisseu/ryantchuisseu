@@ -330,8 +330,8 @@ box(s, M + Inches(3.24), Inches(5.25), Inches(2.16), Inches(0.34), VIOLET)
 tx(s, M, Inches(5.25), Inches(3.24), Inches(0.34), 'Jury 60 %', font=F_SEMI, size=12, color=NUIT, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 tx(s, M + Inches(3.24), Inches(5.25), Inches(2.16), Inches(0.34), 'Public 40 %', font=F_SEMI, size=12, color=NUIT, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
 tx(s, M, Inches(5.85), Inches(5.4), Inches(0.9), [[('Candidatures jusqu’au 28 fév. 2027', {})], [('Gala et remise des prix : 28 avril 2027', {'font': F_SEMI, 'color': ORANGE})]], font=F_LIGHT, size=14, color=BLANC, spacing=1.3)
-px = Inches(6.75); pw = W - px - M; ph = Inches(4.9)
-photo(s, 'awards_2025', px, Inches(1.4), pw, ph, 0.4)
+px = Inches(6.45); pw = Inches(6.4); ph = int(pw / 1.8)
+photo(s, 'awards_2025', px, Inches(2.6), pw, ph, 0.5)
 CHROME[len(prs.slides) - 1] = (M, W - M)
 
 # =============================================================
